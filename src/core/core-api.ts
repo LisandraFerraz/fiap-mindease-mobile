@@ -26,6 +26,7 @@ export async function apiFetch<T>({
   if (access_token) {
     Object.assign(config, {
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${access_token}`,
       },
     });

@@ -2,18 +2,21 @@ import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
 } from "@react-navigation/native";
+import { CustomTheme } from "./utils/theme-interface";
 
-export const DarkTheme = {
+export const DarkTheme: CustomTheme = {
   ...NavigationDarkTheme,
   colors: {
     ...NavigationDarkTheme.colors,
     background: "#0a0a12",
     bg_color_container: "#342d446e",
+    bg_color_container_opacity: "#0a0a12d6",
     bg_color_dark: "#4f5162",
 
     bg_color_element_light: "#342d446e",
     bg_color_element_contrast: "#0f0f1a",
     bg_color_card: "#5b5b75",
+    input_btn_color_primary: "#f6f6f6",
 
     sidenv_bg_color: "#0f0f1a",
     notification_color_exists: "#a61818",
@@ -59,17 +62,17 @@ export const DarkTheme = {
     shadow_dark_grey_color: "#4f5162",
     shadow_dark_blue_color: "#3d3a65",
 
-    border_color_light: "#272639",
-    border_color_dark: "#ffffff",
+    border_color: "##4f5162",
   },
 };
 
-export const LightTheme = {
+export const LightTheme: CustomTheme = {
   ...NavigationDefaultTheme,
   colors: {
     ...NavigationDefaultTheme.colors,
     background: "#ffffff",
     bg_color_container: "#fdfdfd",
+    bg_color_container_opacity: "#ffffffc1",
     bg_color_dark: "#4f5162",
 
     bg_color_element_light: "#ffffff",
@@ -82,6 +85,8 @@ export const LightTheme = {
     btn_bg_color_primary: "#4f5162",
     btn_bg_color_secondary: "#f1f1f1",
 
+    input_bg_color_bright: "#4e4e62",
+    btn_bg_color_primary_light: "#414aaf",
     input_btn_color_primary: "#f6f6f6",
 
     input_bg_color_primary: "#f6f6f6",
@@ -120,7 +125,6 @@ export const LightTheme = {
     shadow_dark_grey_color: "#4f5162",
     shadow_dark_blue_color: "#2f64c7",
 
-    border_color_light: "#cdcdcd",
-    border_color_dark: "#4f5162",
+    border_color: "#a7a7a74b",
   },
 };

@@ -3,17 +3,21 @@ import { useAuth } from "../core/context/AuthContext";
 import { AppStack } from "./AppStacks";
 import { AuthStack } from "./Auth";
 import { DarkTheme, LightTheme } from "../theme/themes";
-import { ThemeProvider } from "@react-navigation/native";
+import { ThemeProvider, useTheme } from "@react-navigation/native";
+import { useEffect } from "react";
+import { useThemeMode } from "../theme/ThemeContext";
 
 export function RootNavigator() {
   const { isAuthenticated } = useAuth();
 
-  const colorScheme = useColorScheme();
+  // const colorScheme = useColorScheme();
+  const { mode } = useThemeMode();
 
-  const theme: any = colorScheme === "dark" ? DarkTheme : LightTheme;
+  useEffect(() => {});
+
   return (
     <>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : LightTheme}>
+      <ThemeProvider value={mode === "dark" ? DarkTheme : LightTheme}>
         {isAuthenticated ? <AppStack /> : <AuthStack />}
       </ThemeProvider>
     </>

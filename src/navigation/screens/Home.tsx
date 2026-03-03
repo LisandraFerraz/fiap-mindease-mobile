@@ -3,8 +3,6 @@ import { StyleSheet, View } from "react-native";
 import { useAuth } from "../../core/context/AuthContext";
 
 export function Home() {
-  const { isAuthenticated, logout } = useAuth();
-
   // if (!isAuthenticated) return <AuthPage />;
 
   return (

@@ -1,17 +1,11 @@
 import { Assets as NavigationAssets } from "@react-navigation/elements";
-import {
-  NavigationContainer,
-  ThemeProvider,
-  useTheme,
-} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { Asset } from "expo-asset";
 import { createURL } from "expo-linking";
 import * as SplashScreen from "expo-splash-screen";
-import * as React from "react";
-import { useColorScheme, View } from "react-native";
 import { AuthProvider } from "./core/context/AuthContext";
 import { RootNavigator } from "./routes/RootNavigator";
-import { LightTheme, DarkTheme } from "./theme/themes";
+import { ThemeProviderCustom } from "./theme/ThemeContext";
 
 Asset.loadAsync([
   ...NavigationAssets,
@@ -32,7 +26,9 @@ export function App() {
           prefixes: [prefix],
         }}
       >
-        <RootNavigator />
+        <ThemeProviderCustom>
+          <RootNavigator />
+        </ThemeProviderCustom>
       </NavigationContainer>
     </AuthProvider>
   );

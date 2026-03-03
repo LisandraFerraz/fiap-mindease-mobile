@@ -30,11 +30,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         body: signInBody,
       });
 
-      setTokens(result);
+      if (result.accessToken) {
+        setTokens(result);
 
-      console.log("AuthProvider :: [LOGIN] - login com sucesso ", result);
-      //   setIsAuthenticated(true);
-      router.replace("/");
+        console.log("AuthProvider :: [LOGIN] - login com sucesso ", result);
+        //   setIsAuthenticated(true);
+        router.replace("/");
+      }
     } catch (error) {
       console.log("AuthProvider :: [LOGIN] - falha no login ", error);
     }
