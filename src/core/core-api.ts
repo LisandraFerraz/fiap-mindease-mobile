@@ -18,15 +18,20 @@ export async function apiFetch<T>({
 }: IApi): Promise<T> {
   const config = {
     method: method,
+    headers: {
+      "Content-Type": "application/json",
+    },
   };
 
+  const reqBody = JSON.stringify(body);
+  console.log(reqBody);
+
   if (method !== "GET" && method !== "DELETE" && body) {
-    Object.assign(config, { body: JSON.stringify(body) });
+    Object.assign(config, { body: reqBody });
   }
   if (access_token) {
     Object.assign(config, {
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${access_token}`,
       },
     });

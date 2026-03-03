@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
         console.log("AuthProvider :: [LOGIN] - login com sucesso ", result);
         //   setIsAuthenticated(true);
-        router.replace("/");
+        navigation.navigate("Home");
       }
     } catch (error) {
       console.log("AuthProvider :: [LOGIN] - falha no login ", error);
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setTokens(result);
 
       console.log("AuthProvider  :: SignUp - usuário cadastrado: ", result);
-      router.replace("/login");
+      navigation.navigate("AuthPage");
     } catch (error) {
       console.log("AuthProvider :: [LOGIN] - falha no login ", error);
     }
@@ -63,7 +63,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     console.log("AuthProvider :: Usuário deslogado");
     router.replace("/login");
     setTokens(null);
-    // setIsAuthenticated(false);
   };
 
   return (

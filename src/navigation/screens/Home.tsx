@@ -3,8 +3,6 @@ import { StyleSheet, View } from "react-native";
 import { useAuth } from "../../core/context/AuthContext";
 
 export function Home() {
-  // if (!isAuthenticated) return <AuthPage />;
-
   return (
     <View style={styles.container}>
       <Text>Home Screen</Text>

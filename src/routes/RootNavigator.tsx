@@ -1,9 +1,8 @@
-import { useColorScheme } from "react-native";
 import { useAuth } from "../core/context/AuthContext";
 import { AppStack } from "./AppStacks";
 import { AuthStack } from "./Auth";
 import { DarkTheme, LightTheme } from "../theme/themes";
-import { ThemeProvider, useTheme } from "@react-navigation/native";
+import { ThemeProvider } from "@react-navigation/native";
 import { useEffect } from "react";
 import { useThemeMode } from "../theme/ThemeContext";
 

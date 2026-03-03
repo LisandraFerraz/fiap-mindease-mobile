@@ -9,14 +9,12 @@ export default function InputText({
   maxLength,
   onChange,
   editable,
-  // hasError,
   errorMessage,
   label,
   placeholder,
 }: {
   value?: any;
   label: string;
-  // hasError?: boolean;
   errorMessage?: string;
   maxLength?: number;
   editable?: boolean;
@@ -69,6 +67,6 @@ const stylesSheet = (color: any) =>
     },
     hasError: {
       borderWidth: 1,
-      // borderColor: colors.red_highlight,
+      borderColor: color.text_color_error,
     },
   });

@@ -1,6 +1,7 @@
 import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
 import { StyleSheet, Text, type TextProps } from "react-native";
+import { CustomTheme } from "../theme/utils/theme-interface";
 
 export type ThemedTextProps = TextProps & {
   type?:
@@ -21,7 +22,7 @@ export function ThemedText({
   ...rest
 }: ThemedTextProps) {
   const { colors } = useTheme();
-  const styles = useMemo(() => stylesSheet(colors), [colors]) as CustomTheme;
+  const styles = useMemo(() => stylesSheet(colors), [colors]);
 
   return (
     <Text
@@ -69,7 +70,7 @@ const stylesSheet = (color: any) =>
     link: {
       lineHeight: 30,
       fontSize: 16,
-      // color: color.dark_green_default,
+      color: color.text_color_dark,
       textDecorationLine: "underline",
       fontWeight: "400",
     },
@@ -78,20 +79,19 @@ const stylesSheet = (color: any) =>
       lineHeight: 24,
       fontWeight: "600",
       textTransform: "uppercase",
-      // color: color.grey_font,
+      color: color.grey,
     },
     labelError: {
       fontSize: 16,
       lineHeight: 24,
       fontWeight: "600",
       textTransform: "uppercase",
-      // color: color.red_highlight,
+      color: color.text_color_error,
     },
     small: {
       fontSize: 12,
       lineHeight: 24,
       fontWeight: "600",
       textTransform: "uppercase",
-      // color: color.red_highlight,
     },
   });
