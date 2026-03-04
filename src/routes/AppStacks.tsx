@@ -2,9 +2,46 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Profile } from "../navigation/screens/Profile";
-import { Settings } from "../navigation/screens/Settings";
 import { NotFound } from "../navigation/screens/NotFound";
 import { Home } from "../navigation/screens/Home";
+import { Header } from "../components/ui/Header";
+
+// const Stack = createNativeStackNavigator();
+
+// export function AppStack() {
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen
+//         name="Olá XXX"
+//         options={{
+//           headerRight: () => (
+//             <Ionicons
+//               onPress={() => alert("This is a button!")}
+//               name="notifications"
+//               size={25}
+//             />
+//           ),
+//         }}
+//         component={HomeTabs}
+//       />
+//       <Stack.Screen
+//         options={{ headerShown: false }}
+//         name="Profile"
+//         component={Profile}
+//       />
+//       <Stack.Screen
+//         name="Settings"
+//         component={Settings}
+//         options={{
+//           presentation: "modal",
+//         }}
+//       />
+//       <Stack.Screen name="NotFound" component={NotFound} />
+//     </Stack.Navigator>
+//   );
+// }
+
+//
 
 const Stack = createNativeStackNavigator();
 
@@ -12,25 +49,16 @@ export function AppStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Olá XXX"
+        name=" "
+        options={{ headerShown: false }}
         component={HomeTabs}
-        options={{
-          headerRight: () => (
-            <Ionicons
-              onPress={() => alert("This is a button!")}
-              name="notifications"
-              size={25}
-            />
-          ),
-        }}
       />
-      <Stack.Screen name="Profile" component={Profile} />
+
+      <Stack.Screen name="Olá, xxxx" component={Home} />
       <Stack.Screen
-        name="Settings"
-        component={Settings}
-        options={{
-          presentation: "modal",
-        }}
+        name="Profile"
+        options={{ headerShown: false }}
+        component={Profile}
       />
       <Stack.Screen name="NotFound" component={NotFound} />
     </Stack.Navigator>
@@ -43,22 +71,32 @@ function HomeTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        headerShown: false,
+        title: "",
         tabBarIcon: ({ color, size }) => {
           let iconName: any;
 
           if (route.name === "Home") {
             iconName = "home-outline";
           } else {
-            iconName = "person-outline";
+            iconName = "reorder-three-outline";
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen
+        options={{
+          header: () => <Header />,
+        }}
+        name="Home"
+        component={Home}
+      />
+      <Tab.Screen
+        name="Menu"
+        options={{ headerShown: false }}
+        component={Profile}
+      />
     </Tab.Navigator>
   );
 }
