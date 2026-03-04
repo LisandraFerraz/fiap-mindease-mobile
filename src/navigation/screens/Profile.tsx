@@ -1,6 +1,8 @@
 import { Text } from "@react-navigation/elements";
 import { StaticScreenProps } from "@react-navigation/native";
+import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
+import UserDataStore from "../../stores/user-data-store";
 
 type Props = StaticScreenProps<{
   user: string;

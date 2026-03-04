@@ -7,15 +7,15 @@ import {
   isAuthFormValid,
   isEmailValid,
 } from "../../../../utils/functions/validate-auth";
-import { useAuth } from "../../../../core/context/AuthContext";
 import { AuthTemplate } from "../AuthTemplate";
+import { UseAuth } from "../../../../core/hooks/useAuth";
 
-export default function AuthPage() {
-  const { login } = useAuth();
+export default function LoginPage() {
+  const { login } = UseAuth();
 
   const [loginBody, setLoginBody] = useState<UsuarioLogin>({
-    email: "",
-    password: "",
+    email: "marianasilva@email.com",
+    password: "12345678",
   });
 
   const prepareBody = (field: string, value: string) => {

@@ -1,13 +1,13 @@
 import { StyleSheet, View } from "react-native";
 import InputText from "../../../../components/ui/InputText";
-import { useAuth } from "../../../../core/context/AuthContext";
 import { useState } from "react";
 import { isAuthFormValid } from "../../../../utils/functions/validate-auth";
 import { UsuarioRegister } from "../../../../utils/models/user-model";
 import { AuthTemplate } from "../AuthTemplate";
+import { UseAuth } from "../../../../core/hooks/useAuth";
 
 export function SignUpPage() {
-  const { register } = useAuth();
+  const { register } = UseAuth();
 
   const [signUpBody, setSignUp] = useState<UsuarioRegister>({
     email: "",
@@ -37,7 +37,7 @@ export function SignUpPage() {
     <AuthTemplate
       body={signUpBody}
       handleClick={handleSignup}
-      navigateTo="AuthPage"
+      navigateTo="LoginPage"
       linkName="Já tenho conta"
       btnDisabled={!isBodyValid()}
     >

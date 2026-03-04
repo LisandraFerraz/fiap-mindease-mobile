@@ -3,7 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Asset } from "expo-asset";
 import { createURL } from "expo-linking";
 import * as SplashScreen from "expo-splash-screen";
-import { AuthProvider } from "./core/context/AuthContext";
 import { RootNavigator } from "./routes/RootNavigator";
 import { ThemeProviderCustom } from "./theme/ThemeContext";
 
@@ -19,17 +18,15 @@ const prefix = createURL("/");
 
 export function App() {
   return (
-    <AuthProvider>
-      <NavigationContainer
-        linking={{
-          enabled: true,
-          prefixes: [prefix],
-        }}
-      >
-        <ThemeProviderCustom>
-          <RootNavigator />
-        </ThemeProviderCustom>
-      </NavigationContainer>
-    </AuthProvider>
+    <NavigationContainer
+      linking={{
+        enabled: true,
+        prefixes: [prefix],
+      }}
+    >
+      <ThemeProviderCustom>
+        <RootNavigator />
+      </ThemeProviderCustom>
+    </NavigationContainer>
   );
 }

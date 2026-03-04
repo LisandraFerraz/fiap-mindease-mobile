@@ -8,14 +8,14 @@ import { useMemo } from "react";
 import { Badge } from "react-native-elements";
 
 export const Header = () => {
-  const { userData } = useAuth();
+  // const { userData } = useAuth();
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => styleSheet(colors), [colors]);
 
   return (
     <>
       <View style={styles.container}>
-        <ThemedText style={styles.header_text}>Olá {userData?.nome}</ThemedText>
+        {/* <ThemedText style={styles.header_text}>Olá {userData?.nome}</ThemedText> */}
         <Badge
           status="error"
           containerStyle={{ position: "absolute", top: 15, right: 20 }}

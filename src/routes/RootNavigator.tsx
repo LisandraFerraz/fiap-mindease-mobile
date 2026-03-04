@@ -1,23 +1,22 @@
 import { useAuth } from "../core/context/AuthContext";
-import { AppStack } from "./AppStacks";
-import { AuthStack } from "./Auth";
+// import { AppStack } from "./AppStacks";
+import { AuthStack } from "./AuthStacks";
 import { DarkTheme, LightTheme } from "../theme/themes";
 import { ThemeProvider } from "@react-navigation/native";
-import { useEffect } from "react";
 import { useThemeMode } from "../theme/ThemeContext";
+import { AppStack } from "./AppStacks";
+import UserDataStore from "../stores/user-data-store";
 
 export function RootNavigator() {
-  const { isAuthenticated } = useAuth();
+  const { userData } = UserDataStore();
 
-  // const colorScheme = useColorScheme();
   const { mode } = useThemeMode();
-
-  useEffect(() => {});
 
   return (
     <>
-      <ThemeProvider value={mode === "dark" ? DarkTheme : LightTheme}>
-        {isAuthenticated ? <AppStack /> : <AuthStack />}
+      <ThemeProvider value={mode === "light" ? DarkTheme : LightTheme}>
+        {/* <AppStack /> */}
+        {userData.tokens.accessToken ? <AppStack /> : <AuthStack />}
       </ThemeProvider>
     </>
   );

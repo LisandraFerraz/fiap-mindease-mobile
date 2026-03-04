@@ -1,12 +1,12 @@
 export class UsuarioRegister {
-  nome: string = '';
-  email: string = '';
-  password: string = '';
+  nome: string = "";
+  email: string = "";
+  password: string = "";
 }
 
 export class UsuarioLogin {
-  email: string = '';
-  password: string = '';
+  email: string = "";
+  password: string = "";
 }
 
 export interface IaccessTokens {
@@ -17,4 +17,8 @@ export interface IaccessTokens {
 
 export interface IRegisterResponse {
   message: string;
+}
+
+export class UserData {
+  nome: string = "";
 }
