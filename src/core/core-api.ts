@@ -40,5 +40,6 @@ export async function apiFetch<T>({ url, method, body }: IApi): Promise<T> {
 
   const response = await fetch(fullUrl, config);
   const data = await response.json();
+
   return data;
 }
