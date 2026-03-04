@@ -1,4 +1,3 @@
-import { useAuth } from "../core/context/AuthContext";
 // import { AppStack } from "./AppStacks";
 import { AuthStack } from "./AuthStacks";
 import { DarkTheme, LightTheme } from "../theme/themes";
@@ -8,7 +7,7 @@ import { AppStack } from "./AppStacks";
 import UserDataStore from "../stores/user-data-store";
 
 export function RootNavigator() {
-  const { userData } = UserDataStore();
+  const { tokens } = UserDataStore();
 
   const { mode } = useThemeMode();
 
@@ -16,7 +15,7 @@ export function RootNavigator() {
     <>
       <ThemeProvider value={mode === "light" ? DarkTheme : LightTheme}>
         {/* <AppStack /> */}
-        {userData.tokens.accessToken ? <AppStack /> : <AuthStack />}
+        {tokens.accessToken ? <AppStack /> : <AuthStack />}
       </ThemeProvider>
     </>
   );

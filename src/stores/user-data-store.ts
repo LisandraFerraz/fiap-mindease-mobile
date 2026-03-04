@@ -1,50 +1,26 @@
 import { create } from "zustand";
 import { IaccessTokens, UserData } from "../utils/models/user-model";
-import { persist } from "zustand/middleware";
 
 interface IUserDataStore {
   tokens: IaccessTokens;
   userInfo: UserData;
 }
 
-type UserDataStore = {
-  userData: IUserDataStore;
+interface UserDataStore extends IUserDataStore {
   setUserData: (userData: IUserDataStore) => void;
-};
+}
 
 const UserDataStore = create<UserDataStore>((set) => ({
-  userData: {
-    tokens: {
-      accessToken: "",
-      platToolsId: "",
-      usuarioId: "",
-    },
-    userInfo: {
-      nome: "",
-    },
+  tokens: {
+    accessToken: "",
+    platToolsId: "",
+    usuarioId: "",
   },
-  setUserData: (userData: IUserDataStore) => set(() => ({ userData })),
+  userInfo: {
+    nome: "",
+  },
+  setUserData: (userData) =>
+    set(() => ({ tokens: userData.tokens, userInfo: userData.userInfo })),
 }));
-
-// const UserDataStore = create<UserDataStore>()(
-//   persist(
-//     (set, get) => ({
-//       userData: {
-//         tokens: {
-//           accessToken: "",
-//           platToolsId: "",
-//           usuarioId: "",
-//         },
-//         userInfo: {
-//           nome: "",
-//         },
-//       },
-//       setUserData: (userData: IUserDataStore) => set(() => ({ userData })),
-//     }),
-//     {
-//       name: "user-data-store",
-//     },
-//   ),
-// );
 
 export default UserDataStore;

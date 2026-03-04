@@ -1,21 +1,22 @@
 import { StyleSheet, View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { ThemedText } from "../ThemedText";
-import { useAuth } from "../../core/context/AuthContext";
 import { useTheme } from "@react-navigation/native";
 import { CustomTheme } from "../../theme/utils/theme-interface";
 import { useMemo } from "react";
 import { Badge } from "react-native-elements";
+import UserDataStore from "../../stores/user-data-store";
+import { ThemedText } from "../ThemedText";
 
 export const Header = () => {
-  // const { userData } = useAuth();
+  const { userInfo } = UserDataStore();
+
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => styleSheet(colors), [colors]);
 
   return (
     <>
       <View style={styles.container}>
-        {/* <ThemedText style={styles.header_text}>Olá {userData?.nome}</ThemedText> */}
+        <ThemedText style={styles.header_text}>Olá {userInfo.nome}</ThemedText>
         <Badge
           status="error"
           containerStyle={{ position: "absolute", top: 15, right: 20 }}

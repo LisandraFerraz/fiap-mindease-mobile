@@ -1,3 +1,4 @@
+import UserDataStore from "../stores/user-data-store";
 import { environment } from "./env/environment";
 
 export type methods = "GET" | "PATCH" | "POST" | "PUT" | "DELETE";
@@ -5,17 +6,11 @@ interface IApi {
   url: string;
   method: methods;
   body?: any;
-  access_token?: string;
-  tools_id?: string;
 }
 
-export async function apiFetch<T>({
-  url,
-  method,
-  body,
-  access_token,
-  tools_id,
-}: IApi): Promise<T> {
+export async function apiFetch<T>({ url, method, body }: IApi): Promise<T> {
+  const { accessToken, platToolsId } = UserDataStore.getState().tokens;
+
   const config = {
     method: method,
     headers: {
@@ -24,21 +19,21 @@ export async function apiFetch<T>({
   };
 
   const reqBody = JSON.stringify(body);
-  console.log(reqBody);
 
   if (method !== "GET" && method !== "DELETE" && body) {
     Object.assign(config, { body: reqBody });
   }
-  if (access_token) {
+
+  if (accessToken) {
     Object.assign(config, {
       headers: {
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
   }
 
-  if (url.includes(":id") && tools_id) {
-    url = url.replace(":id", tools_id);
+  if (url.includes(":id") && platToolsId) {
+    url = url.replace(":id", platToolsId);
   }
 
   const fullUrl = environment.data_api + url;

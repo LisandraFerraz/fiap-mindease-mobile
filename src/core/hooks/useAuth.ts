@@ -19,7 +19,8 @@ export const UseAuth = () => {
 
       if (result) {
         const { userName, ...tokens } = result;
-        setUserData({ tokens: tokens, userInfo: { nome: userName } });
+
+        setUserData({ tokens, userInfo: { nome: userName } });
 
         console.log("{nome:userName}:: ", { nome: userName });
         console.log("tokens:: ", tokens);

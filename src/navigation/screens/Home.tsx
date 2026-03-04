@@ -1,16 +1,9 @@
 import { Button, Text } from "@react-navigation/elements";
 import { StyleSheet, View } from "react-native";
-import { useAuth } from "../../core/context/AuthContext";
 import UserDataStore from "../../stores/user-data-store";
 import { useEffect } from "react";
 
 export function Home() {
-  const { userData } = UserDataStore();
-
-  useEffect(() => {
-    console.log(userData);
-  });
-
   return (
     <View style={styles.container}>
       <Text>Home Screen</Text>
