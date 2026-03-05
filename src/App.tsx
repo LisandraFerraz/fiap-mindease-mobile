@@ -4,7 +4,8 @@ import { Asset } from "expo-asset";
 import { createURL } from "expo-linking";
 import * as SplashScreen from "expo-splash-screen";
 import { RootNavigator } from "./routes/RootNavigator";
-import { ThemeProviderCustom } from "./theme/ThemeContext";
+import { ThemeProviderCustom, useThemeMode } from "./theme/ThemeContext";
+import { DarkTheme, LightTheme } from "./theme/themes";
 
 Asset.loadAsync([
   ...NavigationAssets,
@@ -17,6 +18,8 @@ SplashScreen.preventAutoHideAsync();
 const prefix = createURL("/");
 
 export function App() {
+  const { mode } = useThemeMode();
+
   return (
     <NavigationContainer
       linking={{

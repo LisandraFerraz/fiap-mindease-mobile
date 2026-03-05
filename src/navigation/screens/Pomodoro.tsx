@@ -33,8 +33,6 @@ export function Pomodoro() {
     listPomodoroTasks().then((res) => {
       setPomoTodoList(res);
     });
-
-    console.log(pomoTodoList);
   };
 
   const updateTodo = (item: PomodoroTodo) => {

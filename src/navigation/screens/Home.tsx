@@ -5,14 +5,6 @@ import { useEffect } from "react";
 import { UsePomodoro } from "../../utils/hooks/api-calls/usePomodoro";
 
 export function Home() {
-  const { listPomodoroTasks } = UsePomodoro();
-
-  useEffect(() => {
-    listPomodoroTasks().then((res) => {
-      console.log("Teste fetch ", res);
-    });
-  }, [listPomodoroTasks]);
-
   return (
     <View style={styles.container}>
       <Text>Home Screen</Text>

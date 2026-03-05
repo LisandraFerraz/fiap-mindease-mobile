@@ -23,7 +23,7 @@ export const UseAuth = () => {
         setUserData({ tokens, userInfo: { nome: userName } });
       }
     } catch (error) {
-      console.log("UseAuth :: [LOGIN] - falha no login ", error);
+      console.error("UseAuth :: [LOGIN] - falha no login ", error);
     }
   };
 
@@ -38,7 +38,7 @@ export const UseAuth = () => {
       console.log("AuthProvider  :: SignUp - usuário cadastrado: ", result);
       navigation.navigate("LoginPage");
     } catch (error) {
-      console.log("AuthProvider :: [LOGIN] - falha no login ", error);
+      console.error("AuthProvider :: [LOGIN] - falha no login ", error);
     }
   };
 

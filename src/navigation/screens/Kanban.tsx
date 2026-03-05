@@ -9,7 +9,6 @@ import {
   ColumnModel,
   KanbanBoard,
 } from "@intechnity/react-native-kanban-board";
-import KanbanBoardContainer from "@intechnity/react-native-kanban-board/lib/typescript/components/kanban-board-container.component";
 
 export function Kanban() {
   const {
@@ -32,7 +31,6 @@ export function Kanban() {
 
   const listKanbanItems = () => {
     getKanbanItems().then((res: IKanbanColumn[]) => {
-      console.log(res);
       setKanbanData(res);
 
       let columns: any[] = [];
@@ -67,9 +65,7 @@ export function Kanban() {
     destColumn: ColumnModel,
     item: CardModel,
     targetIdx: number,
-  ) => {
-    // Handle card drag and drop
-  };
+  ) => {};
 
   const onCardPress = (item: CardModel) => {
     // Handle card press
@@ -77,17 +73,16 @@ export function Kanban() {
 
   return (
     <ScrollView>
-      <View>
+      <View style={styles.container}>
         <KanbanBoard
-          style={null}
+          style={{
+            backgroundColor: colors.bg_color_container,
+          }}
           columns={kanbanColumns}
           cards={kanbanCards}
           onDragEnd={onCardDragEnd}
           onCardPress={onCardPress}
         />
-        {/* {
-    kanbanCards && kanbanColumns && 
-  } */}
       </View>
     </ScrollView>
   );
@@ -95,11 +90,16 @@ export function Kanban() {
 
 const stylesSheet = (color: any) =>
   StyleSheet.create({
+    container: {
+      height: 100,
+      flex: 1,
+      //   backgroundColor: color.bg_color_container,
+    },
     kanbanBoard: {
-      backgroundColor: color.bg_color_container,
+      height: "100%",
     },
 
     kanbanContainer: {
-      backgroundColor: color.bg_color_container,
+      //   backgroundColor: color.bg_color_container,
     },
   });

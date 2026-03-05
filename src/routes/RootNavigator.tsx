@@ -7,14 +7,12 @@ import { AppStack } from "./AppStacks";
 import UserDataStore from "../stores/user-data-store";
 
 export function RootNavigator() {
-  const { tokens } = UserDataStore();
-
+  const tokens = UserDataStore((state) => state.tokens);
   const { mode } = useThemeMode();
 
   return (
     <>
-      <ThemeProvider value={mode === "light" ? DarkTheme : LightTheme}>
-        {/* <AppStack /> */}
+      <ThemeProvider value={mode === "dark" ? DarkTheme : LightTheme}>
         {tokens.accessToken ? <AppStack /> : <AuthStack />}
       </ThemeProvider>
     </>

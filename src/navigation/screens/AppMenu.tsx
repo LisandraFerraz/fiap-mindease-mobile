@@ -1,4 +1,4 @@
-import { useNavigation, useRoute, useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import {
   FlatList,
   Image,
@@ -14,11 +14,6 @@ import { navItem } from "./utils/data/navitems";
 import { INavItems } from "./utils/interfaces/navitems-interface";
 import { ThemedText } from "../../components/ThemedText";
 import { Icon } from "../../components/ui/Icon/Icon";
-import { Divider } from "react-native-elements";
-
-// type Props = StaticScreenProps<{
-//   user: string;
-// }>;
 
 export function AppMenu() {
   const navigation = useNavigation();
@@ -27,10 +22,6 @@ export function AppMenu() {
   const styles = useMemo(() => stylesSheet(colors), [colors]);
 
   const navItensList: INavItems[] = navItem;
-
-  const navigateTo = (route: string) => {
-    return navigation.navigate(`${route}`);
-  };
 
   return (
     <View style={styles.container}>

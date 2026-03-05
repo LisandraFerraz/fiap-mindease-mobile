@@ -14,7 +14,7 @@ export function AppStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name=" "
+        name="HomeTabs"
         options={{ headerShown: false }}
         component={HomeTabs}
       />
@@ -38,7 +38,7 @@ function HomeTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        title: "",
+        title: "Hometabs",
         tabBarIcon: ({ color, size }) => {
           let iconName: any;
 
@@ -60,7 +60,7 @@ function HomeTabs() {
         component={Home}
       />
       <Tab.Screen
-        name="Menu"
+        name="AppMenu"
         options={{ headerShown: false }}
         component={AppMenu}
       />

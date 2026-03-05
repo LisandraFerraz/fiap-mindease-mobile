@@ -36,7 +36,6 @@ export async function apiFetch<T>({ url, method, body }: IApi): Promise<T> {
   if (url.includes(":id") && platToolsId) {
     url = url.replace(":id", platToolsId);
   }
-
   const fullUrl = environment.data_api + url;
 
   const response = await fetch(fullUrl, config);

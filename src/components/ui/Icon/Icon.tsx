@@ -11,9 +11,5 @@ interface IconProps extends Omit<ImageProps, "source"> {
 export const Icon = ({ name, ...rest }: IconProps) => {
   const { mode } = useThemeMode();
 
-  useEffect(() => {
-    console.log(MEIcons[name][mode]);
-  }, []);
-
   return <Image source={MEIcons[name][mode]} {...rest} />;
 };

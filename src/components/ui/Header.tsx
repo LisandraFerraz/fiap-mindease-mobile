@@ -8,7 +8,7 @@ import UserDataStore from "../../stores/user-data-store";
 import { ThemedText } from "../ThemedText";
 
 export const Header = () => {
-  const { userInfo } = UserDataStore();
+  const userInfo = UserDataStore((state) => state.userInfo);
 
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => styleSheet(colors), [colors]);
@@ -16,7 +16,9 @@ export const Header = () => {
   return (
     <>
       <View style={styles.container}>
-        <ThemedText style={styles.header_text}>Olá {userInfo.nome}</ThemedText>
+        <ThemedText style={styles.header_text}>
+          Olá {userInfo?.nome ?? "usuário"}
+        </ThemedText>
         <Badge
           status="error"
           containerStyle={{ position: "absolute", top: 15, right: 20 }}
