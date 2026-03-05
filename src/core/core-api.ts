@@ -27,6 +27,7 @@ export async function apiFetch<T>({ url, method, body }: IApi): Promise<T> {
   if (accessToken) {
     Object.assign(config, {
       headers: {
+        ...config.headers,
         Authorization: `Bearer ${accessToken}`,
       },
     });

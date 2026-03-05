@@ -21,7 +21,7 @@ export const UsePomodoro = () => {
   const deletePomodoroTask = async (id: string) => {
     return await apiFetch<PomodoroTodo[]>({
       method: "DELETE",
-      url: `${endpoints.deletePomodoroTask}?${id}`,
+      url: `${endpoints.deletePomodoroTask}/${id}`,
     });
   };
 

@@ -1,61 +1,97 @@
-import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import { ThemedText } from "../../components/ThemedText";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CustomTheme } from "../../theme/utils/theme-interface";
-import { usePomodoroTimer } from "../../utils/hooks/functionalities/usePomodoroTimer";
-import { Button } from "../../components/ui/Button";
-import { Icon } from "../../components/ui/Icon/Icon";
+import { PomodoroTimer } from "../../utils/hooks/functionalities/usePomodoroTimer";
+import { TodoCard } from "../../components/ui/TodoCard";
+import { PomodoroTodo } from "../../utils/models/interfaces-model";
+import { InputAddTask } from "../../components/ui/InputAddTask";
+import { UsePomodoro } from "../../utils/hooks/api-calls/usePomodoro";
+import uuid from "react-native-uuid";
 
 export function Pomodoro() {
   const {
-    isRunning,
-    currentStep,
-    currentRound,
-    buttonOptions,
-    formattedTime,
-    start,
-    stop,
-    reset,
-    setStep,
-  } = usePomodoroTimer();
+    addPomodoroTask,
+    deletePomodoroTask,
+    listPomodoroTasks,
+    updatePomodoroTaskStatus,
+  } = UsePomodoro();
+
+  const [pomoTodoList, setPomoTodoList] = useState<PomodoroTodo[]>([]);
+  const [pomoTodoBody, setPomoTodoBody] = useState<PomodoroTodo>(
+    new PomodoroTodo(),
+  );
 
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => stylesSheet(colors), [colors]);
 
+  useEffect(() => {
+    getPomodoroTasks();
+  }, []);
+
+  const getPomodoroTasks = () => {
+    listPomodoroTasks().then((res) => {
+      setPomoTodoList(res);
+    });
+
+    console.log(pomoTodoList);
+  };
+
+  const updateTodo = (item: PomodoroTodo) => {
+    const body: PomodoroTodo = {
+      ...item,
+      completed: !item.completed,
+    };
+    updatePomodoroTaskStatus(body).then((res) => {
+      setPomoTodoList(res);
+    });
+  };
+
+  const handleAddTask = () => {
+    setPomoTodoBody({
+      ...pomoTodoBody,
+      completed: false,
+      id: uuid.v4(),
+    });
+
+    addPomodoroTask(pomoTodoBody).then((res) => {
+      setPomoTodoBody(new PomodoroTodo());
+      setPomoTodoList(res);
+    });
+  };
+
+  const handleDeleteTask = (id: string) => {
+    deletePomodoroTask(id).then((res) => {
+      setPomoTodoList(res);
+    });
+  };
+
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.time_options}>
-        {buttonOptions.map((btn, index) => (
-          <>
-            <Button
-              key={index}
-              customStyle={styles.timers_btn}
-              color={currentStep === btn.step ? "primary" : "secondary"}
-              name={btn.label}
-              onClick={() => setStep(btn.step)}
-            />
-          </>
-        ))}
-      </View>
+      <PomodoroTimer />
 
-      <View style={styles.timer_wrapper}>
-        <ThemedText style={styles.timer_count}>{formattedTime}</ThemedText>
-        <View style={styles.timer_buttons}>
-          <TouchableOpacity onPress={() => (isRunning ? stop() : start())}>
-            <Icon
-              style={styles.btn_timer_actions}
-              name={isRunning ? "pause" : "play_arrow"}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => reset()}>
-            <Icon style={styles.btn_timer_actions} name="restart" />
-          </TouchableOpacity>
-        </View>
-        <ThemedText style={styles.current_round}>{currentRound}/4</ThemedText>
+      <View style={styles.to_do_list}>
+        <InputAddTask
+          placeholder="Criar tarefa..."
+          value={pomoTodoBody?.description}
+          valueChange={(e) => {
+            setPomoTodoBody({ ...pomoTodoBody, description: e });
+          }}
+          addTask={handleAddTask}
+        />
+        {pomoTodoList.map(
+          (todo, index) =>
+            todo && (
+              <TodoCard
+                key={index}
+                deleteItem={() => handleDeleteTask(todo.id)}
+                markAs={() => updateTodo(todo)}
+                description={todo.description}
+                isCompleted={todo.completed}
+              />
+            ),
+        )}
       </View>
-
-      <View style={styles.to_do_list}></View>
     </ScrollView>
   );
 }
@@ -63,38 +99,12 @@ export function Pomodoro() {
 const stylesSheet = (color: any) =>
   StyleSheet.create({
     container: {
-      // flex:1
-      marginVertical: 25,
-    },
-    time_options: {
-      flexDirection: "row",
-      gap: 5,
-      justifyContent: "center",
-    },
-    timers_btn: {
-      paddingHorizontal: 15,
-      textTransform: "capitalize",
-    },
-    timer_wrapper: {
-      marginTop: "25%",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    timer_count: {
-      fontSize: 100,
-      fontWeight: 700,
-    },
-    timer_buttons: {
-      flexDirection: "row",
-      marginTop: 25,
+      marginTop: "10%",
     },
 
-    btn_timer_actions: {
-      height: 45,
-      width: 45,
-    },
-    to_do_list: {},
-    current_round: {
-      marginVertical: 15,
+    to_do_list: {
+      marginVertical: "5%",
+      paddingHorizontal: 25,
+      gap: 25,
     },
   });

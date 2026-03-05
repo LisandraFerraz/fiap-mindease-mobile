@@ -21,11 +21,6 @@ export const UseAuth = () => {
         const { userName, ...tokens } = result;
 
         setUserData({ tokens, userInfo: { nome: userName } });
-
-        console.log("{nome:userName}:: ", { nome: userName });
-        console.log("tokens:: ", tokens);
-
-        console.log("UseAuth :: [LOGIN] - login com sucesso ", result);
       }
     } catch (error) {
       console.log("UseAuth :: [LOGIN] - falha no login ", error);
