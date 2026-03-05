@@ -1,3 +1,5 @@
+import { AlertType } from "../types/app-types";
+
 export interface INotification {
   id: string;
   read: boolean;

@@ -4,7 +4,7 @@ import {
   IStickyNotesResponse,
   StickyNote,
   StickyNotesGroup,
-} from "../../models/interfaces-model";
+} from "../../models/checklist-model";
 
 export const UseStikyNotes = async () => {
   const listAllStickyGroups = async () => {

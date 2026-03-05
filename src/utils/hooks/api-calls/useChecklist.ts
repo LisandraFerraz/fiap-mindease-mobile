@@ -4,7 +4,7 @@ import {
   Checklist,
   ChecklistItem,
   IChecklistResponse,
-} from "../../models/interfaces-model";
+} from "../../models/checklist-model";
 
 export const UseChecklist = () => {
   const listChecklists = async () => {

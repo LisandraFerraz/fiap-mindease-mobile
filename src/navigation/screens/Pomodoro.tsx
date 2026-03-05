@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CustomTheme } from "../../theme/utils/theme-interface";
 import { PomodoroTimer } from "../../utils/hooks/functionalities/usePomodoroTimer";
 import { TodoCard } from "../../components/ui/TodoCard";
-import { PomodoroTodo } from "../../utils/models/interfaces-model";
+import { PomodoroTodo } from "../../utils/models/pomodoro-model";
 import { InputAddTask } from "../../components/ui/InputAddTask";
 import { UsePomodoro } from "../../utils/hooks/api-calls/usePomodoro";
 import uuid from "react-native-uuid";

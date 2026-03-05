@@ -6,6 +6,7 @@ import { Home } from "../navigation/screens/Home";
 import { Header } from "../components/ui/Header";
 import { AppMenu } from "../navigation/screens/AppMenu";
 import { Pomodoro } from "../navigation/screens/Pomodoro";
+import { Kanban } from "../navigation/screens/Kanban";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,7 @@ export function AppStack() {
         component={AppMenu}
       />
       <Stack.Screen name="Pomodoro" component={Pomodoro} />
+      <Stack.Screen name="Kanban" component={Kanban} />
       <Stack.Screen name="NotFound" component={NotFound} />
     </Stack.Navigator>
   );
