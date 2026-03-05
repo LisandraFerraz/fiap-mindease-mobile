@@ -51,24 +51,24 @@ const stylesSheet = (color: any) =>
     },
     default: {
       fontSize: 16,
-      lineHeight: 24,
+      // lineHeight: 24,
     },
     defaultSemiBold: {
       fontSize: 16,
-      lineHeight: 24,
+      // lineHeight: 24,
       fontWeight: "600",
     },
     title: {
       fontSize: 26,
       fontWeight: "bold",
-      lineHeight: 32,
+      // lineHeight: 32,
     },
     subtitle: {
       fontSize: 20,
       fontWeight: "bold",
     },
     link: {
-      lineHeight: 30,
+      // lineHeight: 30,
       fontSize: 16,
       color: color.text_color_dark,
       textDecorationLine: "underline",
@@ -76,21 +76,21 @@ const stylesSheet = (color: any) =>
     },
     label: {
       fontSize: 14,
-      lineHeight: 24,
+      // lineHeight: 24,
       fontWeight: "600",
       textTransform: "uppercase",
       color: color.grey,
     },
     labelError: {
       fontSize: 16,
-      lineHeight: 24,
+      // lineHeight: 24,
       fontWeight: "600",
       textTransform: "uppercase",
       color: color.text_color_error,
     },
     small: {
       fontSize: 12,
-      lineHeight: 24,
+      // lineHeight: 24,
       fontWeight: "600",
       textTransform: "uppercase",
     },

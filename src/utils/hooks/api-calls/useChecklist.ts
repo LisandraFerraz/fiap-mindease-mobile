@@ -1,10 +1,10 @@
-import { apiFetch } from "../../core/core-api";
-import { endpoints } from "../../core/env/endpoints";
+import { apiFetch } from "../../../core/core-api";
+import { endpoints } from "../../../core/env/endpoints";
 import {
   Checklist,
   ChecklistItem,
   IChecklistResponse,
-} from "../models/interfaces-model";
+} from "../../models/interfaces-model";
 
 export const UseChecklist = () => {
   const listChecklists = async () => {

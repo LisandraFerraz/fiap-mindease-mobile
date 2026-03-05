@@ -1,6 +1,6 @@
-import { apiFetch } from "../../core/core-api";
-import { endpoints } from "../../core/env/endpoints";
-import { INotifResponse } from "../models/notification-model";
+import { apiFetch } from "../../../core/core-api";
+import { endpoints } from "../../../core/env/endpoints";
+import { INotifResponse } from "../../models/notification-model";
 
 export const UseNotifications = () => {
   const getAllNotifications = async () => {

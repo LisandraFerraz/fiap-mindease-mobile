@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Button from "../../../components/ui/Button";
+import { Button } from "../../../components/ui/Button";
 import { ThemedText } from "../../../components/ThemedText";
 import { ReactNode, useMemo } from "react";
 import { useNavigation } from "expo-router";

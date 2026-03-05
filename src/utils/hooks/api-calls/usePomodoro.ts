@@ -1,6 +1,6 @@
-import { apiFetch } from "../../core/core-api";
-import { endpoints } from "../../core/env/endpoints";
-import { PomodoroTodo } from "../models/interfaces-model";
+import { apiFetch } from "../../../core/core-api";
+import { endpoints } from "../../../core/env/endpoints";
+import { PomodoroTodo } from "../../models/interfaces-model";
 
 export const UsePomodoro = () => {
   const listPomodoroTasks = async () => {

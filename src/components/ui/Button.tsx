@@ -1,23 +1,32 @@
 import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, ViewStyle } from "react-native";
 import { CustomTheme } from "../../theme/utils/theme-interface";
 
-export default function Button({
+export function Button({
   name,
   disabled,
   onClick,
+  color,
+  customStyle,
 }: {
+  color?: "primary" | "secondary";
   name: string;
-  disabled: boolean;
+  disabled?: boolean;
   onClick: () => void;
+  customStyle?: ViewStyle;
 }) {
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => stylesSheet(colors), [colors]);
 
   return (
     <TouchableOpacity
-      style={[styles.button, disabled ? styles.on_disabled : styles.on_confirm]}
+      style={[
+        customStyle,
+        styles.button,
+        disabled ? styles.btn_secondary : styles.btn_primary,
+        color === "primary" ? styles.btn_primary : styles.btn_secondary,
+      ]}
       disabled={disabled}
       onPress={() => onClick()}
     >
@@ -37,16 +46,17 @@ const stylesSheet = (color: any) =>
     },
     button_text: {
       color: "#ffffff",
-      textTransform: "uppercase",
+      // textTransform: "uppercase",
       fontWeight: "500",
-      fontSize: 14,
+      fontSize: 16,
       letterSpacing: 1,
       textAlign: "center",
     },
-    on_confirm: {
+
+    btn_primary: {
       backgroundColor: color.btn_bg_color_primary,
     },
-    on_disabled: {
+    btn_secondary: {
       backgroundColor: color.input_bg_color_bright,
     },
   });

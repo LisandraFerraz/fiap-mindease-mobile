@@ -1,10 +1,10 @@
-import { apiFetch } from "../../core/core-api";
-import { endpoints } from "../../core/env/endpoints";
+import { apiFetch } from "../../../core/core-api";
+import { endpoints } from "../../../core/env/endpoints";
 import {
   IStickyNotesResponse,
   StickyNote,
   StickyNotesGroup,
-} from "../models/interfaces-model";
+} from "../../models/interfaces-model";
 
 export const UseStikyNotes = async () => {
   const listAllStickyGroups = async () => {

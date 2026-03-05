@@ -1,47 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { Profile } from "../navigation/screens/Profile";
 import { NotFound } from "../navigation/screens/NotFound";
 import { Home } from "../navigation/screens/Home";
 import { Header } from "../components/ui/Header";
-
-// const Stack = createNativeStackNavigator();
-
-// export function AppStack() {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen
-//         name="Olá XXX"
-//         options={{
-//           headerRight: () => (
-//             <Ionicons
-//               onPress={() => alert("This is a button!")}
-//               name="notifications"
-//               size={25}
-//             />
-//           ),
-//         }}
-//         component={HomeTabs}
-//       />
-//       <Stack.Screen
-//         options={{ headerShown: false }}
-//         name="Profile"
-//         component={Profile}
-//       />
-//       <Stack.Screen
-//         name="Settings"
-//         component={Settings}
-//         options={{
-//           presentation: "modal",
-//         }}
-//       />
-//       <Stack.Screen name="NotFound" component={NotFound} />
-//     </Stack.Navigator>
-//   );
-// }
-
-//
+import { AppMenu } from "../navigation/screens/AppMenu";
+import { Pomodoro } from "../navigation/screens/Pomodoro";
 
 const Stack = createNativeStackNavigator();
 
@@ -56,10 +20,11 @@ export function AppStack() {
 
       <Stack.Screen name="Olá, xxxx" component={Home} />
       <Stack.Screen
-        name="Profile"
+        name="AppMenu"
         options={{ headerShown: false }}
-        component={Profile}
+        component={AppMenu}
       />
+      <Stack.Screen name="Pomodoro" component={Pomodoro} />
       <Stack.Screen name="NotFound" component={NotFound} />
     </Stack.Navigator>
   );
@@ -95,7 +60,7 @@ function HomeTabs() {
       <Tab.Screen
         name="Menu"
         options={{ headerShown: false }}
-        component={Profile}
+        component={AppMenu}
       />
     </Tab.Navigator>
   );

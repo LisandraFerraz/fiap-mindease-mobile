@@ -62,7 +62,7 @@ export const DarkTheme: CustomTheme = {
     shadow_dark_grey_color: "#4f5162",
     shadow_dark_blue_color: "#3d3a65",
 
-    border_color: "##4f5162",
+    border_color: "#4f5162",
   },
 };
 
