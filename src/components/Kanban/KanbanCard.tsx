@@ -16,7 +16,7 @@ export const KanbanCard = ({
 }: {
   card: IKanbanTodo;
   columnId: string;
-  deleteItem?: () => void;
+  deleteItem: (id: string) => any;
   openModal: (kanbanTodo: IKanbanTodo) => any;
 }) => {
   const { colors } = useTheme() as CustomTheme;
@@ -53,27 +53,32 @@ export const KanbanCard = ({
   };
 
   return (
-    <View
-      ref={setNodeRef as any}
-      {...listeners}
-      {...(attributes as any)}
-      style={[style, styles.card]}
-    >
-      <View style={styles.card_row}>
-        <ThemedText type="defaultSemiBold">{card.title}</ThemedText>
-        <View style={styles.card_actions}>
-          <TouchableOpacity>
-            <Icon name="delete" />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Icon name="edit" />
-          </TouchableOpacity>
+    <View style={[style, styles.card]}>
+      <TouchableOpacity
+        style={styles.drag_btn}
+        ref={setNodeRef as any}
+        {...listeners}
+        {...(attributes as any)}
+      >
+        <Icon name="drag" />
+      </TouchableOpacity>
+      <View style={styles.card_body}>
+        <View style={styles.card_row}>
+          <ThemedText type="defaultSemiBold">{card.title}</ThemedText>
+          <View style={styles.card_actions}>
+            <TouchableOpacity onPress={() => deleteItem(card.id)}>
+              <Icon name="delete" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => openModal(card)}>
+              <Icon name="edit" />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-      <ThemedText type="thin">{card.description}</ThemedText>
-      <View style={styles.card_row}>
-        <ThemedText type="small">{card.dayCountMessage ?? ""}</ThemedText>
-        <>{prioTag()}</>
+        <ThemedText type="thin">{card.description}</ThemedText>
+        <View style={styles.card_row}>
+          <ThemedText type="small">{card.dayCountMessage ?? ""}</ThemedText>
+          <>{prioTag()}</>
+        </View>
       </View>
     </View>
   );
@@ -82,12 +87,31 @@ export const KanbanCard = ({
 const stylesSheet = (color: any) =>
   StyleSheet.create({
     card: {
+      shadowColor: color.shadow_dark_grey_color,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+
+      flexDirection: "row",
+      alignItems: "center",
       backgroundColor: color.bg_color_card,
       borderRadius: 15,
+      minWidth: 285,
+      maxHeight: 160,
+      overflow: "hidden",
+    },
+    drag_btn: {
+      width: 30,
+      alignItems: "center",
+      //   backgroundColor: color.bg_color_element_light,
+      height: "100%",
+      justifyContent: "center",
+    },
+    card_body: {
+      flex: 1,
+      flexDirection: "column",
       paddingVertical: 25,
       paddingHorizontal: 20,
-      minWidth: 275,
-      maxHeight: 160,
       gap: 20,
     },
     card_actions: {

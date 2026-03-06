@@ -10,18 +10,17 @@ import { UseKanban } from "../../utils/hooks/api-calls/useKanban";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { CustomTheme } from "../../theme/utils/theme-interface";
+import { KanbanModal } from "./KanbanModal";
 
-export default function KanbanBoard({
-  openModal,
-}: {
-  openModal: (kanbanTodo?: IKanbanTodo) => void;
-}) {
+export default function KanbanBoard() {
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => stylesSheet(colors), [colors]);
 
-  const { getKanbanItems, updateKanbanItem } = UseKanban();
+  const { getKanbanItems, updateKanbanItem, deleteKanbanItem } = UseKanban();
 
   const [kanbanColumns, setKanbanColumns] = useState<IKanbanColumn[]>([]);
+  const [modalData, setModalData] = useState<IKanbanTodo>();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     listKanbanItems();
@@ -31,6 +30,38 @@ export default function KanbanBoard({
     getKanbanItems().then((res: IKanbanColumn[]) => {
       setKanbanColumns(res);
     });
+  };
+
+  const deleteItem = (id: string) => {
+    deleteKanbanItem(id).then((res: IKanbanColumn[]) => {
+      setKanbanColumns(res);
+    });
+  };
+
+  const updateKanbanItemColumn = (
+    card: IKanbanTodo,
+    status: keyof typeof kanbanStatus,
+  ) => {
+    let body: IKanbanTodo = {
+      ...card,
+      status: status,
+    };
+
+    updateKanbanItem(body).then((res: IKanbanColumn[]) => {
+      setKanbanColumns(res);
+    });
+  };
+
+  const showModal = (kanbanTodo?: IKanbanTodo) => {
+    setModalData(kanbanTodo);
+    setIsOpen(true);
+  };
+
+  const handleSaveData = (data?: IKanbanColumn[]) => {
+    if (data) {
+      setKanbanColumns(data);
+      setIsOpen(false);
+    }
   };
 
   function handleDragEnd(event: any) {
@@ -66,40 +97,39 @@ export default function KanbanBoard({
     updateKanbanItemColumn(card, over.id);
   }
 
-  const updateKanbanItemColumn = (
-    card: IKanbanTodo,
-    status: keyof typeof kanbanStatus,
-  ) => {
-    let body: IKanbanTodo = {
-      ...card,
-      status: status,
-    };
-
-    updateKanbanItem(body).then((res) => {
-      setKanbanColumns(res);
-    });
-  };
-
   return (
-    <DndContext onDragEnd={handleDragEnd}>
-      <ScrollView horizontal>
-        <View style={styles.column_group}>
-          {kanbanColumns.map((column) => (
-            <KanbanColumn
-              openModal={openModal}
-              key={column.id}
-              column={column}
-            />
-          ))}
-        </View>
-      </ScrollView>
-    </DndContext>
+    <>
+      <DndContext onDragEnd={handleDragEnd}>
+        <ScrollView horizontal>
+          <View style={styles.column_group}>
+            {kanbanColumns.map((column) => (
+              <KanbanColumn
+                deleteItem={deleteItem}
+                openModal={showModal}
+                key={column.id}
+                column={column}
+              />
+            ))}
+          </View>
+        </ScrollView>
+      </DndContext>
+
+      {isOpen && (
+        <KanbanModal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          saveData={handleSaveData}
+          data={modalData}
+        />
+      )}
+    </>
   );
 }
 
 const stylesSheet = (color: any) =>
   StyleSheet.create({
     column_group: {
+      padding: 5,
       flexDirection: "row",
       gap: 10,
     },

@@ -1,6 +1,6 @@
 import { apiFetch } from "../../../core/core-api";
 import { endpoints } from "../../../core/env/endpoints";
-import { IKanbanColumn, IKanbanTodo } from "../../models/checklist-model";
+import { IKanbanColumn, IKanbanTodo } from "../../models/kanban-model";
 
 export const UseKanban = () => {
   const getKanbanItems = async () => {

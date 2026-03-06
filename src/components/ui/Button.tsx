@@ -25,7 +25,9 @@ export function Button({
         customStyle,
         styles.button,
         disabled ? styles.btn_secondary : styles.btn_primary,
-        color === "primary" ? styles.btn_primary : styles.btn_secondary,
+        color === "primary" && !disabled
+          ? styles.btn_primary
+          : styles.btn_secondary,
       ]}
       disabled={disabled}
       onPress={() => onClick()}

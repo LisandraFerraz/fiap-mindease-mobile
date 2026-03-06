@@ -13,7 +13,7 @@ export const DarkTheme: CustomTheme = {
     bg_color_container_opacity: "#0a0a12d6",
     bg_color_dark: "#4f5162",
 
-    bg_color_element_light: "#342d446e",
+    bg_color_element_light: "#342d445c",
     bg_color_element_contrast: "#0f0f1a",
     bg_color_card: "#5b5b75",
     input_btn_color_primary: "#f6f6f6",
@@ -71,7 +71,7 @@ export const LightTheme: CustomTheme = {
   colors: {
     ...NavigationDefaultTheme.colors,
     background: "#ffffff",
-    bg_color_container: "#fdfdfd",
+    bg_color_container: "#fdfcfc",
     bg_color_container_opacity: "#ffffffc1",
     bg_color_dark: "#4f5162",
 

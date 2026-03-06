@@ -11,9 +11,11 @@ import { Icon } from "../ui/Icon/Icon";
 export const KanbanColumn = ({
   column,
   openModal,
+  deleteItem,
 }: {
   column: IKanbanColumn;
   openModal: (kanbanTodo?: IKanbanTodo) => any;
+  deleteItem: (id: string) => void;
 }) => {
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => stylesSheet(colors), [colors]);
@@ -40,6 +42,7 @@ export const KanbanColumn = ({
         <>
           {item ? (
             <KanbanCard
+              deleteItem={deleteItem}
               openModal={openModal}
               key={item.id}
               card={item}
@@ -63,11 +66,16 @@ const stylesSheet = (color: any) =>
       marginBottom: 15,
     },
     column: {
+      shadowColor: color.shadow_dark_grey_color,
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+
       backgroundColor: color.bg_color_container,
       paddingHorizontal: 20,
       paddingVertical: 35,
       borderRadius: 15,
-      minWidth: 325,
+      minWidth: 335,
       gap: 15,
     },
   });

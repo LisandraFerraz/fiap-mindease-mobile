@@ -76,4 +76,9 @@ export const MEIcons = {
     light: require("./../../../assets/icons/light/light-icon-edit.svg"),
     dark: require("./../../../assets/icons/dark/dark-icon-edit.svg"),
   },
+
+  drag: {
+    light: require("./../../../assets/icons/light/light-icon-drag.svg"),
+    dark: require("./../../../assets/icons/dark/dark-icon-drag.svg"),
+  },
 };
