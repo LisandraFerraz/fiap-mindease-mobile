@@ -11,12 +11,14 @@ export const ModalTemplate = ({
   children,
   modalTitle,
   isOpen,
+  btnDisabled,
   onClose,
   onBtnConfirm,
 }: {
   modalTitle?: string;
   children: React.ReactNode;
   isOpen: boolean;
+  btnDisabled?: boolean;
   onClose: () => void;
   onBtnConfirm: () => void;
 }) => {
@@ -50,6 +52,7 @@ export const ModalTemplate = ({
                       color="primary"
                       name="Confirmar"
                       onClick={onBtnConfirm}
+                      disabled={btnDisabled}
                     />
                   </View>
                 </View>

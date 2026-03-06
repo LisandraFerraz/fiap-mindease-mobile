@@ -12,6 +12,7 @@ export default function InputText({
   errorMessage,
   label,
   placeholder,
+  required,
 }: {
   value?: any;
   label: string;
@@ -20,18 +21,24 @@ export default function InputText({
   editable?: boolean;
   placeholder: string;
   onChange?: any;
+  required?: boolean;
 }) {
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => stylesSheet(colors), [colors]);
 
   return (
     <View style={styles.container}>
-      <ThemedText
-        style={styles.label}
-        type={errorMessage ? "labelError" : "label"}
-      >
-        {label} {errorMessage}
-      </ThemedText>
+      <View style={styles.form_row}>
+        <ThemedText
+          style={styles.label}
+          type={errorMessage ? "labelError" : "label"}
+        >
+          {label} {errorMessage}
+        </ThemedText>
+        <ThemedText style={required && !errorMessage ? styles.required : ""}>
+          {required && !errorMessage ? "obrigatório" : ""}
+        </ThemedText>
+      </View>
       <TextInput
         style={[styles.text_input, errorMessage ? styles.hasError : ""]}
         value={value}
@@ -53,6 +60,16 @@ const stylesSheet = (color: any) =>
     },
     label: {
       fontSize: 14,
+    },
+    form_row: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 5,
+    },
+    required: {
+      color: color.text_color_opacity,
+      fontSize: 12,
+      textTransform: "uppercase",
     },
     text_input: {
       color: color.text_color_dark,

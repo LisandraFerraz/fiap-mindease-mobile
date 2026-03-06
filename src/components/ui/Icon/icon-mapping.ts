@@ -81,4 +81,14 @@ export const MEIcons = {
     light: require("./../../../assets/icons/light/light-icon-drag.svg"),
     dark: require("./../../../assets/icons/dark/dark-icon-drag.svg"),
   },
+
+  chevronDown: {
+    light: require("./../../../assets/icons/light/light-icon-chevronDown.svg"),
+    dark: require("./../../../assets/icons/dark/dark-icon-chevronDown.svg"),
+  },
+
+  chevronLeft: {
+    light: require("./../../../assets/icons/light/light-icon-chevronLeft.svg"),
+    dark: require("./../../../assets/icons/dark/dark-icon-chevronLeft.svg"),
+  },
 };
