@@ -1,4 +1,9 @@
-import { kanbanStatus } from "../types/app-types";
+export enum kanbanStatus {
+  BACKLOG = "Backlog",
+  AFAZER = "A fazer",
+  ANDAMENTO = "Em andamento",
+  CONCLUIDO = "Concluído",
+}
 
 export enum kanbanPriority {
   BAIXO = "baixo",
@@ -12,19 +17,12 @@ export interface IKanbanColumn {
   items: IKanbanTodo[];
 }
 
-export interface IKanbanColumns {
-  backlog: IKanbanColumn;
-  todo: IKanbanColumn;
-  progress: IKanbanColumn;
-  done: IKanbanColumn;
-}
-
 export class IKanbanTodo {
   id: string = "";
   title: string = "";
-  status: kanbanStatus = "AFAZER";
+  status: keyof typeof kanbanStatus = "AFAZER";
   priority: keyof typeof kanbanPriority = "BAIXO";
-  dueDate: Date = new Date();
+  dueDate: string = ""; //: Date = new Date()
   description: string = "";
   dayCountMessage: string = "";
 }
