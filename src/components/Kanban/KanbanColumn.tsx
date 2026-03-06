@@ -1,42 +1,73 @@
-import { Pressable, View } from "react-native";
-import { IKanbanColumn } from "../../utils/models/kanban-model";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { IKanbanColumn, IKanbanTodo } from "../../utils/models/kanban-model";
 import { ThemedText } from "../ThemedText";
-import DraggableFlatList from "react-native-draggable-flatlist";
 import { KanbanCard } from "./KanbanCard";
-import { useEffect } from "react";
 import { useDroppable } from "@dnd-kit/core";
+import { useTheme } from "@react-navigation/native";
+import { CustomTheme } from "../../theme/utils/theme-interface";
+import { useMemo } from "react";
+import { Icon } from "../ui/Icon/Icon";
 
-export const KanbanColumn = ({ column }: { column: IKanbanColumn }) => {
+export const KanbanColumn = ({
+  column,
+  openModal,
+}: {
+  column: IKanbanColumn;
+  openModal: (kanbanTodo?: IKanbanTodo) => any;
+}) => {
+  const { colors } = useTheme() as CustomTheme;
+  const styles = useMemo(() => stylesSheet(colors), [colors]);
+
   const { setNodeRef } = useDroppable({
     id: column.id,
+    data: {
+      columnId: column.id,
+    },
   });
 
   return (
-    <div ref={setNodeRef} className="column">
-      <h3>{column.title}</h3>
+    <View ref={setNodeRef as any} style={styles.column}>
+      <View style={styles.columns_header}>
+        <TouchableOpacity onPress={() => openModal()}>
+          <Icon name="add" />
+        </TouchableOpacity>
+        <ThemedText type="defaultSemiBold">
+          {column.title} ({column.items.length})
+        </ThemedText>
+      </View>
 
-      {column.items.map((item) => (
-        <KanbanCard key={item.id} card={item} />
+      {column.items.map((item: any) => (
+        <>
+          {item ? (
+            <KanbanCard
+              openModal={openModal}
+              key={item.id}
+              card={item}
+              columnId={column.id}
+            />
+          ) : (
+            <ThemedText key={0}>Vazio...</ThemedText>
+          )}
+        </>
       ))}
-    </div>
+    </View>
   );
-
-  // return (
-  //   <View>
-  //     <ThemedText>{column.title}</ThemedText>
-
-  //     <DraggableFlatList
-  //       data={column.items}
-  //       keyExtractor={(item) => item.id}
-  //       renderItem={({ item, drag }) => (
-  //         <Pressable onLongPress={drag}>
-  //           <KanbanCard data={item} />
-  //         </Pressable>
-  //       )}
-  //       onDragEnd={({ data }) => {
-  //         onMove(column.id, data);
-  //       }}
-  //     />
-  //   </View>
-  // );
 };
+
+const stylesSheet = (color: any) =>
+  StyleSheet.create({
+    columns_header: {
+      flexDirection: "row",
+      gap: 15,
+      alignItems: "center",
+      marginBottom: 15,
+    },
+    column: {
+      backgroundColor: color.bg_color_container,
+      paddingHorizontal: 20,
+      paddingVertical: 35,
+      borderRadius: 15,
+      minWidth: 325,
+      gap: 15,
+    },
+  });

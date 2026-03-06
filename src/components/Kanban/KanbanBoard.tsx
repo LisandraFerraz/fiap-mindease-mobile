@@ -1,114 +1,106 @@
 import { DndContext } from "@dnd-kit/core";
-import { useState } from "react";
-import { IKanbanColumn } from "../../utils/models/kanban-model";
+import { useEffect, useMemo, useState } from "react";
+import {
+  IKanbanColumn,
+  IKanbanTodo,
+  kanbanStatus,
+} from "../../utils/models/kanban-model";
 import { KanbanColumn } from "./KanbanColumn";
+import { UseKanban } from "../../utils/hooks/api-calls/useKanban";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { useTheme } from "@react-navigation/native";
+import { CustomTheme } from "../../theme/utils/theme-interface";
 
-export default function KanbanBoard() {
-  const [columns, setColumns] = useState<IKanbanColumn[]>([
-    {
-      id: "BACKLOG",
-      title: "Backlog",
-      items: [
-        {
-          id: "71e0056f-c7d3-402d-a892-20774e205a04",
-          title: "Tarefa backlog 1",
-          status: "BACKLOG",
-          priority: "BAIXO",
-          dueDate: "2026-03-06T03:00:00.000Z",
-          description: "Desc Tarefa backlog 2",
-          dayCountMessage: "",
-        },
-      ],
-    },
-    {
-      id: "AFAZER",
-      title: "A fazer",
-      items: [
-        {
-          id: "1582e977-f004-4a22-9de3-e34d717a8d2c",
-          title: "Tarefa A fazer 1",
-          status: "AFAZER",
-          priority: "MEDIO",
-          dueDate: "2026-03-18T03:00:00.000Z",
-          description: "Desc Tarefa A fazer 1",
-          dayCountMessage: "Restam 13 dias",
-        },
-      ],
-    },
-    {
-      id: "ANDAMENTO",
-      title: "Em progresso",
-      items: [
-        {
-          id: "18006800-2899-4399-8ea2-28d9a9a9e526",
-          title: "Tarefa progresso",
-          status: "ANDAMENTO",
-          priority: "ALTO",
-          dueDate: "2026-03-07T03:00:00.000Z",
-          description: "Desc Tarefa progresso",
-          dayCountMessage: "Restam 2 dias",
-        },
-      ],
-    },
-    {
-      id: "CONCLUIDO",
-      title: "Concluído",
-      items: [],
-    },
-  ]);
+export default function KanbanBoard({
+  openModal,
+}: {
+  openModal: (kanbanTodo?: IKanbanTodo) => void;
+}) {
+  const { colors } = useTheme() as CustomTheme;
+  const styles = useMemo(() => stylesSheet(colors), [colors]);
+
+  const { getKanbanItems, updateKanbanItem } = UseKanban();
+
+  const [kanbanColumns, setKanbanColumns] = useState<IKanbanColumn[]>([]);
+
+  useEffect(() => {
+    listKanbanItems();
+  }, []);
+
+  const listKanbanItems = () => {
+    getKanbanItems().then((res: IKanbanColumn[]) => {
+      setKanbanColumns(res);
+    });
+  };
 
   function handleDragEnd(event: any) {
     const { active, over } = event;
 
     if (!over) return;
 
-    const cardId = active.id;
-    const targetColumnId = over.id;
+    const activeColumn = active.data.current.columnId;
+    const targetColumn = over.data.current?.columnId ?? over.id;
 
-    setColumns((prev) => {
-      let draggedCard: any;
-      let fromColumnId: string | null = null;
+    if (activeColumn === targetColumn) return;
 
-      const newColumns = prev.map((col) => {
-        const found = col.items.find((i) => i.id === cardId);
+    const card = active.data.current.card;
 
-        if (found) {
-          draggedCard = found;
-          fromColumnId = col.id;
+    setKanbanColumns((prev) => {
+      const newColumns = [...prev];
 
-          return {
-            ...col,
-            items: col.items.filter((i) => i.id !== cardId),
-          };
-        }
+      const fromCol = newColumns.find((c) => c.id === activeColumn);
+      const toCol = newColumns.find((c) => c.id === targetColumn);
 
-        return col;
+      if (!fromCol || !toCol) return prev;
+
+      fromCol.items = fromCol.items.filter((i) => i.id !== card.id);
+
+      toCol.items.push({
+        ...card,
+        status: targetColumn,
       });
-
-      const targetColumn = newColumns.find((c) => c.id === targetColumnId);
-
-      if (targetColumn && draggedCard) {
-        targetColumn.items.push({
-          ...draggedCard,
-          status: targetColumnId,
-        });
-      }
-
-      console.log("Card:", draggedCard);
-      console.log("From:", fromColumnId);
-      console.log("To:", targetColumnId);
 
       return [...newColumns];
     });
+
+    updateKanbanItemColumn(card, over.id);
   }
+
+  const updateKanbanItemColumn = (
+    card: IKanbanTodo,
+    status: keyof typeof kanbanStatus,
+  ) => {
+    let body: IKanbanTodo = {
+      ...card,
+      status: status,
+    };
+
+    updateKanbanItem(body).then((res) => {
+      setKanbanColumns(res);
+    });
+  };
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <div style={{ display: "flex", gap: 20 }}>
-        {columns.map((column) => (
-          <KanbanColumn key={column.id} column={column} />
-        ))}
-      </div>
+      <ScrollView horizontal>
+        <View style={styles.column_group}>
+          {kanbanColumns.map((column) => (
+            <KanbanColumn
+              openModal={openModal}
+              key={column.id}
+              column={column}
+            />
+          ))}
+        </View>
+      </ScrollView>
     </DndContext>
   );
 }
+
+const stylesSheet = (color: any) =>
+  StyleSheet.create({
+    column_group: {
+      flexDirection: "row",
+      gap: 10,
+    },
+  });

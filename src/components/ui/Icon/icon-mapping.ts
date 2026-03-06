@@ -71,4 +71,9 @@ export const MEIcons = {
     light: require("./../../../assets/icons/light/light-icon-restart.svg"),
     dark: require("./../../../assets/icons/dark/dark-icon-restart.svg"),
   },
+
+  edit: {
+    light: require("./../../../assets/icons/light/light-icon-edit.svg"),
+    dark: require("./../../../assets/icons/dark/dark-icon-edit.svg"),
+  },
 };
