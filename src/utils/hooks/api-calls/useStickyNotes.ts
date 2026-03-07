@@ -4,9 +4,9 @@ import {
   IStickyNotesResponse,
   StickyNote,
   StickyNotesGroup,
-} from "../../models/checklist-model";
+} from "../../models/sticky-note-model";
 
-export const UseStikyNotes = async () => {
+export const UseStikyNotes = () => {
   const listAllStickyGroups = async () => {
     return await apiFetch<IStickyNotesResponse>({
       method: "GET",
@@ -75,6 +75,7 @@ export const UseStikyNotes = async () => {
   };
 
   return {
+    listAllStickyGroups,
     listStickyNotesGroup,
     createStickyNotesGroup,
     updateStickyNotesGroup,

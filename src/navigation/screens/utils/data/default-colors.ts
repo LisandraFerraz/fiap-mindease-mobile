@@ -25,7 +25,7 @@ export const borderColorsSelection = (color: any) =>
     },
   });
 
-export const bgColorSelection = (color: any) =>
+export const accentColorSelection = (color: any) =>
   StyleSheet.create({
     BLUE: {
       backgroundColor: color.color_accent_blue,
@@ -45,5 +45,28 @@ export const bgColorSelection = (color: any) =>
 
     ORANGE: {
       backgroundColor: color.color_accent_orange,
+    },
+  });
+
+export const bgStickyNotes = (color: any) =>
+  StyleSheet.create({
+    BLUE: {
+      backgroundColor: color.color_baby_blue,
+    },
+
+    YELLOW: {
+      backgroundColor: color.color_light_yellow,
+    },
+
+    RED: {
+      backgroundColor: color.color_light_red,
+    },
+
+    GREEN: {
+      backgroundColor: color.color_light_green,
+    },
+
+    ORANGE: {
+      backgroundColor: color.color_light_orange,
     },
   });

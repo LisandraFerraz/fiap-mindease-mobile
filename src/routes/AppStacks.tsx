@@ -8,6 +8,7 @@ import { AppMenu } from "../navigation/screens/AppMenu";
 import { Pomodoro } from "../navigation/screens/Pomodoro";
 import { Kanban } from "../navigation/screens/Kanban";
 import { Checklist } from "../navigation/screens/Checklist";
+import { StickyNotes } from "../navigation/screens/StickyNotes";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +30,7 @@ export function AppStack() {
       <Stack.Screen name="Pomodoro" component={Pomodoro} />
       <Stack.Screen name="Kanban" component={Kanban} />
       <Stack.Screen name="Checklist" component={Checklist} />
+      <Stack.Screen name="StickyNotes" component={StickyNotes} />
       <Stack.Screen name="NotFound" component={NotFound} />
     </Stack.Navigator>
   );

@@ -18,7 +18,7 @@ export const navItem: INavItems[] = [
   },
   {
     name: "Post-its",
-    route: "PostIt",
+    route: "StickyNotes",
     icon: "post_it",
   },
 ];

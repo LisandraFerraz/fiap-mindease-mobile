@@ -12,7 +12,7 @@ export function Kanban() {
   return (
     <>
       <View style={styles.container}>
-        <ThemedText type="defaultSemiBold">Quadro de tarefas</ThemedText>
+        {/* <ThemedText type="defaultSemiBold">Quadro de tarefas</ThemedText> */}
         <KanbanBoard />
       </View>
     </>

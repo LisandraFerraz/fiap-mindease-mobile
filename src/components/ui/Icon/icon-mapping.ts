@@ -91,4 +91,9 @@ export const MEIcons = {
     light: require("./../../../assets/icons/light/light-icon-chevronLeft.svg"),
     dark: require("./../../../assets/icons/dark/dark-icon-chevronLeft.svg"),
   },
+
+  close: {
+    light: require("./../../../assets/icons/light/light-icon-close.svg"),
+    dark: require("./../../../assets/icons/dark/dark-icon-close.svg"),
+  },
 };

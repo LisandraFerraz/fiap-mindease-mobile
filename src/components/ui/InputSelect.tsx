@@ -10,7 +10,7 @@ import {
 } from "../../utils/functions/get-kanban-keys";
 import { InputTemplate, ITemplateProps } from "./InputTemplate";
 import { stickyNoteColor } from "../../utils/types/app-types";
-import { bgColorSelection } from "../../navigation/screens/utils/data/default-colors";
+import { accentColorSelection } from "../../navigation/screens/utils/data/default-colors";
 
 type MESelect = "status" | "prioridade" | "color";
 
@@ -37,7 +37,7 @@ export const InputSelect = ({
 }: ISelectProps) => {
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => stylesSheet(colors), [colors]);
-  const bgColors = useMemo(() => bgColorSelection(colors), [colors]);
+  const bgColors = useMemo(() => accentColorSelection(colors), [colors]);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [activeOpt, setActiveOpt] = useState(selected);

@@ -50,7 +50,7 @@ export const Checklist = () => {
     <>
       {checklistData && activeChecklist && (
         <View style={styles.container}>
-          <ThemedText type="defaultSemiBold">Checklist</ThemedText>
+          {/* <ThemedText type="defaultSemiBold">Checklist</ThemedText> */}
           <ChecklistListing
             checklistData={checklistData}
             onUpdate={(value: IChecklistResponse) =>

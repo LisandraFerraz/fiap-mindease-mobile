@@ -12,7 +12,7 @@ import { Icon } from "../ui/Icon/Icon";
 import { InputSelect } from "../ui/InputSelect";
 import { stickyNoteColor } from "../../utils/types/app-types";
 import {
-  bgColorSelection,
+  accentColorSelection,
   borderColorsSelection,
 } from "../../navigation/screens/utils/data/default-colors";
 import { InputAddTask } from "../ui/InputAddTask";
@@ -38,7 +38,7 @@ export const ChecklistItems = ({
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => stylesSheet(colors), [colors]);
   const borderColors = useMemo(() => borderColorsSelection(colors), [colors]);
-  const bgColors = useMemo(() => bgColorSelection(colors), [colors]);
+  const bgColors = useMemo(() => accentColorSelection(colors), [colors]);
 
   const [checklistName, setChecklistName] = useState<string>(
     activeChecklist.name,
