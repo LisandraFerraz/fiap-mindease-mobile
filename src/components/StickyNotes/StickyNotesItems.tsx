@@ -39,7 +39,7 @@ export const StickyNotesItems = ({
     const body = {
       id: uuid.v4(),
       color: "BLUE",
-      description: "",
+      description: "Sem descrição...",
       title: "Novo post-it",
     } as StickyNote;
 
@@ -54,7 +54,7 @@ export const StickyNotesItems = ({
     <View style={styles.wrapper}>
       <View style={styles.search_add_top}>
         <InputText maxLength={20} placeholder="Pesquisar anotação..." />
-        <TouchableOpacity style={styles.add_button}>
+        <TouchableOpacity onPress={handleAddNote} style={styles.add_button}>
           <Icon name="add" style={{ width: 25, height: 25 }} />
         </TouchableOpacity>
       </View>
@@ -64,7 +64,6 @@ export const StickyNotesItems = ({
             key={note.id}
             noteData={note}
             updateStickyNote={(body) => handleUpdateNote(body)}
-            addStickyNote={handleAddNote}
             deleteStickyNote={(id: string) => handleDeleteNote(id)}
           />
         ))}

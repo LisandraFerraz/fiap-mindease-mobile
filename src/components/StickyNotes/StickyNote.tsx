@@ -14,11 +14,9 @@ interface INoteProps {
   noteData: StickyNote;
   updateStickyNote: (body: Partial<StickyNote>) => void;
   deleteStickyNote: (id: string) => void;
-  addStickyNote: () => void;
 }
 
 export const StickyNoteItem = ({
-  addStickyNote,
   deleteStickyNote,
   updateStickyNote,
   noteData,
@@ -26,7 +24,6 @@ export const StickyNoteItem = ({
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => stylesSheet(colors), [colors]);
   const bgColors = useMemo(() => bgStickyNotes(colors), [colors]);
-  const borderColors = useMemo(() => accentColorSelection(colors), [colors]);
 
   const [noteName, setNoteName] = useState<string>(noteData.title);
   const [noteDescription, setNoteDescription] = useState<string>(
@@ -58,7 +55,7 @@ export const StickyNoteItem = ({
           maxLength={25}
           style={[styles.note_title_input]}
         />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => deleteStickyNote(noteData.id)}>
           <Icon name="close" />
         </TouchableOpacity>
       </View>

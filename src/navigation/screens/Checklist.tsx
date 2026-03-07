@@ -33,7 +33,6 @@ export const Checklist = () => {
 
   const handleSetActiveChecklist = (checklist: ChecklistModel[]) => {
     setChecklistData(checklist);
-    console.log("handleSetActiveChecklist :: ", checklist);
 
     if (activeChecklist) {
       const findActive = checklist.find(
