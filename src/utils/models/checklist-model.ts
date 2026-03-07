@@ -1,10 +1,10 @@
 import { stickyNoteColor } from "../types/app-types";
 
 export interface IChecklistResponse {
-  checklist: Checklist[];
+  checklist: ChecklistModel[];
 }
 
-export class Checklist {
+export class ChecklistModel {
   id: string = "";
   name: string = "";
   color: stickyNoteColor = "BLUE";

@@ -1,8 +1,8 @@
 import { apiFetch } from "../../../core/core-api";
 import { endpoints } from "../../../core/env/endpoints";
 import {
-  Checklist,
   ChecklistItem,
+  ChecklistModel,
   IChecklistResponse,
 } from "../../models/checklist-model";
 
@@ -14,7 +14,7 @@ export const UseChecklist = () => {
     });
   };
 
-  const createChecklist = async (body: Checklist) => {
+  const createChecklist = async (body: Partial<ChecklistModel>) => {
     return await apiFetch<IChecklistResponse>({
       method: "POST",
       url: `${endpoints.createChecklist}`,
@@ -24,7 +24,7 @@ export const UseChecklist = () => {
 
   const atualizaChecklist = async (
     checklistId: string,
-    body: Partial<Checklist>,
+    body: Partial<ChecklistModel>,
   ) => {
     return await apiFetch<IChecklistResponse>({
       method: "PATCH",

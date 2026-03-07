@@ -28,7 +28,7 @@ export const InputTemplate = ({
           {required ? "obrigatório" : ""}
         </ThemedText>
       </View>
-      {children}
+      <View style={{ position: "relative" }}>{children}</View>
     </SafeAreaView>
   );
 };

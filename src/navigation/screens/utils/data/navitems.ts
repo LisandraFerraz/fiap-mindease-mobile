@@ -12,7 +12,7 @@ export const navItem: INavItems[] = [
     icon: "kanban",
   },
   {
-    name: "Lista de tarefas",
+    name: "Checklist",
     route: "Checklist",
     icon: "checklist",
   },
