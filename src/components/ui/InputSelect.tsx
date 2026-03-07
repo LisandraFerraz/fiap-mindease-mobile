@@ -59,7 +59,7 @@ export const InputSelect = ({
         <View
           style={[
             styles.color_opt_circle,
-            bgColors[activeOpt as stickyNoteColor],
+            bgColors[selected as stickyNoteColor],
           ]}
         />
       );

@@ -21,30 +21,34 @@ export const Checklist = () => {
 
   const listAllChecklists = () => {
     listChecklists().then((res: IChecklistResponse) => {
-      setChecklistData(res.checklist);
-      setActiveChecklist(res.checklist[0]);
+      updateActiveChecklist(res);
     });
   };
 
   const updateActiveChecklist = (data: IChecklistResponse) => {
-    setChecklistData(data.checklist);
+    const checklist = data.checklist;
 
-    if (checklistData) {
-      if (activeChecklist) {
-        const findActive = checklistData.find(
-          (cl) => cl.id === activeChecklist.id,
-        ) as ChecklistModel;
+    handleSetActiveChecklist(checklist);
+  };
 
-        setActiveChecklist(findActive ? findActive : checklistData[0]);
-      } else {
-        setActiveChecklist(checklistData[0]);
-      }
+  const handleSetActiveChecklist = (checklist: ChecklistModel[]) => {
+    setChecklistData(checklist);
+    console.log("handleSetActiveChecklist :: ", checklist);
+
+    if (activeChecklist) {
+      const findActive = checklist.find(
+        (cl) => cl.id === activeChecklist.id,
+      ) as ChecklistModel;
+
+      setActiveChecklist(findActive ? findActive : checklist[0]);
+    } else {
+      setActiveChecklist(checklist[0]);
     }
   };
 
   return (
     <>
-      {checklistData && (
+      {checklistData && activeChecklist && (
         <View style={styles.container}>
           <ThemedText type="defaultSemiBold">Checklist</ThemedText>
           <ChecklistListing

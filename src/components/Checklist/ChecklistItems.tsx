@@ -1,7 +1,7 @@
 import { useTheme } from "@react-navigation/native";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { CustomTheme } from "../../theme/utils/theme-interface";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ChecklistItem,
   ChecklistModel,
@@ -15,6 +15,9 @@ import {
   bgColorSelection,
   borderColorsSelection,
 } from "../../navigation/screens/utils/data/default-colors";
+import { InputAddTask } from "../ui/InputAddTask";
+import uuid from "react-native-uuid";
+import { TodoCard } from "../ui/TodoCard";
 
 interface ICheckItemsProps {
   activeChecklist: ChecklistModel;
@@ -41,7 +44,38 @@ export const ChecklistItems = ({
     activeChecklist.name,
   );
   const [checklistColor, setChecklistColor] = useState(activeChecklist.color);
+  const [newTask, setNewTask] = useState<string>("");
 
+  // Cria, atualiza e deleta tarefa //
+  const handleCreateTask = () => {
+    const body = {
+      completed: false,
+      description: newTask,
+      id: uuid.v4(),
+      lastUpdated: new Date(),
+    } as ChecklistItem;
+
+    setNewTask("");
+    addChecklistItem(activeChecklist.id, body).then((res) => onUpdate(res));
+  };
+
+  const handleDeleteTask = (id: string) => {
+    deletaChecklistItem(activeChecklist.id, id).then((res) => onUpdate(res));
+  };
+
+  const handleUpdateTask = (item: ChecklistItem) => {
+    const body: ChecklistItem = {
+      ...item,
+      completed: !item.completed,
+      lastUpdated: new Date(),
+    };
+
+    atualizaChecklistItem(activeChecklist.id, body).then((res) =>
+      onUpdate(res),
+    );
+  };
+
+  // Atualiza nome e cor da checklist //
   const handleUpdateChecklist = (field: string, value: any) => {
     const body = {
       [field]: value,
@@ -72,32 +106,55 @@ export const ChecklistItems = ({
   };
 
   return (
-    <View style={[styles.items_group, borderColors[checklistColor]]}>
-      <View style={styles.group_top}>
-        <View style={styles.group_name_edit}>
-          <Icon name="edit" />
-          <TextInput
-            value={checklistName}
-            onChangeText={(e) =>
-              e.length > 0 ? setChecklistName(e) : undefined
-            }
-            accessibilityHint="Alterar nome da checklist"
-            style={styles.name_change_input}
-            maxLength={20}
-            onBlur={() => handleUpdateChecklist("name", checklistName)}
+    <>
+      {activeChecklist && (
+        <View style={[styles.items_group, borderColors[activeChecklist.color]]}>
+          <View style={styles.group_top}>
+            <View style={styles.group_name_edit}>
+              <Icon name="edit" />
+              <TextInput
+                value={activeChecklist.name}
+                onChangeText={(e) =>
+                  e.length > 0 ? setChecklistName(e) : undefined
+                }
+                accessibilityHint="Alterar nome da checklist"
+                style={styles.name_change_input}
+                maxLength={20}
+                onBlur={() => handleUpdateChecklist("name", checklistName)}
+              />
+            </View>
+            <InputSelect
+              selected={activeChecklist.color}
+              options={getColorsList()}
+              type="color"
+              setSelectedOption={(option: any) => {
+                handleUpdateChecklist("color", option);
+                setChecklistColor(option);
+              }}
+            />
+          </View>
+
+          <InputAddTask
+            valueChange={(e) => setNewTask(e)}
+            placeholder="Criar tarefa..."
+            value={newTask}
+            addTask={handleCreateTask}
           />
+
+          <View style={styles.tasks_group}>
+            {activeChecklist.data.map((item, index) => (
+              <TodoCard
+                key={index}
+                deleteItem={() => handleDeleteTask(item.id)}
+                markAs={() => handleUpdateTask(item)}
+                description={item.description}
+                isCompleted={item.completed}
+              />
+            ))}
+          </View>
         </View>
-        <InputSelect
-          selected={activeChecklist.color}
-          options={getColorsList()}
-          type="color"
-          setSelectedOption={(option: any) => {
-            handleUpdateChecklist("color", option);
-            setChecklistColor(option);
-          }}
-        />
-      </View>
-    </View>
+      )}
+    </>
   );
 };
 
@@ -108,7 +165,7 @@ const stylesSheet = (color: any) =>
       paddingVertical: 15,
       paddingHorizontal: 25,
       borderRadius: 15,
-      gap: 15,
+      gap: 25,
 
       borderTopWidth: 10,
     },
@@ -121,14 +178,18 @@ const stylesSheet = (color: any) =>
       flexDirection: "row",
       gap: 15,
     },
+
     name_change_input: {
       color: color.text_color_dark,
       fontSize: 16,
     },
-
     color_opt_circle: {
       borderRadius: 100,
       width: 20,
       height: 20,
+    },
+
+    tasks_group: {
+      gap: 10,
     },
   });

@@ -12,16 +12,20 @@ interface IItemCardProps {
   onDelete: () => void;
 }
 
-export const ChecklistItemCard = ({ data, onDelete }: IItemCardProps) => {
+export const ChecklistItemCard = ({
+  data,
+  onDelete,
+  setActive,
+}: IItemCardProps) => {
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => stylesSheet(colors), [colors]);
 
   return (
     <View style={styles.card}>
-      <View style={styles.card_details}>
+      <TouchableOpacity onPress={setActive} style={styles.card_details}>
         <View style={[styles.checklist_color, styles[data.color]]} />
         <ThemedText>{data.name}</ThemedText>
-      </View>
+      </TouchableOpacity>
       <TouchableOpacity onPress={onDelete}>
         <Icon name="delete" />
       </TouchableOpacity>
