@@ -15,7 +15,7 @@ export default function InputText({
   required,
 }: {
   value?: any;
-  label: string;
+  label?: string;
   errorMessage?: string;
   maxLength?: number;
   editable?: boolean;
@@ -28,17 +28,19 @@ export default function InputText({
 
   return (
     <View style={styles.container}>
-      <View style={styles.form_row}>
-        <ThemedText
-          style={styles.label}
-          type={errorMessage ? "labelError" : "label"}
-        >
-          {label} {errorMessage}
-        </ThemedText>
-        <ThemedText style={required && !errorMessage ? styles.required : ""}>
-          {required && !errorMessage ? "obrigatório" : ""}
-        </ThemedText>
-      </View>
+      {label && (
+        <View style={styles.form_row}>
+          <ThemedText
+            style={styles.label}
+            type={errorMessage ? "labelError" : "label"}
+          >
+            {label} {errorMessage}
+          </ThemedText>
+          <ThemedText style={required && !errorMessage ? styles.required : ""}>
+            {required && !errorMessage ? "obrigatório" : ""}
+          </ThemedText>
+        </View>
+      )}
       <TextInput
         style={[styles.text_input, errorMessage ? styles.hasError : ""]}
         value={value}

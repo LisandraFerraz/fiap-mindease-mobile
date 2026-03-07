@@ -12,7 +12,7 @@ export enum kanbanPriority {
 }
 
 export interface IKanbanColumn {
-  id: string;
+  id: keyof typeof kanbanStatus;
   title: string;
   items: IKanbanTodo[];
 }
@@ -22,7 +22,7 @@ export class IKanbanTodo {
   title: string = "";
   status: keyof typeof kanbanStatus = "AFAZER";
   priority: keyof typeof kanbanPriority = "BAIXO";
-  dueDate: string = ""; //: Date = new Date()
+  dueDate: Date = new Date(); //: Date = new Date()
   description: string = "";
   dayCountMessage: string = "";
 }

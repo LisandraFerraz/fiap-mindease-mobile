@@ -1,6 +1,10 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { GetKanbanPriority } from "../../utils/functions/get-kanban-keys";
-import { IKanbanTodo, kanbanPriority } from "../../utils/models/kanban-model";
+import {
+  IKanbanTodo,
+  kanbanPriority,
+  kanbanStatus,
+} from "../../utils/models/kanban-model";
 import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
 import { CustomTheme } from "../../theme/utils/theme-interface";
@@ -15,9 +19,12 @@ export const KanbanCard = ({
   openModal,
 }: {
   card: IKanbanTodo;
-  columnId: string;
+  columnId: keyof typeof kanbanStatus;
   deleteItem: (id: string) => any;
-  openModal: (kanbanTodo: IKanbanTodo) => any;
+  openModal: (
+    kanbanTodo: IKanbanTodo,
+    columnId: keyof typeof kanbanStatus,
+  ) => any;
 }) => {
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => stylesSheet(colors), [colors]);
@@ -69,7 +76,7 @@ export const KanbanCard = ({
             <TouchableOpacity onPress={() => deleteItem(card.id)}>
               <Icon name="delete" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => openModal(card)}>
+            <TouchableOpacity onPress={() => openModal(card, columnId)}>
               <Icon name="edit" />
             </TouchableOpacity>
           </View>

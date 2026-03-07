@@ -4,9 +4,9 @@ export const GetKanbanPriority = (priority: keyof typeof kanbanPriority) => {
   const value = kanbanPriority[priority];
 
   const mapPriority = {
-    [kanbanPriority.BAIXO]: "baixo",
-    [kanbanPriority.MEDIO]: "médio",
-    [kanbanPriority.ALTO]: "alto",
+    [kanbanPriority.BAIXO]: "Baixo",
+    [kanbanPriority.MEDIO]: "Médio",
+    [kanbanPriority.ALTO]: "Alto",
   };
 
   return mapPriority[value];

@@ -1,5 +1,9 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { IKanbanColumn, IKanbanTodo } from "../../utils/models/kanban-model";
+import {
+  IKanbanColumn,
+  IKanbanTodo,
+  kanbanStatus,
+} from "../../utils/models/kanban-model";
 import { ThemedText } from "../ThemedText";
 import { KanbanCard } from "./KanbanCard";
 import { useDroppable } from "@dnd-kit/core";
@@ -14,7 +18,7 @@ export const KanbanColumn = ({
   deleteItem,
 }: {
   column: IKanbanColumn;
-  openModal: (kanbanTodo?: IKanbanTodo) => any;
+  openModal: (kanbanTodo?: Partial<IKanbanTodo>) => any;
   deleteItem: (id: string) => void;
 }) => {
   const { colors } = useTheme() as CustomTheme;
@@ -30,7 +34,7 @@ export const KanbanColumn = ({
   return (
     <View ref={setNodeRef as any} style={styles.column}>
       <View style={styles.columns_header}>
-        <TouchableOpacity onPress={() => openModal()}>
+        <TouchableOpacity onPress={() => openModal({ status: column.id })}>
           <Icon name="add" />
         </TouchableOpacity>
         <ThemedText type="defaultSemiBold">
@@ -39,19 +43,18 @@ export const KanbanColumn = ({
       </View>
 
       {column.items.map((item: any) => (
-        <>
+        <View key={item.id}>
           {item ? (
             <KanbanCard
               deleteItem={deleteItem}
               openModal={openModal}
-              key={item.id}
               card={item}
               columnId={column.id}
             />
           ) : (
-            <ThemedText key={0}>Vazio...</ThemedText>
+            <ThemedText>Vazio...</ThemedText>
           )}
-        </>
+        </View>
       ))}
     </View>
   );

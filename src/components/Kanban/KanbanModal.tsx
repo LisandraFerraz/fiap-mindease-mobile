@@ -1,11 +1,10 @@
 import { StyleSheet, View } from "react-native";
 import { ModalTemplate } from "../ui/ModalTemplate";
-import { useTheme } from "@react-navigation/native";
-import { CustomTheme } from "../../theme/utils/theme-interface";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import {
   IKanbanColumn,
   IKanbanTodo,
+  kanbanPriority,
   kanbanStatus,
 } from "../../utils/models/kanban-model";
 import InputText from "../ui/InputText";
@@ -13,57 +12,45 @@ import { UseKanban } from "../../utils/hooks/api-calls/useKanban";
 import uuid from "react-native-uuid";
 import { hasEmptyValues } from "../../utils/functions/validate-empty-values";
 import { InputSelect } from "../ui/InputSelect";
-import { GetKanbanStatus } from "../../utils/functions/get-kanban-keys";
+import {
+  GetKanbanPriority,
+  GetKanbanStatus,
+} from "../../utils/functions/get-kanban-keys";
+import { InputDatePicker } from "../ui/InputDatePicker";
 
 export const KanbanModal = ({
   isOpen,
   data,
   onClose,
   saveData,
+  selectedColumn
 }: {
   isOpen: boolean;
-  data?: IKanbanTodo;
+  data?: Partial<IKanbanTodo>;
   onClose: () => void;
   saveData: (data?: IKanbanColumn[]) => void;
+  selectedColumn:
 }) => {
   const { addNewKanbanItem, updateKanbanItem } = UseKanban();
 
-  const getStatusList = () => {
-    const list = Object.keys(kanbanStatus);
-    return list.map((status: any) => {
-      return {
-        label: GetKanbanStatus(status),
-        value: status as keyof kanbanStatus,
-      };
-    });
-  };
-
-  const { colors } = useTheme() as CustomTheme;
-  const styles = useMemo(() => stylesSheet(colors), [colors]);
-
-  const [modalItemData, setModalItemData] = useState<IKanbanTodo>(
-    new IKanbanTodo(),
+  const [modalItemData, setModalItemData] = useState<Partial<IKanbanTodo>>(
+    data ?? new IKanbanTodo(),
   );
 
-  useEffect(() => {
-    if (data) {
-      setModalItemData(data);
-    } else {
-      setModalItemData(new IKanbanTodo());
-    }
-  }, []);
-
-  const updateBodyField = (field: keyof IKanbanTodo, value: string) => {
+  const updateBodyField = (field: keyof IKanbanTodo, value: any) => {
     const body = {
       ...modalItemData,
       [field]: value,
     } as IKanbanTodo;
+
     setModalItemData(body);
   };
 
   const handleData = () => {
     if (data) {
-      updateKanbanItem(modalItemData!).then((res: IKanbanColumn[]) => {
+      const { dayCountMessage, ...rest } = modalItemData;
+
+      updateKanbanItem(rest).then((res: IKanbanColumn[]) => {
         saveData(res);
         setModalItemData(new IKanbanTodo());
       });
@@ -72,12 +59,25 @@ export const KanbanModal = ({
         ...modalItemData,
         id: uuid.v4(),
       } as IKanbanTodo;
+      const { dayCountMessage, ...rest } = body;
 
-      addNewKanbanItem(body).then((res: IKanbanColumn[]) => {
-        saveData(res);
-        setModalItemData(new IKanbanTodo());
-      });
+      addNewKanbanItem(rest as Partial<IKanbanTodo>).then(
+        (res: IKanbanColumn[]) => {
+          saveData(res);
+          setModalItemData(new IKanbanTodo());
+        },
+      );
     }
+  };
+
+  const getList = (type: any, parseFN: any) => {
+    const list = Object.keys(type);
+    return list.map((item: any) => {
+      return {
+        label: parseFN(item),
+        value: item,
+      };
+    });
   };
 
   const isFormValid = (): boolean => {
@@ -87,6 +87,11 @@ export const KanbanModal = ({
       return hasEmptyValues(rest);
     }
     return false;
+  };
+
+  const getItemDate = (): Date => {
+    const dueDate = new Date(modalItemData.dueDate!);
+    return dueDate;
   };
 
   return (
@@ -113,22 +118,28 @@ export const KanbanModal = ({
               value={modalItemData?.description}
               onChange={(e: string) => updateBodyField("description", e)}
             />
-            <InputText
+            <InputSelect
               label="prioridade"
-              placeholder="Digite aqui..."
+              type="prioridade"
               required={true}
-              value={modalItemData?.priority}
-              onChange={(e: string) => updateBodyField("priority", e)}
+              options={getList(kanbanPriority, GetKanbanPriority)}
+              selected={modalItemData.priority}
+              setSelectedOption={(e: string) => updateBodyField("priority", e)}
             />
             <InputSelect
               label="status"
               type="status"
               required={true}
-              options={getStatusList()}
+              options={getList(kanbanStatus, GetKanbanStatus)}
               selected={modalItemData.status}
               setSelectedOption={(e: string) => updateBodyField("status", e)}
             />
-            {/* vencimento */}
+            <InputDatePicker
+              date={getItemDate()}
+              label="Expira em"
+              required={true}
+              onPickDate={(e: Date) => updateBodyField("dueDate", e)}
+            />
           </View>
         </ModalTemplate>
       )}
@@ -136,10 +147,9 @@ export const KanbanModal = ({
   );
 };
 
-const stylesSheet = (color: any) =>
-  StyleSheet.create({
-    form_body: {
-      flexDirection: "column",
-      gap: 25,
-    },
-  });
+const styles = StyleSheet.create({
+  form_body: {
+    flexDirection: "column",
+    gap: 25,
+  },
+});

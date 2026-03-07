@@ -10,7 +10,7 @@ export const UseKanban = () => {
     });
   };
 
-  const addNewKanbanItem = async (body: IKanbanTodo) => {
+  const addNewKanbanItem = async (body: Partial<IKanbanTodo>) => {
     return await apiFetch<IKanbanColumn[]>({
       method: "POST",
       url: `${endpoints.addKanbanTask}`,
@@ -18,7 +18,7 @@ export const UseKanban = () => {
     });
   };
 
-  const updateKanbanItem = async (body: IKanbanTodo) => {
+  const updateKanbanItem = async (body: Partial<IKanbanTodo>) => {
     return await apiFetch<IKanbanColumn[]>({
       method: "PATCH",
       url: `${endpoints.atualizaKanbanTask}`,

@@ -13,13 +13,11 @@ import { CustomTheme } from "../../theme/utils/theme-interface";
 import { KanbanModal } from "./KanbanModal";
 
 export default function KanbanBoard() {
-  const { colors } = useTheme() as CustomTheme;
-  const styles = useMemo(() => stylesSheet(colors), [colors]);
-
   const { getKanbanItems, updateKanbanItem, deleteKanbanItem } = UseKanban();
 
   const [kanbanColumns, setKanbanColumns] = useState<IKanbanColumn[]>([]);
   const [modalData, setModalData] = useState<IKanbanTodo>();
+  const [selectedColumn, setSelectedColumn] = useState<keyof typeof kanbanStatus>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -52,7 +50,9 @@ export default function KanbanBoard() {
     });
   };
 
-  const showModal = (kanbanTodo?: IKanbanTodo) => {
+  const showModal = (kanbanTodo?: IKanbanTodo, columnId?:keyof typeof kanbanStatus) => {
+
+    setSelectedColumn(columnId)
     setModalData(kanbanTodo);
     setIsOpen(true);
   };
@@ -105,7 +105,7 @@ export default function KanbanBoard() {
             {kanbanColumns.map((column) => (
               <KanbanColumn
                 deleteItem={deleteItem}
-                openModal={showModal}
+                openModal={(e: any) => showModal(e, column.id)}
                 key={column.id}
                 column={column}
               />
@@ -120,17 +120,17 @@ export default function KanbanBoard() {
           onClose={() => setIsOpen(false)}
           saveData={handleSaveData}
           data={modalData}
+          selectedColumn={selectedColumn}
         />
       )}
     </>
   );
 }
 
-const stylesSheet = (color: any) =>
-  StyleSheet.create({
-    column_group: {
-      padding: 5,
-      flexDirection: "row",
-      gap: 10,
-    },
-  });
+const styles = StyleSheet.create({
+  column_group: {
+    padding: 5,
+    flexDirection: "row",
+    gap: 10,
+  },
+});
