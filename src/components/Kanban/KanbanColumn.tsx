@@ -42,20 +42,19 @@ export const KanbanColumn = ({
         </ThemedText>
       </View>
 
-      {column.items.map((item: any) => (
-        <View key={item.id}>
-          {item ? (
-            <KanbanCard
-              deleteItem={deleteItem}
-              openModal={openModal}
-              card={item}
-              columnId={column.id}
-            />
-          ) : (
-            <ThemedText>Vazio...</ThemedText>
-          )}
-        </View>
-      ))}
+      {column.items.length > 0 ? (
+        column.items.map((item: any) => (
+          <KanbanCard
+            key={item.id}
+            deleteItem={deleteItem}
+            openModal={openModal}
+            card={item}
+            columnId={column.id}
+          />
+        ))
+      ) : (
+        <ThemedText style={styles.empty_message}>Vazio</ThemedText>
+      )}
     </View>
   );
 };
@@ -80,5 +79,9 @@ const stylesSheet = (color: any) =>
       borderRadius: 15,
       minWidth: 335,
       gap: 15,
+    },
+    empty_message: {
+      color: color.text_color_opacity,
+      textAlign: "center",
     },
   });

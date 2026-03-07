@@ -23,17 +23,17 @@ export const KanbanModal = ({
   data,
   onClose,
   saveData,
-  selectedColumn
+  selectedColumn,
 }: {
   isOpen: boolean;
-  data?: Partial<IKanbanTodo>;
+  data?: IKanbanTodo;
   onClose: () => void;
   saveData: (data?: IKanbanColumn[]) => void;
-  selectedColumn:
+  selectedColumn?: keyof typeof kanbanStatus;
 }) => {
   const { addNewKanbanItem, updateKanbanItem } = UseKanban();
 
-  const [modalItemData, setModalItemData] = useState<Partial<IKanbanTodo>>(
+  const [modalItemData, setModalItemData] = useState<IKanbanTodo>(
     data ?? new IKanbanTodo(),
   );
 
@@ -44,30 +44,6 @@ export const KanbanModal = ({
     } as IKanbanTodo;
 
     setModalItemData(body);
-  };
-
-  const handleData = () => {
-    if (data) {
-      const { dayCountMessage, ...rest } = modalItemData;
-
-      updateKanbanItem(rest).then((res: IKanbanColumn[]) => {
-        saveData(res);
-        setModalItemData(new IKanbanTodo());
-      });
-    } else {
-      const body = {
-        ...modalItemData,
-        id: uuid.v4(),
-      } as IKanbanTodo;
-      const { dayCountMessage, ...rest } = body;
-
-      addNewKanbanItem(rest as Partial<IKanbanTodo>).then(
-        (res: IKanbanColumn[]) => {
-          saveData(res);
-          setModalItemData(new IKanbanTodo());
-        },
-      );
-    }
   };
 
   const getList = (type: any, parseFN: any) => {
@@ -92,6 +68,30 @@ export const KanbanModal = ({
   const getItemDate = (): Date => {
     const dueDate = new Date(modalItemData.dueDate!);
     return dueDate;
+  };
+
+  const handleData = () => {
+    if (data) {
+      const { dayCountMessage, ...rest } = modalItemData;
+
+      updateKanbanItem(rest).then((res: IKanbanColumn[]) => {
+        saveData(res);
+        setModalItemData(new IKanbanTodo());
+      });
+    } else {
+      const body = {
+        ...modalItemData,
+        id: uuid.v4(),
+      } as IKanbanTodo;
+      const { dayCountMessage, ...rest } = body;
+
+      addNewKanbanItem(rest as Partial<IKanbanTodo>).then(
+        (res: IKanbanColumn[]) => {
+          saveData(res);
+          setModalItemData(new IKanbanTodo());
+        },
+      );
+    }
   };
 
   return (
@@ -131,7 +131,7 @@ export const KanbanModal = ({
               type="status"
               required={true}
               options={getList(kanbanStatus, GetKanbanStatus)}
-              selected={modalItemData.status}
+              selected={selectedColumn}
               setSelectedOption={(e: string) => updateBodyField("status", e)}
             />
             <InputDatePicker

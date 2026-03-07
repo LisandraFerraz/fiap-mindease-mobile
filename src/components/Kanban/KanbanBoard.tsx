@@ -1,5 +1,5 @@
 import { DndContext } from "@dnd-kit/core";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   IKanbanColumn,
   IKanbanTodo,
@@ -8,8 +8,6 @@ import {
 import { KanbanColumn } from "./KanbanColumn";
 import { UseKanban } from "../../utils/hooks/api-calls/useKanban";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { useTheme } from "@react-navigation/native";
-import { CustomTheme } from "../../theme/utils/theme-interface";
 import { KanbanModal } from "./KanbanModal";
 
 export default function KanbanBoard() {
@@ -17,7 +15,8 @@ export default function KanbanBoard() {
 
   const [kanbanColumns, setKanbanColumns] = useState<IKanbanColumn[]>([]);
   const [modalData, setModalData] = useState<IKanbanTodo>();
-  const [selectedColumn, setSelectedColumn] = useState<keyof typeof kanbanStatus>();
+  const [selectedColumn, setSelectedColumn] =
+    useState<keyof typeof kanbanStatus>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -50,10 +49,13 @@ export default function KanbanBoard() {
     });
   };
 
-  const showModal = (kanbanTodo?: IKanbanTodo, columnId?:keyof typeof kanbanStatus) => {
-
-    setSelectedColumn(columnId)
+  const showModal = (
+    kanbanTodo?: IKanbanTodo,
+    columnId?: keyof typeof kanbanStatus,
+  ) => {
     setModalData(kanbanTodo);
+    setSelectedColumn(columnId!);
+
     setIsOpen(true);
   };
 
@@ -100,17 +102,19 @@ export default function KanbanBoard() {
   return (
     <>
       <DndContext onDragEnd={handleDragEnd}>
-        <ScrollView horizontal>
-          <View style={styles.column_group}>
-            {kanbanColumns.map((column) => (
-              <KanbanColumn
-                deleteItem={deleteItem}
-                openModal={(e: any) => showModal(e, column.id)}
-                key={column.id}
-                column={column}
-              />
-            ))}
-          </View>
+        <ScrollView>
+          <ScrollView horizontal>
+            <View style={styles.column_group}>
+              {kanbanColumns.map((column) => (
+                <KanbanColumn
+                  deleteItem={deleteItem}
+                  openModal={(e: any) => showModal(e, column.id)}
+                  key={column.id}
+                  column={column}
+                />
+              ))}
+            </View>
+          </ScrollView>
         </ScrollView>
       </DndContext>
 
@@ -119,7 +123,7 @@ export default function KanbanBoard() {
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
           saveData={handleSaveData}
-          data={modalData}
+          data={modalData!}
           selectedColumn={selectedColumn}
         />
       )}
