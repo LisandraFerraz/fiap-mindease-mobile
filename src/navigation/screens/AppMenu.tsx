@@ -1,4 +1,8 @@
-import { useNavigation, useTheme } from "@react-navigation/native";
+import {
+  ParamListBase,
+  useNavigation,
+  useTheme,
+} from "@react-navigation/native";
 import {
   FlatList,
   Image,
@@ -14,9 +18,12 @@ import { navItem } from "../../utils/data/navitems";
 import { INavItems } from "../../utils/models/navitems-interface";
 import { ThemedText } from "../../components/ThemedText";
 import { Icon } from "../../components/ui/Icon";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Header } from "../../components/ui/Header";
 
-export function AppMenu() {
-  const navigation = useNavigation();
+export function Menu() {
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
   const { colors } = useTheme() as CustomTheme;
 
   const styles = useMemo(() => stylesSheet(colors), [colors]);
@@ -25,8 +32,9 @@ export function AppMenu() {
 
   return (
     <View style={styles.container}>
+      <Header />
       <Image source={me_icon} style={styles.icon} />
-      <View style={styles.items_list}>
+      <View>
         <FlatList
           data={navItensList}
           renderItem={({ item }) => (
@@ -58,14 +66,12 @@ const stylesSheet = (color: any) =>
     container: {
       flex: 1,
       gap: 10,
+      paddingHorizontal: "10%",
     },
     icon: {
       height: 200,
       width: 200,
       alignSelf: "center",
-    },
-    items_list: {
-      paddingHorizontal: "10%",
     },
     menu_item: {
       flex: 1,

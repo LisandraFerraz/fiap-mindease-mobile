@@ -2,24 +2,34 @@ import { PartialRoute, useTheme } from "@react-navigation/native";
 import { StickyNote } from "../../utils/models/sticky-note-model";
 import { CustomTheme } from "../../theme/utils/theme-interface";
 import { useEffect, useMemo, useState } from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  StyleProp,
+  StyleSheet,
+  TextInput,
+  TextStyle,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import {
   accentColorSelection,
   bgStickyNotes,
 } from "../../utils/data/default-colors";
 import { stickyNoteColor } from "../../utils/types/app-types";
 import { Icon } from "../ui/Icon";
+import { ThemedText } from "../ThemedText";
 
 interface INoteProps {
   noteData: StickyNote;
-  updateStickyNote: (body: Partial<StickyNote>) => void;
-  deleteStickyNote: (id: string) => void;
+  updateStickyNote?: (body: Partial<StickyNote>) => void;
+  deleteStickyNote?: (id: string) => void;
+  style?: StyleProp<TextStyle>;
 }
 
 export const StickyNoteItem = ({
   deleteStickyNote,
   updateStickyNote,
   noteData,
+  style,
 }: INoteProps) => {
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => stylesSheet(colors), [colors]);
@@ -30,13 +40,16 @@ export const StickyNoteItem = ({
     noteData.description,
   );
 
-  const handleUpdateNote = (fieldName: keyof StickyNote, value: string) => {
+  const handleUpdateNote = (
+    fieldName: keyof StickyNote,
+    value: string | boolean,
+  ) => {
     const body = {
       id: noteData.id,
       [fieldName]: value,
     } as Partial<StickyNote>;
 
-    updateStickyNote(body);
+    if (updateStickyNote) updateStickyNote(body);
   };
 
   useEffect(() => {
@@ -45,9 +58,10 @@ export const StickyNoteItem = ({
   }, [noteData]);
 
   return (
-    <View style={[styles.card, bgColors[noteData.color]]}>
+    <View style={[styles.card, bgColors[noteData.color], style]}>
       <View style={styles.card_top}>
         <TextInput
+          editable={deleteStickyNote ? true : false}
           value={noteName}
           onChangeText={(e) => setNoteName(e)}
           accessibilityHint="Alterar nome do grupo de post-its"
@@ -55,14 +69,28 @@ export const StickyNoteItem = ({
           maxLength={25}
           style={[styles.note_title_input]}
         />
-        <TouchableOpacity onPress={() => deleteStickyNote(noteData.id)}>
-          <Icon name="close" />
-        </TouchableOpacity>
+        {deleteStickyNote && (
+          <View style={styles.postit_options}>
+            <TouchableOpacity
+              onPress={() =>
+                handleUpdateNote("isFavorite", !noteData.isFavorite)
+              }
+            >
+              <Icon
+                name={noteData.isFavorite ? "filled_heart" : "empty_heart"}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => deleteStickyNote(noteData.id)}>
+              <Icon name="close" />
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
-      <View style={styles.card_content}>
+      <View>
         <TextInput
+          editable={deleteStickyNote ? true : false}
           multiline
-          numberOfLines={Math.round(noteDescription.length / 33)}
+          numberOfLines={Math.round(noteDescription.length / 30)}
           value={noteDescription}
           onChangeText={(e) => setNoteDescription(e)}
           accessibilityHint="Alterar nome do grupo de post-its"
@@ -71,6 +99,11 @@ export const StickyNoteItem = ({
           style={[styles.note_desc_input]}
         />
       </View>
+      {deleteStickyNote && (
+        <ThemedText style={{ alignSelf: "flex-end" }} type="thin">
+          {noteDescription.length}/200
+        </ThemedText>
+      )}
     </View>
   );
 };
@@ -78,14 +111,14 @@ export const StickyNoteItem = ({
 const stylesSheet = (colors: any) =>
   StyleSheet.create({
     card: {
-      paddingHorizontal: 30,
-      paddingVertical: 20,
-      borderTopWidth: 10,
-      borderRadius: 15,
+      borderBottomWidth: 10,
       borderColor: "#5d5d5d74",
+      paddingHorizontal: 20,
+      paddingVertical: 15,
+      borderRadius: 15,
       gap: 10,
       height: "auto",
-      maxHeight: 300,
+      maxHeight: 400,
     },
     card_top: {
       flexDirection: "row",
@@ -95,6 +128,10 @@ const stylesSheet = (colors: any) =>
       color: colors.text_color_dark,
       fontSize: 18,
       fontWeight: "500",
+    },
+    postit_options: {
+      flexDirection: "row",
+      gap: 10,
     },
     note_desc_input: {
       color: colors.text_color_light,

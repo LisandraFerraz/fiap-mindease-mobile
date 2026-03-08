@@ -1,16 +1,12 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { GetKanbanPriority } from "../../utils/functions/get-kanban-keys";
-import {
-  IKanbanTodo,
-  kanbanPriority,
-  kanbanStatus,
-} from "../../utils/models/kanban-model";
+import { IKanbanTodo, kanbanStatus } from "../../utils/models/kanban-model";
 import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
 import { CustomTheme } from "../../theme/utils/theme-interface";
 import { useDraggable } from "@dnd-kit/core";
 import { ThemedText } from "../ThemedText";
 import { Icon } from "../ui/Icon";
+import { KanbanPrioTag } from "../ui/KanbanPrioTag";
 
 export const KanbanCard = ({
   card,
@@ -43,22 +39,6 @@ export const KanbanCard = ({
       : undefined,
   };
 
-  const prioTag = () => {
-    return (
-      <ThemedText
-        type="defaultSemiBold"
-        style={[
-          styles.prio_tag,
-          card.priority === "BAIXO" ? styles.prio_BAIXO : undefined,
-          card.priority === "MEDIO" ? styles.prio_MEDIO : undefined,
-          card.priority === "ALTO" ? styles.prio_ALTO : undefined,
-        ]}
-      >
-        {GetKanbanPriority(card.priority)}
-      </ThemedText>
-    );
-  };
-
   return (
     <View style={[style, styles.card]}>
       <TouchableOpacity
@@ -84,7 +64,10 @@ export const KanbanCard = ({
         <ThemedText type="thin">{card.description}</ThemedText>
         <View style={styles.card_row}>
           <ThemedText type="small">{card.dayCountMessage ?? ""}</ThemedText>
-          <>{prioTag()}</>
+          <KanbanPrioTag
+            prio={card.priority}
+            style={{ paddingHorizontal: 25 }}
+          />
         </View>
       </View>
     </View>
@@ -130,24 +113,5 @@ const stylesSheet = (color: any) =>
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-    },
-    prio_tag: {
-      paddingHorizontal: 30,
-      paddingVertical: 2,
-      borderRadius: 100,
-      textTransform: "capitalize",
-      textAlign: "center",
-    },
-    prio_BAIXO: {
-      backgroundColor: color.tag_bg_color_green,
-      color: color.tag_text_color_green,
-    },
-    prio_MEDIO: {
-      backgroundColor: color.tag_bg_color_yellow,
-      color: color.tag_text_color_yellow,
-    },
-    prio_ALTO: {
-      backgroundColor: color.tag_bg_color_red,
-      color: color.tag_text_color_red,
     },
   });

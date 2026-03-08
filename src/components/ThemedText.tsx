@@ -64,8 +64,9 @@ const stylesSheet = (color: any) =>
       // lineHeight: 32,
     },
     thin: {
-      fontSize: 14,
+      fontSize: 16,
       fontWeight: 300,
+      color: color.text_color_light,
     },
     link: {
       // lineHeight: 30,

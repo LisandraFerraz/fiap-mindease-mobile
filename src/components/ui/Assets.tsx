@@ -1,7 +1,7 @@
 import { Image, ImageProps } from "react-native";
 import { assetName } from "../../utils/types/app-types";
 import { useThemeMode } from "../../theme/ThemeContext";
-import { MEAssets } from "../../utils/functions/assets-config/assets-mapping";
+import { MEAssets } from "../../utils/functions/assets-mapping";
 
 interface IAssetProps extends Omit<ImageProps, "source"> {
   name: assetName;

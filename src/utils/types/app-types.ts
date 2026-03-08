@@ -1,5 +1,5 @@
-import { MEAssets } from "../functions/assets-config/assets-mapping";
-import { MEIcons } from "../functions/Icon-config/icon-mapping";
+import { MEAssets } from "../functions/assets-mapping";
+import { MEIcons } from "../functions/icon-mapping";
 
 export type ThemeMode = "dark-mode" | "light-mode";
 

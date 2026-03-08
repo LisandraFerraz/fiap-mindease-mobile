@@ -11,9 +11,11 @@ import { UseNotifications } from "../../utils/hooks/api-calls/useNotifications";
 import { INotifResponse } from "../../utils/models/notification-model";
 import { Icon } from "./Icon";
 import { useThemeMode } from "../../theme/ThemeContext";
+import { FormatDateName } from "../../utils/functions/get-today-date";
 
-export const Header = ({ routeName }: { routeName: string }) => {
+export const Header = ({ hasName = false }: { hasName?: boolean }) => {
   const userInfo = UserDataStore((state) => state.userInfo);
+  const dateNow = new Date();
 
   const { getAllNotifications } = UseNotifications();
 
@@ -47,9 +49,17 @@ export const Header = ({ routeName }: { routeName: string }) => {
   return (
     <>
       <View style={styles.container}>
-        <ThemedText style={styles.header_text}>
-          {routeName !== "Menu" && <>Olá {userInfo?.nome ?? "usuário"}</>}
-        </ThemedText>
+        <View style={{ gap: 5 }}>
+          {hasName && (
+            <>
+              <ThemedText style={styles.header_text}>
+                Olá, {userInfo?.nome ?? "usuário"}
+              </ThemedText>
+              <ThemedText type="thin">{FormatDateName(dateNow)}</ThemedText>
+            </>
+          )}
+        </View>
+
         <View style={styles.header_opts_group}>
           <TouchableOpacity onPress={toggleTheme}>
             <Icon name="theme" />
@@ -88,11 +98,10 @@ export const Header = ({ routeName }: { routeName: string }) => {
 const styleSheet = (color: any) =>
   StyleSheet.create({
     container: {
-      flex: 1,
       alignItems: "center",
       flexDirection: "row",
       justifyContent: "space-between",
-      padding: 30,
+      paddingTop: 30,
     },
     header_opts_group: {
       flexDirection: "row",

@@ -39,44 +39,40 @@ export const ModalTemplate = ({
   return (
     <>
       {children && (
-        <SafeAreaProvider>
-          <SafeAreaView>
-            <Modal
-              animationType="fade"
-              transparent={true}
-              visible={isOpen}
-              onRequestClose={onClose}
-            >
-              <TouchableOpacity style={styles.centeredView} onPress={onClose}>
-                <TouchableWithoutFeedback>
-                  <View style={styles.modalView}>
-                    <View style={[styles.modalTop]}>
-                      <ThemedText style={styles.modalText}>
-                        {modalTitle ?? ""}
-                      </ThemedText>
-                      <Pressable onPress={onClose}>
-                        <Text style={{ color: colors.text_color_dark }}>
-                          <Icon name="close" />
-                        </Text>
-                      </Pressable>
-                    </View>
-                    {children}
-                    {btnShown && onBtnConfirm && (
-                      <View style={styles.modal_bottom}>
-                        <Button
-                          color="primary"
-                          name="Confirmar"
-                          onClick={onBtnConfirm}
-                          disabled={btnDisabled}
-                        />
-                      </View>
-                    )}
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={isOpen}
+          onRequestClose={onClose}
+        >
+          <TouchableOpacity style={styles.centeredView} onPress={onClose}>
+            <TouchableWithoutFeedback>
+              <View style={styles.modalView}>
+                <View style={[styles.modalTop]}>
+                  <ThemedText style={styles.modalText}>
+                    {modalTitle ?? ""}
+                  </ThemedText>
+                  <Pressable onPress={onClose}>
+                    <Text style={{ color: colors.text_color_dark }}>
+                      <Icon name="close" />
+                    </Text>
+                  </Pressable>
+                </View>
+                {children}
+                {btnShown && onBtnConfirm && (
+                  <View style={styles.modal_bottom}>
+                    <Button
+                      color="primary"
+                      name="Confirmar"
+                      onClick={onBtnConfirm}
+                      disabled={btnDisabled}
+                    />
                   </View>
-                </TouchableWithoutFeedback>
-              </TouchableOpacity>
-            </Modal>
-          </SafeAreaView>
-        </SafeAreaProvider>
+                )}
+              </View>
+            </TouchableWithoutFeedback>
+          </TouchableOpacity>
+        </Modal>
       )}
     </>
   );

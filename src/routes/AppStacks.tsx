@@ -1,18 +1,15 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import { NotFound } from "../navigation/screens/NotFound";
-import { Home } from "../navigation/screens/Home";
-import { Header } from "../components/ui/Header";
-import { AppMenu } from "../navigation/screens/AppMenu";
+import { Menu } from "../navigation/screens/AppMenu";
 import { Pomodoro } from "../navigation/screens/Pomodoro";
 import { Kanban } from "../navigation/screens/Kanban";
 import { Checklist } from "../navigation/screens/Checklist";
 import { StickyNotes } from "../navigation/screens/StickyNotes";
 import { Settings } from "../navigation/screens/Settings";
 import { Icon } from "../components/ui/Icon";
-import { MEIcons } from "../utils/functions/Icon-config/icon-mapping";
-import { StyleSheet, View } from "react-native";
+import { MEIcons } from "../utils/functions/icon-mapping";
+import { Dashboard } from "../navigation/screens/Dashboard";
 
 const Stack = createNativeStackNavigator();
 
@@ -27,10 +24,10 @@ export function AppStack() {
 
       <Stack.Screen
         options={{ headerShown: false }}
-        name="Home"
-        component={Home}
+        name="Dashboard"
+        component={Dashboard}
       />
-      <Stack.Screen name="Menu" component={AppMenu} />
+      <Stack.Screen name="Menu" component={Menu} />
       <Stack.Screen name="Pomodoro" component={Pomodoro} />
       <Stack.Screen name="Kanban" component={Kanban} />
       <Stack.Screen name="Checklist" component={Checklist} />
@@ -46,7 +43,7 @@ const Tab = createBottomTabNavigator();
 function HomeTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Dashboard"
       screenOptions={({ route }) => ({
         tabBarShowLabel: false,
         title: "Hometabs",
@@ -60,7 +57,7 @@ function HomeTabs() {
           if (route.name === "Settings") {
             iconName = "settings";
           }
-          if (route.name === "Home") {
+          if (route.name === "Dashboard") {
             iconName = "home";
           }
 
@@ -70,17 +67,13 @@ function HomeTabs() {
     >
       <Tab.Screen
         name="Menu"
-        options={{
-          header: () => <Header routeName="Menu" />,
-        }}
-        component={AppMenu}
+        options={{ headerShown: false }}
+        component={Menu}
       />
       <Tab.Screen
-        options={{
-          header: () => <Header routeName="Home" />,
-        }}
-        name="Home"
-        component={Home}
+        options={{ headerShown: false }}
+        name="Dashboard"
+        component={Dashboard}
       />
       <Tab.Screen
         name="Settings"

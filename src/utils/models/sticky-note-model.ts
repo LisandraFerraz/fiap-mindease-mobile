@@ -19,4 +19,5 @@ export class StickyNote {
   description: string = "";
   title: string = "";
   color: stickyNoteColor = "BLUE";
+  isFavorite: boolean = false;
 }
