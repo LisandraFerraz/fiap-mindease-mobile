@@ -1,4 +1,4 @@
-import { INavItems } from "../interfaces/navitems-interface";
+import { INavItems } from "../models/navitems-interface";
 
 export const navItem: INavItems[] = [
   {

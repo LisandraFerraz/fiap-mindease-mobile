@@ -6,12 +6,11 @@ import { useEffect, useMemo, useState } from "react";
 import { Badge } from "react-native-elements";
 import UserDataStore from "../../stores/user-data-store";
 import { ThemedText } from "../ThemedText";
-import { ModalTemplate } from "./ModalTemplate";
 import { NotificationsModal } from "../Notifications/NotificationsModal";
 import { UseNotifications } from "../../utils/hooks/api-calls/useNotifications";
 import { INotifResponse } from "../../utils/models/notification-model";
 
-export const Header = () => {
+export const Header = ({ routeName }: { routeName: string }) => {
   const userInfo = UserDataStore((state) => state.userInfo);
 
   const { getAllNotifications } = UseNotifications();
@@ -47,7 +46,7 @@ export const Header = () => {
     <>
       <View style={styles.container}>
         <ThemedText style={styles.header_text}>
-          Olá {userInfo?.nome ?? "usuário"}
+          {routeName !== "Menu" && <>Olá {userInfo?.nome ?? "usuário"}</>}
         </ThemedText>
         <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
           {hasNotifs && (
@@ -82,8 +81,7 @@ const styleSheet = (color: any) =>
       alignItems: "center",
       flexDirection: "row",
       justifyContent: "space-between",
-      paddingHorizontal: 20,
-      minHeight: 65,
+      padding: 30,
     },
     header_text: {
       fontSize: 22,

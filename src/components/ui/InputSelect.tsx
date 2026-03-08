@@ -10,7 +10,7 @@ import {
 } from "../../utils/functions/get-kanban-keys";
 import { InputTemplate, ITemplateProps } from "./InputTemplate";
 import { stickyNoteColor } from "../../utils/types/app-types";
-import { accentColorSelection } from "../../navigation/screens/utils/data/default-colors";
+import { accentColorSelection } from "../../utils/data/default-colors";
 
 type MESelect = "status" | "prioridade" | "color";
 

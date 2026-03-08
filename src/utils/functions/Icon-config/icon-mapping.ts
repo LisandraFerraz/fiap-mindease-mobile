@@ -19,7 +19,7 @@ export const MEIcons = {
   },
 
   delete: {
-    light: require("./../../../assets/icons/light/light-icon-delete.svg"),
+    light: require("./../../../assets/icons/light/light-icon-kanban.svg"),
     dark: require("./../../../assets/icons/dark/dark-icon-delete.svg"),
   },
 
@@ -115,5 +115,15 @@ export const MEIcons = {
   arrow_right: {
     light: require("./../../../assets/icons/light/light-icon-arrow-right.svg"),
     dark: require("./../../../assets/icons/dark/dark-icon-arrow-right.svg"),
+  },
+
+  home: {
+    light: require("./../../../assets/icons/light/light-icon-home.svg"),
+    dark: require("./../../../assets/icons/dark/dark-icon-home.svg"),
+  },
+
+  menu: {
+    light: require("./../../../assets/icons/light/light-icon-menu.svg"),
+    dark: require("./../../../assets/icons/dark/dark-icon-menu.svg"),
   },
 };

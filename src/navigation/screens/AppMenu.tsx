@@ -10,8 +10,8 @@ import { CustomTheme } from "../../theme/utils/theme-interface";
 import { useMemo } from "react";
 
 import me_icon from "./../../assets/static-assets/me-icon.png";
-import { navItem } from "./utils/data/navitems";
-import { INavItems } from "./utils/interfaces/navitems-interface";
+import { navItem } from "../../utils/data/navitems";
+import { INavItems } from "../../utils/models/navitems-interface";
 import { ThemedText } from "../../components/ThemedText";
 import { Icon } from "../../components/ui/Icon";
 
@@ -57,9 +57,7 @@ const stylesSheet = (color: any) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      // justifyContent: "center",
       gap: 10,
-      marginTop: "10%",
     },
     icon: {
       height: 200,

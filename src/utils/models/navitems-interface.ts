@@ -1,4 +1,4 @@
-import { iconName } from "../../../../utils/types/app-types";
+import { iconName } from "../types/app-types";
 
 export interface INavItems {
   name: string;

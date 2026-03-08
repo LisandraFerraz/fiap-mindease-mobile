@@ -13,7 +13,7 @@ import { stickyNoteColor } from "../../utils/types/app-types";
 import {
   accentColorSelection,
   borderColorsSelection,
-} from "../../navigation/screens/utils/data/default-colors";
+} from "../../utils/data/default-colors";
 import { InputAddTask } from "../ui/InputAddTask";
 import uuid from "react-native-uuid";
 import { TodoCard } from "../ui/TodoCard";

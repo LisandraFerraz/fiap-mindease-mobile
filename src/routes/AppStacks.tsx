@@ -9,6 +9,10 @@ import { Pomodoro } from "../navigation/screens/Pomodoro";
 import { Kanban } from "../navigation/screens/Kanban";
 import { Checklist } from "../navigation/screens/Checklist";
 import { StickyNotes } from "../navigation/screens/StickyNotes";
+import { Settings } from "../navigation/screens/Settings";
+import { Icon } from "../components/ui/Icon";
+import { MEIcons } from "../utils/functions/Icon-config/icon-mapping";
+import { StyleSheet, View } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,16 +25,17 @@ export function AppStack() {
         component={HomeTabs}
       />
 
-      <Stack.Screen name="Olá, xxxx" component={Home} />
       <Stack.Screen
-        name="AppMenu"
         options={{ headerShown: false }}
-        component={AppMenu}
+        name="Home"
+        component={Home}
       />
+      <Stack.Screen name="Menu" component={AppMenu} />
       <Stack.Screen name="Pomodoro" component={Pomodoro} />
       <Stack.Screen name="Kanban" component={Kanban} />
       <Stack.Screen name="Checklist" component={Checklist} />
       <Stack.Screen name="StickyNotes" component={StickyNotes} />
+      <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="NotFound" component={NotFound} />
     </Stack.Navigator>
   );
@@ -41,32 +46,46 @@ const Tab = createBottomTabNavigator();
 function HomeTabs() {
   return (
     <Tab.Navigator
+      initialRouteName="Home"
       screenOptions={({ route }) => ({
+        tabBarShowLabel: false,
         title: "Hometabs",
-        tabBarIcon: ({ color, size }) => {
-          let iconName: any;
+        tabBarInactiveBackgroundColor: "#81818111",
+        tabBarIcon: () => {
+          let iconName: keyof typeof MEIcons;
 
+          if (route.name === "Menu") {
+            iconName = "menu";
+          }
+          if (route.name === "Settings") {
+            iconName = "settings";
+          }
           if (route.name === "Home") {
-            iconName = "home-outline";
-          } else {
-            iconName = "reorder-three-outline";
+            iconName = "home";
           }
 
-          return <Ionicons name={iconName} size={size} color={color} />;
+          return <Icon name={iconName!} />;
         },
       })}
     >
       <Tab.Screen
+        name="Menu"
         options={{
-          header: () => <Header />,
+          header: () => <Header routeName="Menu" />,
+        }}
+        component={AppMenu}
+      />
+      <Tab.Screen
+        options={{
+          header: () => <Header routeName="Home" />,
         }}
         name="Home"
         component={Home}
       />
       <Tab.Screen
-        name="AppMenu"
+        name="Settings"
         options={{ headerShown: false }}
-        component={AppMenu}
+        component={Settings}
       />
     </Tab.Navigator>
   );

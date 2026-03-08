@@ -6,7 +6,7 @@ import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import {
   accentColorSelection,
   bgStickyNotes,
-} from "../../navigation/screens/utils/data/default-colors";
+} from "../../utils/data/default-colors";
 import { stickyNoteColor } from "../../utils/types/app-types";
 import { Icon } from "../ui/Icon";
 
