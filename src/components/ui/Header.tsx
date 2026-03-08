@@ -1,17 +1,51 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useTheme } from "@react-navigation/native";
 import { CustomTheme } from "../../theme/utils/theme-interface";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Badge } from "react-native-elements";
 import UserDataStore from "../../stores/user-data-store";
 import { ThemedText } from "../ThemedText";
+import { ModalTemplate } from "./ModalTemplate";
+import { NotificationsModal } from "../Notifications/NotificationsModal";
+import { UseNotifications } from "../../utils/hooks/api-calls/useNotifications";
+import { INotifResponse } from "../../utils/models/notification-model";
 
 export const Header = () => {
   const userInfo = UserDataStore((state) => state.userInfo);
 
+  const { getAllNotifications } = UseNotifications();
+
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => styleSheet(colors), [colors]);
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [hasNotifs, setHasNotifs] = useState<boolean>(false);
+  const [modalData, setModalData] = useState<INotifResponse>({
+    checklistNotificacoes: [],
+    kanbanNotificacoes: [],
+  });
+
+  useEffect(() => {
+    handleListAllNotifs();
+  }, []);
+
+  const handleListAllNotifs = () => {
+    getAllNotifications().then((res: INotifResponse) => {
+      if (res) {
+        setModalData(res);
+        setHasNotifs(
+          res.checklistNotificacoes.length > 0 ||
+            res.kanbanNotificacoes.length > 0,
+        );
+      }
+    });
+  };
+
+  const handleCloseModal = () => {
+    handleListAllNotifs();
+    setIsOpen(!isOpen);
+  };
 
   return (
     <>
@@ -19,17 +53,29 @@ export const Header = () => {
         <ThemedText style={styles.header_text}>
           Olá {userInfo?.nome ?? "usuário"}
         </ThemedText>
-        <Badge
-          status="error"
-          containerStyle={{ position: "absolute", top: 15, right: 20 }}
-        />
-        <Ionicons
-          style={styles.notif_icon}
-          onPress={() => alert("This is a button!")}
-          name="notifications"
-          size={25}
-        />
+        <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
+          {hasNotifs && (
+            <Badge
+              status="error"
+              containerStyle={{
+                position: "absolute",
+                top: 0,
+                right: 3,
+                zIndex: 10,
+              }}
+            />
+          )}
+          <Ionicons style={styles.notif_icon} name="notifications" size={25} />
+        </TouchableOpacity>
       </View>
+
+      {modalData && isOpen && (
+        <NotificationsModal
+          notifData={modalData}
+          isOpen={isOpen}
+          onClose={() => handleCloseModal()}
+        />
+      )}
     </>
   );
 };
@@ -37,7 +83,6 @@ export const Header = () => {
 const styleSheet = (color: any) =>
   StyleSheet.create({
     container: {
-      // backgroundColor: color.sidenv_bg_color,
       flex: 1,
       alignItems: "center",
       flexDirection: "row",

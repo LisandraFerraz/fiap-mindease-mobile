@@ -10,7 +10,7 @@ import { useMemo } from "react";
 import { CustomTheme } from "../../theme/utils/theme-interface";
 import { useDraggable } from "@dnd-kit/core";
 import { ThemedText } from "../ThemedText";
-import { Icon } from "../ui/Icon/Icon";
+import { Icon } from "../ui/Icon";
 
 export const KanbanCard = ({
   card,

@@ -8,7 +8,7 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { CustomTheme } from "../../theme/utils/theme-interface";
 import { ChecklistItemCard } from "./ChecklistItemCard";
-import { Icon } from "../ui/Icon/Icon";
+import { Icon } from "../ui/Icon";
 import { ThemedText } from "../ThemedText";
 import uuid from "react-native-uuid";
 

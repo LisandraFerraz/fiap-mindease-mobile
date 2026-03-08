@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { Icon } from "./Icon/Icon";
+import { Icon } from "./Icon";
 import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
 import { CustomTheme } from "../../theme/utils/theme-interface";

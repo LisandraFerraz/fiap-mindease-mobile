@@ -4,13 +4,12 @@ import { Asset } from "expo-asset";
 import { createURL } from "expo-linking";
 import * as SplashScreen from "expo-splash-screen";
 import { RootNavigator } from "./routes/RootNavigator";
-import { ThemeProviderCustom, useThemeMode } from "./theme/ThemeContext";
-import { DarkTheme, LightTheme } from "./theme/themes";
+import { ThemeProviderCustom } from "./theme/ThemeContext";
 
 Asset.loadAsync([
   ...NavigationAssets,
-  require("./assets/newspaper.png"),
-  require("./assets/bell.png"),
+  require("./assets/static-assets/newspaper.png"),
+  require("./assets/static-assets/bell.png"),
 ]);
 
 SplashScreen.preventAutoHideAsync();
@@ -18,8 +17,6 @@ SplashScreen.preventAutoHideAsync();
 const prefix = createURL("/");
 
 export function App() {
-  const { mode } = useThemeMode();
-
   return (
     <NavigationContainer
       linking={{

@@ -1,25 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useThemeMode } from "../../../theme/ThemeContext";
 
 import { Button } from "../../../components/ui/Button";
 import { ThemedText } from "../../../components/ThemedText";
-import { Icon } from "../../../components/ui/Icon/Icon";
-
-import pomodoroBgLight from "./../../../assets/pomodoro-bg.png";
-import pomodoroBgDark from "./../../../assets/pomodoro-bg.png";
+import { Icon } from "../../../components/ui/Icon";
+import { Asset } from "../../../components/ui/Assets";
 
 type Step = "FIRSTROUND" | "SHORTBREAK" | "SECONDROUND" | "LONGBREAK";
 
 export function PomodoroTimer() {
   const { mode } = useThemeMode();
-  const bgImg = mode === "dark" ? pomodoroBgDark : pomodoroBgLight;
 
   const intervalRef = useRef<number | null>(null);
 
@@ -135,7 +126,6 @@ export function PomodoroTimer() {
   }, [timeRemaining]);
 
   // component //
-
   return (
     <View>
       <View style={styles.time_options}>
@@ -153,7 +143,7 @@ export function PomodoroTimer() {
       </View>
 
       <View style={styles.timer_wrapper}>
-        <Image style={styles.timer_bg} source={bgImg} />
+        <Asset name="pomodoro_bg" style={styles.timer_bg} />
         <ThemedText style={styles.timer_count}>{formattedTime}</ThemedText>
         <View style={styles.timer_buttons}>
           <TouchableOpacity onPress={() => (isRunning ? stop() : start())}>
@@ -185,11 +175,12 @@ const styles = StyleSheet.create({
   timer_wrapper: {
     justifyContent: "center",
     alignItems: "center",
-    marginVertical: "25%",
+    marginVertical: "30%",
   },
   timer_count: {
     fontSize: 100,
     fontWeight: 700,
+    top: 15,
   },
   timer_buttons: {
     flexDirection: "row",
@@ -204,8 +195,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: "center",
     zIndex: -1,
-    bottom: -35,
-    width: 360,
-    height: 320,
+    // bottom: -35,
+    width: 480,
+    height: 420,
   },
 });

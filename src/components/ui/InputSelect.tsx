@@ -3,7 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { CustomTheme } from "../../theme/utils/theme-interface";
 import { ReactNode, useMemo, useState } from "react";
 import { ThemedText } from "../ThemedText";
-import { Icon } from "./Icon/Icon";
+import { Icon } from "./Icon";
 import {
   GetKanbanPriority,
   GetKanbanStatus,

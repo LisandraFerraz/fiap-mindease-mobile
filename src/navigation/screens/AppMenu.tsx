@@ -9,11 +9,11 @@ import {
 import { CustomTheme } from "../../theme/utils/theme-interface";
 import { useMemo } from "react";
 
-import me_icon from "./../../assets/me-icon.png";
+import me_icon from "./../../assets/static-assets/me-icon.png";
 import { navItem } from "./utils/data/navitems";
 import { INavItems } from "./utils/interfaces/navitems-interface";
 import { ThemedText } from "../../components/ThemedText";
-import { Icon } from "../../components/ui/Icon/Icon";
+import { Icon } from "../../components/ui/Icon";
 
 export function AppMenu() {
   const navigation = useNavigation();

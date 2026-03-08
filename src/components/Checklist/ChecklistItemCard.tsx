@@ -4,7 +4,7 @@ import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
 import { CustomTheme } from "../../theme/utils/theme-interface";
 import { ThemedText } from "../ThemedText";
-import { Icon } from "../ui/Icon/Icon";
+import { Icon } from "../ui/Icon";
 
 interface IItemCardProps {
   data: ChecklistModel;

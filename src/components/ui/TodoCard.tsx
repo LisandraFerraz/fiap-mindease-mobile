@@ -2,7 +2,7 @@ import { useTheme } from "@react-navigation/native";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { CustomTheme } from "../../theme/utils/theme-interface";
 import { useMemo } from "react";
-import { Icon } from "./Icon/Icon";
+import { Icon } from "./Icon";
 import { ThemedText } from "../ThemedText";
 import { CheckBox } from "react-native-elements";
 

@@ -8,7 +8,7 @@ import {
   bgStickyNotes,
 } from "../../navigation/screens/utils/data/default-colors";
 import { stickyNoteColor } from "../../utils/types/app-types";
-import { Icon } from "../ui/Icon/Icon";
+import { Icon } from "../ui/Icon";
 
 interface INoteProps {
   noteData: StickyNote;

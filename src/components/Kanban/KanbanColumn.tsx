@@ -10,7 +10,7 @@ import { useDroppable } from "@dnd-kit/core";
 import { useTheme } from "@react-navigation/native";
 import { CustomTheme } from "../../theme/utils/theme-interface";
 import { useMemo } from "react";
-import { Icon } from "../ui/Icon/Icon";
+import { Icon } from "../ui/Icon";
 
 export const KanbanColumn = ({
   column,

@@ -1,8 +1,7 @@
 import { Image, ImageProps } from "react-native";
-import { useThemeMode } from "../../../theme/ThemeContext";
-import { MEIcons } from "./icon-mapping";
-import { useEffect } from "react";
-import { iconName } from "../../../utils/types/app-types";
+import { useThemeMode } from "../../theme/ThemeContext";
+import { iconName } from "../../utils/types/app-types";
+import { MEIcons } from "../../utils/functions/Icon-config/icon-mapping";
 
 interface IconProps extends Omit<ImageProps, "source"> {
   name: iconName;

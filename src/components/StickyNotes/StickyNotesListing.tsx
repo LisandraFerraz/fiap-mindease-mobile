@@ -12,7 +12,7 @@ import {
   IStickyNotesResponse,
   StickyNotesGroup,
 } from "../../utils/models/sticky-note-model";
-import { Icon } from "../ui/Icon/Icon";
+import { Icon } from "../ui/Icon";
 import { UseStikyNotes } from "../../utils/hooks/api-calls/useStickyNotes";
 import uuid from "react-native-uuid";
 

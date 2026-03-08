@@ -96,4 +96,24 @@ export const MEIcons = {
     light: require("./../../../assets/icons/light/light-icon-close.svg"),
     dark: require("./../../../assets/icons/dark/dark-icon-close.svg"),
   },
+
+  assignment_late: {
+    light: require("./../../../assets/icons/light/light-icon-assignment_late.svg"),
+    dark: require("./../../../assets/icons/dark/dark-icon-assignment_late.svg"),
+  },
+
+  schedule: {
+    light: require("./../../../assets/icons/light/light-icon-schedule.svg"),
+    dark: require("./../../../assets/icons/dark/dark-icon-schedule.svg"),
+  },
+
+  today: {
+    light: require("./../../../assets/icons/light/light-icon-today.svg"),
+    dark: require("./../../../assets/icons/dark/dark-icon-today.svg"),
+  },
+
+  arrow_right: {
+    light: require("./../../../assets/icons/light/light-icon-arrow-right.svg"),
+    dark: require("./../../../assets/icons/dark/dark-icon-arrow-right.svg"),
+  },
 };

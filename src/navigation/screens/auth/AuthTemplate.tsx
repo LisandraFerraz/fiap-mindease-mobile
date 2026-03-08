@@ -15,9 +15,9 @@ import { useThemeMode } from "../../../theme/ThemeContext";
 import { CustomTheme } from "../../../theme/utils/theme-interface";
 import { useTheme } from "@react-navigation/native";
 
-import dark_bg from "./../../../assets/dark-auth-bg.png";
-import light_bg from "./../../../assets/light-auth-bg.png";
-import me_icon from "./../../../assets/me-icon.png";
+import dark_bg from "./../../../assets/static-assets/dark/dark-auth-bg.png";
+import light_bg from "./../../../assets/static-assets/light/light-auth-bg.png";
+import { Asset } from "../../../components/ui/Assets";
 
 interface AuthTemplate {
   children: ReactNode;
@@ -48,7 +48,7 @@ export const AuthTemplate = ({
         <ImageBackground source={img} resizeMode="cover" style={styles.image}>
           <ScrollView>
             <View style={styles.container}>
-              <Image source={me_icon} style={[styles.icon]} />
+              <Asset name="me_icon" style={[styles.icon]} />
               <View style={styles.form_container}>
                 {children}
 

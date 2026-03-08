@@ -4,7 +4,7 @@ import { CustomTheme } from "../../theme/utils/theme-interface";
 import { useMemo } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import InputText from "../ui/InputText";
-import { Icon } from "../ui/Icon/Icon";
+import { Icon } from "../ui/Icon";
 import {
   IStickyNotesResponse,
   StickyNote,

@@ -8,7 +8,6 @@ import {
   IChecklistResponse,
 } from "../../utils/models/checklist-model";
 import { UseChecklist } from "../../utils/hooks/api-calls/useChecklist";
-import { Icon } from "../ui/Icon/Icon";
 import { InputSelect } from "../ui/InputSelect";
 import { stickyNoteColor } from "../../utils/types/app-types";
 import {
@@ -18,6 +17,7 @@ import {
 import { InputAddTask } from "../ui/InputAddTask";
 import uuid from "react-native-uuid";
 import { TodoCard } from "../ui/TodoCard";
+import { Icon } from "../ui/Icon";
 
 interface ICheckItemsProps {
   activeChecklist: ChecklistModel;
