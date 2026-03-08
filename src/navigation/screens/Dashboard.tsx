@@ -110,7 +110,7 @@ export function Dashboard() {
                   </View>
                   <View style={{ flexDirection: "row", gap: 5 }}>
                     <ThemedText>{item.dayCountMessage}</ThemedText>
-                    <Icon name="arrow_right" />
+                    <Icon name="arrow_long" />
                   </View>
                 </TouchableOpacity>
               )}
@@ -162,6 +162,7 @@ export function Dashboard() {
                 showXAxisLabelTexts={false}
                 showVerticalLines={false}
                 showXAxisIndices={false}
+                midAxisLabelFontFamily="Verdana"
               />
             </View>
           </View>

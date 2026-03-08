@@ -91,7 +91,11 @@ export const StickyNoteItem = ({
           editable={deleteStickyNote ? true : false}
           multiline
           numberOfLines={Math.round(noteDescription.length / 30)}
-          value={noteDescription}
+          value={
+            deleteStickyNote
+              ? noteDescription
+              : `${noteDescription.slice(0, 75)}...`
+          }
           onChangeText={(e) => setNoteDescription(e)}
           accessibilityHint="Alterar nome do grupo de post-its"
           onBlur={() => handleUpdateNote("description", noteDescription)}
@@ -126,7 +130,7 @@ const stylesSheet = (colors: any) =>
     },
     note_title_input: {
       color: colors.text_color_dark,
-      fontSize: 18,
+      fontSize: 16,
       fontWeight: "500",
     },
     postit_options: {
@@ -135,7 +139,7 @@ const stylesSheet = (colors: any) =>
     },
     note_desc_input: {
       color: colors.text_color_light,
-      fontSize: 16,
+      fontSize: 15,
     },
     card_content: {},
   });

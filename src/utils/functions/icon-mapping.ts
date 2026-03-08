@@ -136,4 +136,9 @@ export const MEIcons = {
     light: require("./../../assets/icons/light/light-icon-filled-favorite.svg"),
     dark: require("./../../assets/icons/dark/dark-icon-filled-favorite.svg"),
   },
+
+  arrow_long: {
+    light: require("./../../assets/icons/light/light-icon-arrow-long.svg"),
+    dark: require("./../../assets/icons/dark/dark-icon-arrow-long.svg"),
+  },
 };

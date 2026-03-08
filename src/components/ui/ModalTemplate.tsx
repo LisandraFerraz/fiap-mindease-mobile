@@ -10,7 +10,6 @@ import {
   View,
 } from "react-native";
 
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { CustomTheme } from "../../theme/utils/theme-interface";
 import { ThemedText } from "../ThemedText";
 import { Button } from "./Button";
@@ -94,19 +93,16 @@ const stylesSheet = (color: any) =>
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      marginBottom: 20,
     },
     modalView: {
       width: "90%",
       position: "absolute",
-      // borderTopRightRadius: 20,
-      // borderTopLeftRadius: 20,
       borderRadius: 20,
       shadowOpacity: 0.25,
       shadowRadius: 4,
       elevation: 1,
-      padding: 20,
-      // padding: 35,
+      paddingVertical: 25,
+      paddingHorizontal: 20,
       shadowColor: color.shadow_dark_grey_color,
       backgroundColor: color.background,
     },
