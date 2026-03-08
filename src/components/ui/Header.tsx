@@ -21,19 +21,15 @@ export const Header = () => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [hasNotifs, setHasNotifs] = useState<boolean>(false);
-  const [modalData, setModalData] = useState<INotifResponse>({
-    checklistNotificacoes: [],
-    kanbanNotificacoes: [],
-  });
 
   useEffect(() => {
     handleListAllNotifs();
+    console.log(hasNotifs);
   }, []);
 
   const handleListAllNotifs = () => {
     getAllNotifications().then((res: INotifResponse) => {
       if (res) {
-        setModalData(res);
         setHasNotifs(
           res.checklistNotificacoes.length > 0 ||
             res.kanbanNotificacoes.length > 0,
@@ -69,9 +65,8 @@ export const Header = () => {
         </TouchableOpacity>
       </View>
 
-      {modalData && isOpen && (
+      {isOpen && (
         <NotificationsModal
-          notifData={modalData}
           isOpen={isOpen}
           onClose={() => handleCloseModal()}
         />

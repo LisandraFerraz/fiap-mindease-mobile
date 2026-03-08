@@ -1,4 +1,4 @@
-import { act, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { UseNotifications } from "../../utils/hooks/api-calls/useNotifications";
 import { ModalTemplate } from "../ui/ModalTemplate";
 import {
@@ -20,77 +20,81 @@ import { Asset } from "../ui/Assets";
 
 interface INotifModalProps {
   isOpen: boolean;
-  notifData: INotifResponse;
   onClose: () => void;
 }
 
-export const NotificationsModal = ({
-  isOpen,
-  notifData,
-  onClose,
-}: INotifModalProps) => {
-  const { markAllAsRead, markOneAsRead } = UseNotifications();
+export const NotificationsModal = ({ isOpen, onClose }: INotifModalProps) => {
+  const { markAllAsRead, markOneAsRead, getAllNotifications } =
+    UseNotifications();
 
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => styleSheet(colors), [colors]);
 
-  // const [allNotifs, setAllNotifs] = useState<INotifResponse>(notifData);
   const [kanbanNotifis, setKanbanNotifis] = useState<INotification[]>([]);
   const [checklistNotifis, setChecklistNotifis] = useState<INotification[]>([]);
   const [activeTab, setActiveTab] = useState<INotification[]>([]);
-  // const [isKanbanActive, setIsKanbanActive] = useState<boolean>(true);
 
   useEffect(() => {
-    // setAllNotifs(notifData);
-    handleSetNotifications(notifData);
     handleSetActiveTab();
-    // setActiveTab(notifData.kanbanNotificacoes);
-  }, [kanbanNotifis]);
+  }, [kanbanNotifis, checklistNotifis]);
+
+  useEffect(() => {
+    listNotifs();
+  }, []);
+
+  const listNotifs = () => {
+    getAllNotifications().then((res) => handleSetNotifications(res));
+  };
 
   const handleSetNotifications = (data: INotifResponse) => {
     setChecklistNotifis(data.checklistNotificacoes);
     setKanbanNotifis(data.kanbanNotificacoes);
+  };
 
-    handleSetActiveTab();
+  const handleFindActiveTab = (notif: INotification[]) => {
+    const activeItems = activeTab.map((at) => at.id);
+    const isActive = notif.find((nt) => activeItems.includes(nt.id));
+
+    return isActive;
   };
 
   const handleSetActiveTab = () => {
-    if (kanbanNotifis?.length > 0) {
+    if (activeTab.length > 0 && handleFindActiveTab(kanbanNotifis)) {
       setActiveTab(kanbanNotifis);
-      console.log("kanbanNotifis: ", kanbanNotifis);
+    } else if (activeTab.length > 0 && handleFindActiveTab(checklistNotifis)) {
+      setActiveTab(checklistNotifis);
     } else {
       setActiveTab(
-        checklistNotifis?.length > 0 ? checklistNotifis : kanbanNotifis,
+        kanbanNotifis.length > 0
+          ? kanbanNotifis
+          : checklistNotifis.length > 0
+            ? checklistNotifis
+            : [],
       );
     }
   };
 
-  // const handleChangeLayout = () => {
-  //   setIsKanbanActive(!isKanbanActive);
-  // };
-
   const handleMarkOneAsRead = (id: string) => {
-    markOneAsRead(id).then((res) => handleSetNotifications(res));
+    markOneAsRead(id).then(() => listNotifs());
   };
 
   const handleMarkAllAsRead = () => {
     const ids = activeTab.map((nt) => nt.id);
-    markAllAsRead(ids).then((res) => {
-      handleSetNotifications(res);
-      handleSetActiveTab();
+    markAllAsRead(ids).then(() => {
+      listNotifs();
     });
   };
 
   const getTabs = [
     {
       tabName: "Kanban",
-      isActive: kanbanNotifis?.length === activeTab?.length,
+      isActive: handleFindActiveTab(kanbanNotifis),
       hasItems: kanbanNotifis?.length > 0,
       items: kanbanNotifis,
     },
     {
       tabName: "Checklist",
-      isActive: checklistNotifis?.length === activeTab?.length,
+      isActive: handleFindActiveTab(checklistNotifis),
       hasItems: checklistNotifis?.length > 0,
       items: checklistNotifis,
     },
@@ -109,8 +113,6 @@ export const NotificationsModal = ({
                       key={tab.tabName}
                       onPress={() => {
                         setActiveTab(tab.items);
-                        // handleChangeLayout();
-                        console.log("tab.items:", getTabs);
                       }}
                       style={[
                         styles.tab_btn,
@@ -135,7 +137,7 @@ export const NotificationsModal = ({
               style={{ alignSelf: "flex-end" }}
             >
               <ThemedText type="link">
-                Marcar todos como lidos {activeTab.length}
+                Marcar todos como lidos ({activeTab.length})
               </ThemedText>
             </TouchableOpacity>
             <ScrollView>
@@ -200,7 +202,7 @@ const styleSheet = (colors: any) =>
     empty_list: {
       alignSelf: "center",
       width: 150,
-      height: 150,
+      height: 160,
       marginBottom: 45,
     },
   });
