@@ -9,12 +9,15 @@ import { ThemedText } from "../ThemedText";
 import { NotificationsModal } from "../Notifications/NotificationsModal";
 import { UseNotifications } from "../../utils/hooks/api-calls/useNotifications";
 import { INotifResponse } from "../../utils/models/notification-model";
+import { Icon } from "./Icon";
+import { useThemeMode } from "../../theme/ThemeContext";
 
 export const Header = ({ routeName }: { routeName: string }) => {
   const userInfo = UserDataStore((state) => state.userInfo);
 
   const { getAllNotifications } = UseNotifications();
 
+  const { toggleTheme } = useThemeMode();
   const { colors } = useTheme() as CustomTheme;
   const styles = useMemo(() => styleSheet(colors), [colors]);
 
@@ -23,7 +26,6 @@ export const Header = ({ routeName }: { routeName: string }) => {
 
   useEffect(() => {
     handleListAllNotifs();
-    console.log(hasNotifs);
   }, []);
 
   const handleListAllNotifs = () => {
@@ -48,20 +50,29 @@ export const Header = ({ routeName }: { routeName: string }) => {
         <ThemedText style={styles.header_text}>
           {routeName !== "Menu" && <>Olá {userInfo?.nome ?? "usuário"}</>}
         </ThemedText>
-        <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
-          {hasNotifs && (
-            <Badge
-              status="error"
-              containerStyle={{
-                position: "absolute",
-                top: 0,
-                right: 3,
-                zIndex: 10,
-              }}
+        <View style={styles.header_opts_group}>
+          <TouchableOpacity onPress={toggleTheme}>
+            <Icon name="theme" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
+            {hasNotifs && (
+              <Badge
+                status="error"
+                containerStyle={{
+                  position: "absolute",
+                  top: 0,
+                  right: 3,
+                  zIndex: 10,
+                }}
+              />
+            )}
+            <Ionicons
+              style={styles.notif_icon}
+              name="notifications"
+              size={25}
             />
-          )}
-          <Ionicons style={styles.notif_icon} name="notifications" size={25} />
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {isOpen && (
@@ -82,6 +93,11 @@ const styleSheet = (color: any) =>
       flexDirection: "row",
       justifyContent: "space-between",
       padding: 30,
+    },
+    header_opts_group: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 15,
     },
     header_text: {
       fontSize: 22,
