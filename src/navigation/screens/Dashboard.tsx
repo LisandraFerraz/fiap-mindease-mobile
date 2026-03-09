@@ -26,6 +26,7 @@ import { KanbanPrioTag } from "../../components/ui/KanbanPrioTag";
 import { StickyNoteItem } from "../../components/StickyNotes/StickyNote";
 import { Header } from "../../components/ui/Header";
 import { PopulationPyramid } from "react-native-gifted-charts";
+import { Asset } from "../../components/ui/Assets";
 
 export function Dashboard() {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
@@ -83,11 +84,11 @@ export function Dashboard() {
           />
         </View>
 
-        {kanbanToExpire.length > 0 && (
-          <View style={styles.dash_section}>
-            <ThemedText style={styles.section_title}>
-              Tarefas que expiram em breve
-            </ThemedText>
+        <View style={styles.dash_section}>
+          <ThemedText style={styles.section_title}>
+            Tarefas que expiram em breve
+          </ThemedText>
+          {kanbanToExpire.length > 0 ? (
             <FlatList
               data={kanbanToExpire}
               contentContainerStyle={{ gap: 12, padding: 5 }}
@@ -115,14 +116,23 @@ export function Dashboard() {
                 </TouchableOpacity>
               )}
             />
-          </View>
-        )}
+          ) : (
+            <Asset
+              style={{
+                alignSelf: "center",
+                width: 185,
+                height: 55,
+              }}
+              name="empty_todo_list"
+            />
+          )}
+        </View>
 
-        {favoriteNotes.length > 0 && (
-          <View style={styles.dash_section}>
-            <ThemedText style={styles.section_title}>
-              Post-its favoritos
-            </ThemedText>
+        <View style={styles.dash_section}>
+          <ThemedText style={styles.section_title}>
+            Post-its favoritos
+          </ThemedText>
+          {favoriteNotes.length > 0 ? (
             <FlatList
               data={favoriteNotes}
               numColumns={2}
@@ -133,8 +143,13 @@ export function Dashboard() {
                 <StickyNoteItem noteData={item} style={{ flex: 1 }} />
               )}
             />
-          </View>
-        )}
+          ) : (
+            <Asset
+              style={{ height: 90, width: 85, alignSelf: "center" }}
+              name="empty_notes_list"
+            />
+          )}
+        </View>
 
         {/* right: done
             left: not done */}
@@ -186,7 +201,7 @@ const styleSheet = (colors: any) =>
       color: colors.text_color_dark,
     },
     dash_section: {
-      gap: 15,
+      gap: 25,
     },
     styles_grid: {
       flex: 1,
