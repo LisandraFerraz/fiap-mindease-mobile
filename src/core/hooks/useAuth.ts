@@ -1,12 +1,17 @@
 import {
   IaccessTokens,
+  IRegisterResponse,
   UsuarioLogin,
   UsuarioRegister,
+  VerificaSenha,
 } from "../../utils/models/user-model";
 import { apiFetch } from "../core-api";
 import UserDataStore from "../../stores/user-data-store";
+import { endpoints } from "../env/endpoints";
 
 export const UseAuth = () => {
+  const { tokens } = UserDataStore();
+
   const setUserData = UserDataStore((state) => state.setUserData);
 
   const login = async (signInBody: UsuarioLogin) => {
@@ -42,5 +47,26 @@ export const UseAuth = () => {
     }
   };
 
-  return { login, register };
+  const verificaSenha = async (body: VerificaSenha) => {
+    body = {
+      ...body,
+      usuarioId: tokens.usuarioId,
+    };
+
+    return await apiFetch<IRegisterResponse>({
+      url: `${endpoints.verificaSenha}`,
+      method: "POST",
+      body: body,
+    });
+  };
+
+  const atualizaaUsuario = async (body: Partial<UsuarioLogin>) => {
+    return await apiFetch<IRegisterResponse>({
+      url: `${endpoints.user}/${tokens.usuarioId}`,
+      method: "PATCH",
+      body: body,
+    });
+  };
+
+  return { login, register, verificaSenha, atualizaaUsuario };
 };

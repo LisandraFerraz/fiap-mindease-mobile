@@ -22,3 +22,8 @@ export interface IRegisterResponse {
 export class UserData {
   nome: string = "";
 }
+
+export class VerificaSenha {
+  password: string = "";
+  usuarioId: string = "";
+}

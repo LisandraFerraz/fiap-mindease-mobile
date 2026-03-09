@@ -76,7 +76,7 @@ export function Dashboard() {
                 ]}
                 onPress={() => navigation.navigate(item.route)}
               >
-                <Icon name={item.icon} />
+                <Icon style={{ height: 30, width: 30 }} name={item.icon} />
                 <ThemedText>{item.name}</ThemedText>
               </TouchableOpacity>
             )}

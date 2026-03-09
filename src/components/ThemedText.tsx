@@ -12,7 +12,8 @@ export type ThemedTextProps = TextProps & {
     | "link"
     | "label"
     | "labelError"
-    | "small";
+    | "small"
+    | "subtitle";
 };
 
 export function ThemedText({
@@ -35,6 +36,7 @@ export function ThemedText({
         type === "link" ? styles.link : undefined,
         type === "label" ? styles.label : undefined,
         type === "labelError" ? styles.labelError : undefined,
+        type === "subtitle" ? styles.subtitle : undefined,
         style,
       ]}
       {...rest}
@@ -59,9 +61,13 @@ const stylesSheet = (color: any) =>
       fontWeight: "600",
     },
     title: {
-      fontSize: 26,
-      fontWeight: "bold",
+      fontSize: 22,
+      fontWeight: "600",
       // lineHeight: 32,
+    },
+    subtitle: {
+      fontSize: 20,
+      fontWeight: "600",
     },
     thin: {
       fontSize: 16,
