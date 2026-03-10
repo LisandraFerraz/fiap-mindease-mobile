@@ -13,10 +13,7 @@ import { UseAuth } from "../../../../core/hooks/useAuth";
 export default function LoginPage() {
   const { login } = UseAuth();
 
-  const [loginBody, setLoginBody] = useState<UsuarioLogin>({
-    email: "marianasilva@email.com",
-    password: "12345678",
-  });
+  const [loginBody, setLoginBody] = useState<UsuarioLogin>(new UsuarioLogin());
 
   const prepareBody = (field: string, value: string) => {
     setLoginBody({

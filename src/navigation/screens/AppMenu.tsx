@@ -48,7 +48,10 @@ export function Menu() {
           )}
         />
         <View style={styles.divider} />
-        <TouchableOpacity style={styles.menu_item}>
+        <TouchableOpacity
+          style={styles.menu_item}
+          onPress={() => navigation.navigate("Settings")}
+        >
           <Icon style={styles.menu_item_icon} name="settings" />
           <ThemedText style={styles.menu_item_txt}>Preferências</ThemedText>
         </TouchableOpacity>
