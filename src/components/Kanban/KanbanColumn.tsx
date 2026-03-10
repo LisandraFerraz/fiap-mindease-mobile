@@ -1,9 +1,5 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import {
-  IKanbanColumn,
-  IKanbanTodo,
-  kanbanStatus,
-} from "../../utils/models/kanban-model";
+import { IKanbanColumn, IKanbanTodo } from "../../utils/models/kanban-model";
 import { ThemedText } from "../ThemedText";
 import { KanbanCard } from "./KanbanCard";
 import { useDroppable } from "@dnd-kit/core";
@@ -53,7 +49,9 @@ export const KanbanColumn = ({
           />
         ))
       ) : (
-        <ThemedText style={styles.empty_message}>Vazio</ThemedText>
+        <ThemedText type="defaultBoldOpacity" style={{ textAlign: "center" }}>
+          Vazio
+        </ThemedText>
       )}
     </View>
   );
@@ -68,6 +66,8 @@ const stylesSheet = (color: any) =>
       marginBottom: 15,
     },
     column: {
+      flex: 1,
+
       shadowColor: color.shadow_dark_grey_color,
       shadowOffset: { width: 0, height: 0 },
       shadowOpacity: 0.8,
@@ -79,9 +79,5 @@ const stylesSheet = (color: any) =>
       borderRadius: 15,
       minWidth: 335,
       gap: 15,
-    },
-    empty_message: {
-      color: color.text_color_opacity,
-      textAlign: "center",
     },
   });

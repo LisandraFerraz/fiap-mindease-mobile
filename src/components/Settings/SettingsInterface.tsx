@@ -6,6 +6,7 @@ import { IPreferenciasOptions } from "../../utils/data/settings";
 import { SettingsTemplate } from "./SettingsTemplate";
 import { ThemedText } from "../ThemedText";
 import { useThemeMode } from "../../theme/ThemeContext";
+import { FontSizeSelector } from "./FontSizeSelector";
 
 interface ISInterface {
   data: IPreferenciasOptions;
@@ -20,25 +21,20 @@ export const SettingsInterface = ({ data }: ISInterface) => {
 
   return (
     <SettingsTemplate data={data}>
-      <View>
-        <ThemedText>Animações ativadas</ThemedText>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={() => setIsEnabled(!isEnabled)}
-          value={isEnabled}
-        />
-      </View>
-      <View>
-        <ThemedText>Modo escuro</ThemedText>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleTheme}
-          value={mode === "dark"}
-        />
+      <View style={{ gap: 25 }}>
+        <View style={styles.row}>
+          <ThemedText type="defaultSemiBold">Modo escuro</ThemedText>
+          <Switch
+            trackColor={{ false: "#767577", true: "#414aaf" }}
+            thumbColor={isEnabled ? "#414aaf" : "#f4f3f4"}
+            onValueChange={toggleTheme}
+            value={mode === "dark"}
+          />
+        </View>
+        <View style={{ gap: 15 }}>
+          <ThemedText type="defaultSemiBold">Tamanho dos textos</ThemedText>
+          <FontSizeSelector />
+        </View>
       </View>
     </SettingsTemplate>
   );
@@ -49,6 +45,11 @@ export const stylesSheet = (colors: any) =>
     wrapper: {
       flexDirection: "column",
       gap: 25,
+    },
+    row: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      gap: 15,
     },
     divider: {
       width: "100%",

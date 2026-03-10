@@ -2,18 +2,20 @@ import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
 import { StyleSheet, Text, type TextProps } from "react-native";
 import { CustomTheme } from "../theme/utils/theme-interface";
+import { useThemeMode } from "../theme/ThemeContext";
+import { FontTokens } from "../utils/models/fontsize-tokens";
 
 export type ThemedTextProps = TextProps & {
   type?:
     | "default"
     | "title"
     | "defaultSemiBold"
-    | "thin"
+    | "defaultThin"
     | "link"
     | "label"
     | "labelError"
-    | "small"
-    | "subtitle";
+    | "sectionTitle"
+    | "defaultBoldOpacity";
 };
 
 export function ThemedText({
@@ -22,21 +24,22 @@ export function ThemedText({
   children,
   ...rest
 }: ThemedTextProps) {
+  const { fonts } = useThemeMode();
   const { colors } = useTheme();
-  const styles = useMemo(() => stylesSheet(colors), [colors]);
+  const styles = useMemo(() => stylesSheet(colors, fonts), [colors, fonts]);
 
   return (
     <Text
       style={[
-        styles.textColor,
         type === "default" ? styles.default : undefined,
         type === "title" ? styles.title : undefined,
         type === "defaultSemiBold" ? styles.defaultSemiBold : undefined,
-        type === "thin" ? styles.thin : undefined,
+        type === "defaultThin" ? styles.defaultThin : undefined,
         type === "link" ? styles.link : undefined,
         type === "label" ? styles.label : undefined,
         type === "labelError" ? styles.labelError : undefined,
-        type === "subtitle" ? styles.subtitle : undefined,
+        type === "sectionTitle" ? styles.sectionTitle : undefined,
+        type === "defaultBoldOpacity" ? styles.defaultBoldOpacity : undefined,
         style,
       ]}
       {...rest}
@@ -46,58 +49,54 @@ export function ThemedText({
   );
 }
 
-const stylesSheet = (color: any) =>
+const stylesSheet = (color: any, fonts: FontTokens) =>
   StyleSheet.create({
-    textColor: {
+    title: {
+      fontSize: fonts.size_title,
       color: color.text_color_dark,
+      fontWeight: "600",
+    },
+    label: {
+      fontSize: fonts.size_label,
+      color: color.text_color_dark,
+      fontWeight: "600",
+      textTransform: "uppercase",
+    },
+    labelError: {
+      fontSize: fonts.size_label,
+      color: color.text_color_error,
+      fontWeight: "600",
+      textTransform: "uppercase",
     },
     default: {
-      fontSize: 16,
-      // lineHeight: 24,
+      fontSize: fonts.size_text,
+      color: color.text_color_dark,
+      fontWeight: "400",
     },
     defaultSemiBold: {
-      fontSize: 16,
-      // lineHeight: 24,
+      fontSize: fonts.size_text,
+      color: color.text_color_dark,
       fontWeight: "600",
     },
-    title: {
-      fontSize: 22,
+    defaultBoldOpacity: {
+      fontSize: fonts.size_text,
+      color: color.text_color_opacity,
       fontWeight: "600",
-      // lineHeight: 32,
-    },
-    subtitle: {
-      fontSize: 20,
-      fontWeight: "600",
-    },
-    thin: {
-      fontSize: 16,
-      fontWeight: 300,
-      color: color.text_color_light,
     },
     link: {
-      // lineHeight: 30,
-      fontSize: 16,
+      fontSize: fonts.size_text,
       color: color.text_color_dark,
       textDecorationLine: "underline",
       fontWeight: "400",
     },
-    label: {
-      fontSize: 14,
-      // lineHeight: 24,
-      fontWeight: "600",
-      textTransform: "uppercase",
-      color: color.grey,
+    defaultThin: {
+      fontSize: fonts.size_text,
+      color: color.text_color_dark,
+      fontWeight: 300,
     },
-    labelError: {
-      fontSize: 16,
-      // lineHeight: 24,
-      fontWeight: "600",
-      textTransform: "uppercase",
-      color: color.text_color_error,
-    },
-    small: {
-      fontSize: 12,
-      // lineHeight: 24,
+    sectionTitle: {
+      fontSize: fonts.size_description,
+      color: color.text_color_dark,
       fontWeight: "600",
       textTransform: "uppercase",
     },

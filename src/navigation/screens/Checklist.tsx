@@ -12,7 +12,7 @@ import { ChecklistItems } from "../../components/Checklist/ChecklistItems";
 export const Checklist = () => {
   const { listChecklists } = UseChecklist();
 
-  const [checklistData, setChecklistData] = useState<ChecklistModel[]>();
+  const [checklistData, setChecklistData] = useState<ChecklistModel[]>([]);
   const [activeChecklist, setActiveChecklist] = useState<ChecklistModel>();
 
   useEffect(() => {
@@ -47,29 +47,25 @@ export const Checklist = () => {
 
   return (
     <>
-      {checklistData && activeChecklist && (
-        <View style={styles.container}>
-          {/* <ThemedText type="defaultSemiBold">Checklist</ThemedText> */}
-          <ChecklistListing
-            checklistData={checklistData}
+      <View style={styles.container}>
+        {/* <ThemedText type="defaultSemiBold">Checklist</ThemedText> */}
+        <ChecklistListing
+          checklistData={checklistData}
+          onUpdate={(value: IChecklistResponse) => updateActiveChecklist(value)}
+          setActive={(checklist: ChecklistModel) =>
+            setActiveChecklist(checklist)
+          }
+        />
+
+        {activeChecklist && (
+          <ChecklistItems
+            activeChecklist={activeChecklist}
             onUpdate={(value: IChecklistResponse) =>
               updateActiveChecklist(value)
             }
-            setActive={(checklist: ChecklistModel) =>
-              setActiveChecklist(checklist)
-            }
           />
-
-          {activeChecklist && (
-            <ChecklistItems
-              activeChecklist={activeChecklist}
-              onUpdate={(value: IChecklistResponse) =>
-                updateActiveChecklist(value)
-              }
-            />
-          )}
-        </View>
-      )}
+        )}
+      </View>
     </>
   );
 };

@@ -59,7 +59,7 @@ export function Dashboard() {
       <View style={styles.container}>
         <Header hasName />
         <View style={styles.dash_section}>
-          <ThemedText style={styles.section_title}>Links rápidos</ThemedText>
+          <ThemedText type="sectionTitle">Links rápidos</ThemedText>
           <FlatList
             data={navItensList}
             numColumns={2}
@@ -84,39 +84,108 @@ export function Dashboard() {
           />
         </View>
 
-        <View style={styles.dash_section}>
-          <ThemedText style={styles.section_title}>
-            Tarefas que expiram em breve
-          </ThemedText>
-          {kanbanToExpire.length > 0 ? (
-            <FlatList
-              data={kanbanToExpire}
-              contentContainerStyle={{ gap: 12, padding: 5 }}
-              keyExtractor={(_, index) => index.toString()}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={[
-                    styles.grid_item,
-                    styles.nav_items,
-                    styles.kanban_item,
-                  ]}
-                  onPress={() => navigation.navigate("Kanban")}
-                >
-                  <View style={{ flexDirection: "row", gap: 5 }}>
-                    <KanbanPrioTag
-                      prio={item.priority}
-                      style={{ paddingHorizontal: 10 }}
-                    />
-                    <ThemedText> {item.title} </ThemedText>
-                  </View>
-                  <View style={{ flexDirection: "row", gap: 5 }}>
-                    <ThemedText>{item.dayCountMessage}</ThemedText>
-                    <Icon name="arrow_long" />
-                  </View>
-                </TouchableOpacity>
+        {kanbanToExpire.length !== 0 && favoriteNotes.length !== 0 ? (
+          <>
+            <View style={styles.dash_section}>
+              <ThemedText type="sectionTitle">
+                Tarefas que expiram em breve
+              </ThemedText>
+              {kanbanToExpire.length > 0 ? (
+                <FlatList
+                  data={kanbanToExpire}
+                  contentContainerStyle={{ gap: 12, padding: 5 }}
+                  keyExtractor={(_, index) => index.toString()}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={[
+                        styles.grid_item,
+                        styles.nav_items,
+                        styles.kanban_item,
+                      ]}
+                      onPress={() => navigation.navigate("Kanban")}
+                    >
+                      <View style={{ flexDirection: "row", gap: 5 }}>
+                        <KanbanPrioTag
+                          prio={item.priority}
+                          style={{ paddingHorizontal: 10 }}
+                        />
+                        <ThemedText> {item.title} </ThemedText>
+                      </View>
+                      <View style={{ flexDirection: "row", gap: 5 }}>
+                        <ThemedText>{item.dayCountMessage}</ThemedText>
+                        <Icon name="arrow_long" />
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                />
+              ) : (
+                <Asset
+                  style={{
+                    alignSelf: "center",
+                    width: 185,
+                    height: 55,
+                  }}
+                  name="empty_todo_list"
+                />
               )}
-            />
-          ) : (
+            </View>
+
+            <View style={styles.dash_section}>
+              <ThemedText type="sectionTitle">Post-its favoritos</ThemedText>
+              {favoriteNotes.length > 0 ? (
+                <FlatList
+                  data={favoriteNotes}
+                  numColumns={2}
+                  contentContainerStyle={styles.styles_grid}
+                  columnWrapperStyle={{ gap: 12 }}
+                  keyExtractor={(_, index) => index.toString()}
+                  renderItem={({ item }) => (
+                    <StickyNoteItem noteData={item} style={{ flex: 1 }} />
+                  )}
+                />
+              ) : (
+                <Asset
+                  style={{ height: 90, width: 85, alignSelf: "center" }}
+                  name="empty_notes_list"
+                />
+              )}
+            </View>
+
+            {/* right: done
+                  left: not done */}
+            {graphData.length > 0 && (
+              <View style={styles.dash_section}>
+                <ThemedText type="sectionTitle">
+                  Visão geral de tarefas
+                </ThemedText>
+                <View style={styles.graph_top}>
+                  <ThemedText type="defaultSemiBold">Concluído</ThemedText>
+                  <ThemedText type="defaultSemiBold">Pendente</ThemedText>
+                </View>
+                <View style={styles.graph}>
+                  <PopulationPyramid
+                    data={graphData}
+                    showMidAxis
+                    leftBarColor={colors.color_accent_green}
+                    rightBarColor={colors.color_accent_red}
+                    barLabelColor={colors.text_color_dark}
+                    xAxisLabelColor={colors.text_color_dark}
+                    midAxisLabelColor={colors.text_color_dark}
+                    midAxisLabelFontSize={18}
+                    stepHeight={60}
+                    width={380}
+                    showXAxisLabelTexts={false}
+                    showVerticalLines={false}
+                    showXAxisIndices={false}
+                    midAxisLabelFontFamily="Verdana"
+                  />
+                </View>
+              </View>
+            )}
+          </>
+        ) : (
+          <View style={[styles.dash_section, { marginTop: 15 }]}>
+            <ThemedText type="sectionTitle">Visão geral das tarefas</ThemedText>
             <Asset
               style={{
                 alignSelf: "center",
@@ -125,61 +194,6 @@ export function Dashboard() {
               }}
               name="empty_todo_list"
             />
-          )}
-        </View>
-
-        <View style={styles.dash_section}>
-          <ThemedText style={styles.section_title}>
-            Post-its favoritos
-          </ThemedText>
-          {favoriteNotes.length > 0 ? (
-            <FlatList
-              data={favoriteNotes}
-              numColumns={2}
-              contentContainerStyle={styles.styles_grid}
-              columnWrapperStyle={{ gap: 12 }}
-              keyExtractor={(_, index) => index.toString()}
-              renderItem={({ item }) => (
-                <StickyNoteItem noteData={item} style={{ flex: 1 }} />
-              )}
-            />
-          ) : (
-            <Asset
-              style={{ height: 90, width: 85, alignSelf: "center" }}
-              name="empty_notes_list"
-            />
-          )}
-        </View>
-
-        {/* right: done
-            left: not done */}
-        {graphData.length > 0 && (
-          <View style={styles.dash_section}>
-            <ThemedText style={styles.section_title}>
-              Visão geral de tarefas
-            </ThemedText>
-            <View style={styles.graph_top}>
-              <ThemedText type="defaultSemiBold">Concluído</ThemedText>
-              <ThemedText type="defaultSemiBold">Pendente</ThemedText>
-            </View>
-            <View style={styles.graph}>
-              <PopulationPyramid
-                data={graphData}
-                showMidAxis
-                leftBarColor={colors.color_accent_green}
-                rightBarColor={colors.color_accent_red}
-                barLabelColor={colors.text_color_dark}
-                xAxisLabelColor={colors.text_color_dark}
-                midAxisLabelColor={colors.text_color_dark}
-                midAxisLabelFontSize={18}
-                stepHeight={60}
-                width={380}
-                showXAxisLabelTexts={false}
-                showVerticalLines={false}
-                showXAxisIndices={false}
-                midAxisLabelFontFamily="Verdana"
-              />
-            </View>
           </View>
         )}
       </View>
@@ -194,12 +208,12 @@ const styleSheet = (colors: any) =>
       paddingHorizontal: 20,
       gap: 35,
     },
-    section_title: {
-      fontSize: 15,
-      fontWeight: 600,
-      textTransform: "uppercase",
-      color: colors.text_color_dark,
-    },
+    // section_title: {
+    //   fontSize: 15,
+    //   fontWeight: 600,
+    //   textTransform: "uppercase",
+    //   color: colors.text_color_dark,
+    // },
     dash_section: {
       gap: 25,
     },

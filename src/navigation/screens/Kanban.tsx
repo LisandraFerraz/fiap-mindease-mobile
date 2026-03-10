@@ -12,7 +12,6 @@ export function Kanban() {
   return (
     <>
       <View style={styles.container}>
-        {/* <ThemedText type="defaultSemiBold">Quadro de tarefas</ThemedText> */}
         <KanbanBoard />
       </View>
     </>
@@ -25,8 +24,5 @@ const stylesSheet = (color: any) =>
       padding: 25,
       flex: 1,
       gap: 25,
-    },
-    kanbanBoard: {
-      height: "100%",
     },
   });

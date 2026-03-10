@@ -61,9 +61,9 @@ export const KanbanCard = ({
             </TouchableOpacity>
           </View>
         </View>
-        <ThemedText type="thin">{card.description}</ThemedText>
+        <ThemedText type="defaultThin">{card.description}</ThemedText>
         <View style={styles.card_row}>
-          <ThemedText type="small">{card.dayCountMessage ?? ""}</ThemedText>
+          <ThemedText type="default">{card.dayCountMessage ?? ""}</ThemedText>
           <KanbanPrioTag
             prio={card.priority}
             style={{ paddingHorizontal: 25 }}
@@ -93,7 +93,6 @@ const stylesSheet = (color: any) =>
     drag_btn: {
       width: 30,
       alignItems: "center",
-      //   backgroundColor: color.bg_color_element_light,
       height: "100%",
       justifyContent: "center",
     },

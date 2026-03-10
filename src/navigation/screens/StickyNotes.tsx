@@ -12,7 +12,9 @@ import { StickyNotesItems } from "../../components/StickyNotes/StickyNotesItems"
 export const StickyNotes = () => {
   const { listAllStickyGroups } = UseStikyNotes();
 
-  const [stickyNotesData, setStickyNotesData] = useState<StickyNotesGroup[]>();
+  const [stickyNotesData, setStickyNotesData] = useState<StickyNotesGroup[]>(
+    [],
+  );
   const [activeNotesGroup, setActiveNotesGroup] = useState<StickyNotesGroup>();
 
   useEffect(() => {
@@ -47,28 +49,30 @@ export const StickyNotes = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {stickyNotesData && activeNotesGroup && (
-        <View style={styles.wrapped}>
-          <StickyNotesListing
-            onUpdateGroup={(res: IStickyNotesResponse) =>
-              updateAllActiveNotesGroup(res)
-            }
-            activeNotesGroup={activeNotesGroup}
-            notesList={stickyNotesData}
-            setActiveNotesGroup={(noteGroup: StickyNotesGroup) =>
-              setActiveNotesGroup(noteGroup)
-            }
-          />
+      <View style={styles.wrapped}>
+        {activeNotesGroup && (
+          <>
+            <StickyNotesListing
+              onUpdateGroup={(res: IStickyNotesResponse) =>
+                updateAllActiveNotesGroup(res)
+              }
+              activeNotesGroup={activeNotesGroup}
+              notesList={stickyNotesData}
+              setActiveNotesGroup={(noteGroup: StickyNotesGroup) =>
+                setActiveNotesGroup(noteGroup)
+              }
+            />
 
-          <StickyNotesItems
-            notes={activeNotesGroup.data}
-            activeGroup={activeNotesGroup}
-            onUpdateGroup={(res: IStickyNotesResponse) =>
-              updateAllActiveNotesGroup(res)
-            }
-          />
-        </View>
-      )}
+            <StickyNotesItems
+              notes={activeNotesGroup.data}
+              activeGroup={activeNotesGroup}
+              onUpdateGroup={(res: IStickyNotesResponse) =>
+                updateAllActiveNotesGroup(res)
+              }
+            />
+          </>
+        )}
+      </View>
     </ScrollView>
   );
 };

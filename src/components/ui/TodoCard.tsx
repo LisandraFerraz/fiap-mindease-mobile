@@ -26,7 +26,10 @@ export const TodoCard = ({
     <View style={[styles.card]}>
       <View style={styles.card_content}>
         <CheckBox onPress={markAs} checked={isCompleted} />
-        <ThemedText style={isCompleted ? styles.completed_card : styles.none}>
+        <ThemedText
+          type="default"
+          style={isCompleted ? styles.completed_card : styles.none}
+        >
           {description}
         </ThemedText>
       </View>

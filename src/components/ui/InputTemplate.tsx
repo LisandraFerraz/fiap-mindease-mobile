@@ -36,6 +36,7 @@ export const InputTemplate = ({
 const stylesSheet = (color: any) =>
   StyleSheet.create({
     container: {
+      zIndex: 100,
       flex: 1,
     },
     label_row: {

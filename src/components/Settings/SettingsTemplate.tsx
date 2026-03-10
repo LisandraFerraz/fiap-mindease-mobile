@@ -16,10 +16,8 @@ export const SettingsTemplate = ({ data, children }: ISInterface) => {
 
   return (
     <View style={styles.wrapper}>
-      <ThemedText type="subtitle">{data.prefTitle}</ThemedText>
-      <ThemedText type="thin" style={{ fontSize: 18 }}>
-        {data.prefSubtitle}
-      </ThemedText>
+      <ThemedText type="defaultSemiBold">{data.prefTitle}</ThemedText>
+      <ThemedText type="defaultThin">{data.prefSubtitle}</ThemedText>
       <View style={styles.divider} />
       {children}
     </View>
@@ -30,7 +28,7 @@ export const stylesSheet = (colors: any) =>
   StyleSheet.create({
     wrapper: {
       flexDirection: "column",
-      gap: 25,
+      gap: 15,
     },
     divider: {
       width: "100%",

@@ -4,6 +4,8 @@ import { Icon } from "./Icon";
 import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
 import { CustomTheme } from "../../theme/utils/theme-interface";
+import { useThemeMode } from "../../theme/ThemeContext";
+import { FontTokens } from "../../utils/models/fontsize-tokens";
 
 interface IInputAddTask {
   value: string;
@@ -19,10 +21,11 @@ export const InputAddTask = ({
   valueChange,
 }: IInputAddTask) => {
   const { colors } = useTheme() as CustomTheme;
-  const styles = useMemo(() => stylesSheet(colors), [colors]);
+  const { fonts } = useThemeMode();
+  const styles = useMemo(() => stylesSheet(colors, fonts), [colors, fonts]);
 
   return (
-    <View>
+    <View style={{ zIndex: -1 }}>
       <TextInput
         onChange={(e) => valueChange(e.nativeEvent.text)}
         style={styles.text_input}
@@ -39,7 +42,7 @@ export const InputAddTask = ({
   );
 };
 
-const stylesSheet = (color: any) =>
+const stylesSheet = (color: any, fonts: FontTokens) =>
   StyleSheet.create({
     input_icon: {
       height: 25,
@@ -51,13 +54,13 @@ const stylesSheet = (color: any) =>
     text_input: {
       color: color.text_color_dark,
       backgroundColor: color.input_bg_color_primary,
+      borderColor: color.border_color,
+      fontSize: fonts.size_text,
       borderRadius: 10,
       elevation: 1,
       height: 50,
-      fontSize: 16,
       paddingHorizontal: 10,
       borderWidth: 1,
-      borderColor: color.border_color,
       paddingRight: 45,
     },
   });

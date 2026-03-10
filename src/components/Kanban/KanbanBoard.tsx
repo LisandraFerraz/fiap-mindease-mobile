@@ -133,6 +133,7 @@ export default function KanbanBoard() {
 
 const styles = StyleSheet.create({
   column_group: {
+    flex: 1,
     padding: 5,
     flexDirection: "row",
     gap: 10,

@@ -92,7 +92,7 @@ export const InputSelect = ({
                 >
                   {label ? (
                     // Recebe label = é seleção de texto //
-                    <ThemedText type="thin">{label}</ThemedText>
+                    <ThemedText type="defaultThin">{label}</ThemedText>
                   ) : (
                     // Recebe jsxElement = é color pick //
                     <>{jsxElement}</>

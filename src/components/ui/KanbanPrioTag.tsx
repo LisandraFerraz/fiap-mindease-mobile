@@ -18,7 +18,7 @@ export const KanbanPrioTag = ({
 
   return (
     <ThemedText
-      type="defaultSemiBold"
+      type="label"
       style={[
         style,
         styles.prio_tag,
@@ -35,12 +35,8 @@ export const KanbanPrioTag = ({
 const stylesSheet = (colors: any) =>
   StyleSheet.create({
     prio_tag: {
-      //   paddingHorizontal: 30,
       paddingVertical: 4,
       borderRadius: 100,
-      textTransform: "uppercase",
-      fontSize: 12,
-      fontWeight: "800",
       textAlign: "center",
     },
     prio_BAIXO: {

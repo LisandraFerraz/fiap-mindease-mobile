@@ -30,10 +30,7 @@ export default function InputText({
     <View style={styles.container}>
       {label && (
         <View style={styles.form_row}>
-          <ThemedText
-            style={styles.label}
-            type={errorMessage ? "labelError" : "label"}
-          >
+          <ThemedText type={errorMessage ? "labelError" : "label"}>
             {label} {errorMessage}
           </ThemedText>
           <ThemedText style={required && !errorMessage ? styles.required : ""}>
@@ -59,9 +56,6 @@ const stylesSheet = (color: any) =>
     container: {
       gap: 10,
       flex: 1,
-    },
-    label: {
-      fontSize: 14,
     },
     form_row: {
       flexDirection: "row",

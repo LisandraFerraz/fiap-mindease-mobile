@@ -93,7 +93,7 @@ export const SettingsConta = ({ data }: ISConta) => {
       {passwordVerified && (
         <View style={styles.form_wrapper}>
           <ThemedText>Confirme sua senha</ThemedText>
-          <ThemedText type="thin">
+          <ThemedText type="defaultThin">
             Antes de alterar seus dados, confirme sua senha atual abaixo.
           </ThemedText>
           <InputText
@@ -123,7 +123,7 @@ export const SettingsConta = ({ data }: ISConta) => {
           </View>
           <View style={styles.form_wrapper}>
             <ThemedText>Alterar senha</ThemedText>
-            <ThemedText type="thin">Infrome uma senha com: </ThemedText>
+            <ThemedText type="defaultThin">Infrome uma senha com: </ThemedText>
             <View>
               <FlatList
                 data={[
@@ -132,7 +132,7 @@ export const SettingsConta = ({ data }: ISConta) => {
                   { key: "- Deve conter pelo menos 1 (um) caractere especial" },
                 ]}
                 renderItem={({ item }) => (
-                  <ThemedText type="thin">{item.key}</ThemedText>
+                  <ThemedText type="defaultThin">{item.key}</ThemedText>
                 )}
               />
             </View>

@@ -20,10 +20,6 @@ export function Settings() {
 
   const preferenciasConteudo: IPreferenciasOptions[] = PreferenciasOptions;
 
-  useEffect(() => {
-    setActiveLayout("conta-option");
-  }, []);
-
   const RenderLayout = () => {
     if (activeLayout === "interface-option") {
       return <SettingsInterface data={preferenciasConteudo[0]} />;

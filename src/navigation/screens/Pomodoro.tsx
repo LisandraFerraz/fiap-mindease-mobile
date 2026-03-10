@@ -1,7 +1,5 @@
 import { ScrollView, StyleSheet, View } from "react-native";
-import { useTheme } from "@react-navigation/native";
-import { useEffect, useMemo, useState } from "react";
-import { CustomTheme } from "../../theme/utils/theme-interface";
+import { useEffect, useState } from "react";
 import { PomodoroTimer } from "../../utils/hooks/functionalities/usePomodoroTimer";
 import { TodoCard } from "../../components/ui/TodoCard";
 import { PomodoroTodo } from "../../utils/models/pomodoro-model";
@@ -21,9 +19,6 @@ export function Pomodoro() {
   const [pomoTodoBody, setPomoTodoBody] = useState<PomodoroTodo>(
     new PomodoroTodo(),
   );
-
-  const { colors } = useTheme() as CustomTheme;
-  const styles = useMemo(() => stylesSheet(colors), [colors]);
 
   useEffect(() => {
     getPomodoroTasks();
@@ -94,15 +89,14 @@ export function Pomodoro() {
   );
 }
 
-const stylesSheet = (color: any) =>
-  StyleSheet.create({
-    container: {
-      marginTop: "10%",
-    },
+const styles = StyleSheet.create({
+  container: {
+    marginTop: "10%",
+  },
 
-    to_do_list: {
-      marginVertical: "5%",
-      paddingHorizontal: 25,
-      gap: 25,
-    },
-  });
+  to_do_list: {
+    marginVertical: "5%",
+    paddingHorizontal: 25,
+    gap: 25,
+  },
+});

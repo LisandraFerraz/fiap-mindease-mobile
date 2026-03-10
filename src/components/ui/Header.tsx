@@ -55,7 +55,9 @@ export const Header = ({ hasName = false }: { hasName?: boolean }) => {
               <ThemedText style={styles.header_text}>
                 Olá, {userInfo?.nome ?? "usuário"}
               </ThemedText>
-              <ThemedText type="thin">{FormatDateName(dateNow)}</ThemedText>
+              <ThemedText type="defaultThin">
+                {FormatDateName(dateNow)}
+              </ThemedText>
             </>
           )}
         </View>

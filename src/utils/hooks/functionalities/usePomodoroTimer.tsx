@@ -130,15 +130,13 @@ export function PomodoroTimer() {
     <View>
       <View style={styles.time_options}>
         {buttonOptions.map((btn, index) => (
-          <>
-            <Button
-              key={index}
-              customStyle={styles.timers_btn}
-              color={currentStep === btn.step ? "primary" : "secondary"}
-              name={btn.label}
-              onClick={() => setStep(btn.step)}
-            />
-          </>
+          <Button
+            key={index}
+            customStyle={styles.timers_btn}
+            color={currentStep === btn.step ? "primary" : "secondary"}
+            name={btn.label}
+            onClick={() => setStep(btn.step)}
+          />
         ))}
       </View>
 
@@ -153,7 +151,13 @@ export function PomodoroTimer() {
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => reset()}>
-            <Icon style={styles.btn_timer_actions} name="restart" />
+            <Icon
+              style={{
+                height: 35,
+                width: 35,
+              }}
+              name="restart"
+            />
           </TouchableOpacity>
         </View>
         <ThemedText>{currentRound}/4</ThemedText>
@@ -184,6 +188,7 @@ const styles = StyleSheet.create({
   },
   timer_buttons: {
     flexDirection: "row",
+    alignItems: "center",
     marginTop: 25,
   },
 
@@ -195,7 +200,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: "center",
     zIndex: -1,
-    // bottom: -35,
     width: 480,
     height: 420,
   },

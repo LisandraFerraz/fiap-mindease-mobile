@@ -104,7 +104,7 @@ export const StickyNoteItem = ({
         />
       </View>
       {deleteStickyNote && (
-        <ThemedText style={{ alignSelf: "flex-end" }} type="thin">
+        <ThemedText style={{ alignSelf: "flex-end" }} type="defaultThin">
           {noteDescription.length}/200
         </ThemedText>
       )}

@@ -13,11 +13,12 @@ import { ReactNode, useMemo } from "react";
 import { useNavigation } from "expo-router";
 import { useThemeMode } from "../../../theme/ThemeContext";
 import { CustomTheme } from "../../../theme/utils/theme-interface";
-import { useTheme } from "@react-navigation/native";
+import { ParamListBase, useTheme } from "@react-navigation/native";
 
 import dark_bg from "./../../../assets/static-assets/dark/dark-auth-bg.png";
 import light_bg from "./../../../assets/static-assets/light/light-auth-bg.png";
 import { Asset } from "../../../components/ui/Assets";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 interface AuthTemplate {
   children: ReactNode;
@@ -35,11 +36,11 @@ export const AuthTemplate = ({
   linkName,
   btnDisabled,
 }: AuthTemplate) => {
-  const navigation = useNavigation();
-  const { mode } = useThemeMode();
-  const { colors } = useTheme() as CustomTheme;
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
-  const styles = useMemo(() => stylesSheet(colors), [colors]);
+  const { mode, fonts } = useThemeMode();
+  const { colors } = useTheme() as CustomTheme;
+  const styles = useMemo(() => stylesSheet(colors, fonts), [colors, fonts]);
   const img = mode === "dark" ? dark_bg : light_bg;
 
   return (
@@ -75,7 +76,7 @@ export const AuthTemplate = ({
   );
 };
 
-const stylesSheet = (color: any) =>
+const stylesSheet = (color: any, fonts: any) =>
   StyleSheet.create({
     wrapper: {
       flex: 1,
@@ -93,7 +94,6 @@ const stylesSheet = (color: any) =>
       width: 200,
     },
     form_container: {
-      gap: 20,
       width: "90%",
       paddingHorizontal: 20,
       paddingVertical: 50,

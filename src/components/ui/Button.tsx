@@ -2,6 +2,7 @@ import { useTheme } from "@react-navigation/native";
 import { useMemo } from "react";
 import { StyleSheet, Text, TouchableOpacity, ViewStyle } from "react-native";
 import { CustomTheme } from "../../theme/utils/theme-interface";
+import { ThemedText } from "../ThemedText";
 
 export function Button({
   name,
@@ -32,7 +33,9 @@ export function Button({
       disabled={disabled}
       onPress={() => onClick()}
     >
-      <Text style={styles.button_text}>{name}</Text>
+      <ThemedText type="defaultSemiBold" style={styles.button_text}>
+        {name}
+      </ThemedText>
     </TouchableOpacity>
   );
 }
@@ -47,10 +50,6 @@ const stylesSheet = (color: any) =>
       justifyContent: "center",
     },
     button_text: {
-      color: "#ffffff",
-      // textTransform: "uppercase",
-      fontWeight: "500",
-      fontSize: 16,
       letterSpacing: 1,
       textAlign: "center",
     },
