@@ -18,6 +18,7 @@ import { InputAddTask } from "../ui/InputAddTask";
 import uuid from "react-native-uuid";
 import { TodoCard } from "../ui/TodoCard";
 import { Icon } from "../ui/Icon";
+import { ThemedText } from "../ThemedText";
 
 interface ICheckItemsProps {
   activeChecklist: ChecklistModel;
@@ -134,6 +135,19 @@ export const ChecklistItems = ({
             />
           </View>
 
+          <View style={styles.todo_counter_indicator}>
+            {activeChecklist.data.length > 0 && (
+              <ThemedText type="defaultBoldOpacity">
+                {activeChecklist.completedItems}/{activeChecklist.data.length}{" "}
+                tarefas finalizadas
+              </ThemedText>
+            )}
+
+            <ThemedText type="defaultBoldOpacity">
+              {activeChecklist.data.length}/10 tarefas criadas
+            </ThemedText>
+          </View>
+
           <InputAddTask
             valueChange={(e) => setNewTask(e)}
             placeholder="Criar tarefa..."
@@ -177,6 +191,11 @@ const stylesSheet = (color: any) =>
     group_name_edit: {
       flexDirection: "row",
       gap: 15,
+    },
+    todo_counter_indicator: {
+      flexDirection: "column",
+      alignItems: "flex-end",
+      gap: 10,
     },
 
     name_change_input: {

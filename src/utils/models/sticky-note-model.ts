@@ -21,3 +21,7 @@ export class StickyNote {
   color: stickyNoteColor = "BLUE";
   isFavorite: boolean = false;
 }
+
+export class FilterStickyNotes {
+  search: string = "";
+}

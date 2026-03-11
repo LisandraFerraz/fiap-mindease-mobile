@@ -66,6 +66,7 @@ export const StickyNotes = () => {
             <StickyNotesItems
               notes={activeNotesGroup.data}
               activeGroup={activeNotesGroup}
+              onUpdateActiveGroup={(item: any) => setActiveNotesGroup(item)}
               onUpdateGroup={(res: IStickyNotesResponse) =>
                 updateAllActiveNotesGroup(res)
               }

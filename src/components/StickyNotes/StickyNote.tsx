@@ -115,8 +115,6 @@ export const StickyNoteItem = ({
 const stylesSheet = (colors: any) =>
   StyleSheet.create({
     card: {
-      borderBottomWidth: 10,
-      borderColor: "#5d5d5d74",
       paddingHorizontal: 20,
       paddingVertical: 15,
       borderRadius: 15,

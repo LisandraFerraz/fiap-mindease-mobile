@@ -1,6 +1,7 @@
 import { apiFetch } from "../../../core/core-api";
 import { endpoints } from "../../../core/env/endpoints";
 import {
+  FilterStickyNotes,
   IStickyNotesResponse,
   StickyNote,
   StickyNotesGroup,
@@ -25,6 +26,17 @@ export const UseStikyNotes = () => {
     return await apiFetch<IStickyNotesResponse>({
       method: "POST",
       url: `${endpoints.createStickyNotesGroup}`,
+      body: body,
+    });
+  };
+
+  const filterStickyNotesGroup = async (
+    body: FilterStickyNotes,
+    groupId: string,
+  ) => {
+    return await apiFetch({
+      method: "POST",
+      url: `${endpoints.searchAtickyNotes}/${groupId}`,
       body: body,
     });
   };
@@ -77,6 +89,7 @@ export const UseStikyNotes = () => {
   return {
     listAllStickyGroups,
     listStickyNotesGroup,
+    filterStickyNotesGroup,
     createStickyNotesGroup,
     updateStickyNotesGroup,
     addStickyNote,

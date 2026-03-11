@@ -9,6 +9,7 @@ export class ChecklistModel {
   name: string = "";
   color: stickyNoteColor = "BLUE";
   data: ChecklistItem[] = [];
+  completedItems?: number;
 }
 
 export class ChecklistItem {
